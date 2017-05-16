@@ -1,3 +1,7 @@
 [![Stories in Ready](https://badge.waffle.io/BinaryBaboons/PlusOne.png?label=ready&title=Ready)](https://waffle.io/BinaryBaboons/PlusOne?utm_source=badge)
 # PlusOne
 PlusOne
+
+Product Description : Plus one is an app for events that need more people in order to create an 
+event more successful. This app provides a filter for finding the best person to fill the gap created 
+those unsightly no-shows.        
