@@ -1,0 +1,27 @@
+{
+  "name": "plus-one",
+  "version": "0.0.1",
+  "description": "A Website to Find Last-Minute Fill-Ins for Events.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BinaryBaboons/PlusOne.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BinaryBaboons/PlusOne/issues"
+  },
+  "homepage": "https://github.com/BinaryBaboons/PlusOne#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
