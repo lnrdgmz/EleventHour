@@ -1,17 +1,23 @@
-// load .env file
-require('dotenv').config();
-
-// create express app
+// MODULES ==================================================
+require ('dotenv').config();
 const express = require('express');
-
 const app = express();
 
+// CONFIGURATION =============================================
+// configure our server with all the middlware and routing
 require('./config/auth')(app);
+require('./config/middleware.js')(app, express);
 
-// connect to database
 
-// require middleware
-require('./config/middleware')(app, express);
 
-// start server
-app.listen(process.env.PORT || 8000)
+// Sets the port to either the Process environment's or 3000
+let port = process.env.PORT || 3000;
+
+//Run the Server and console.log the port;
+if(!module.parent) {
+    app.listen(port);
+    console.log('Listening on port: ', port);
+}
+
+module.exports = app; 
+
