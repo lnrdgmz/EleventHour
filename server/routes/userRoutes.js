@@ -22,5 +22,4 @@ userRouter.route('/:userId')
         //delete event
     });
 
-
 module.exports = userRouter;

@@ -1,5 +1,4 @@
 // require all middleware here
-
 // MODULES ==============================
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -24,5 +23,4 @@ module.exports = (app, express) => {
     app.use('/events', eventRouter);
     app.use('/users', userRouter);
     app.use('/rating', ratingRouter);
-
 }
