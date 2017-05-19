@@ -26,6 +26,7 @@ passport.use(new FacebookStrategy({
   */
   return cb(null, profile);
 }));
+
 /** 
  * Edit this when implementing a user database?
  */
@@ -41,4 +42,5 @@ module.exports = (app) => {
   app.use(passport.initialize());
   app.use(passport.session());
 };
+
 
