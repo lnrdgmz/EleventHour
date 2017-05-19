@@ -18,8 +18,7 @@ module.exports = (app, express) => {
     app.use(bodyParser.json());
     app.use(passport.initialize());
     app.use(passport.session());
-    // app.use(express.static(path.join(_dirname, 'CLIENT FOLDER')))
-    // app.use(express.static(path.join(_dirname, 'NODE MODULES FOLDER')))
+    app.use(express.static(path.join(__dirname, '../../client')))
     app.use(authRouter);
     app.use('/events', eventRouter);
     app.use('/users', userRouter);
