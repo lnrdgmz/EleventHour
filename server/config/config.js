@@ -24,6 +24,8 @@ db.knex.schema.hasTable('user').then((exists) => {
             user.string('email', 100);
             user.string('bio',280);
             user.integer('age');
+            user.date('created_at');
+            user.date('updated_at');
         }).then( table => {
             console.log('Created new "user" table', table);
         });
@@ -35,6 +37,7 @@ db.knex.schema.hasTable('event').then( exists => {
         db.knex.schema.createTable('event', event => {
             event.increments('id').primary();
             event.integer('creator_id').references('user.id');
+            event.integer('wait_list_id').references('wait_list.id')
             event.string('title').notNullable();
             event.string('description').notNullable();
             event.date('date_time', 100).notNullable();
@@ -42,6 +45,8 @@ db.knex.schema.hasTable('event').then( exists => {
             event.string('location');
             event.integer('skill_level');
             event.string('habitat', 60);
+            event.date('created_at');
+            event.date('updated_at');
         }).then( table => {
             console.log('Created new "event" table', table);
         });
@@ -79,10 +84,22 @@ db.knex.hasTable('skill_rating').then( exists => {
         db.knex.createTable('skill_rating', skillRating => {
             skillRating.increments('id').primary();
             skillRating.integer('user_id').references('user.id');
-            skillRating.integer('tag_id').references('eventTag.id');
+            skillRating.integer('tag_id').references('tag.id');
             skillRating.integer('rating');
         }).then( table => {
             console.log('Created new "skill_rating" table', table);
+        });
+    }
+});
+
+db.knex.hasTable('tag').then( exists => {
+    if (!exists) {
+        db.knex.createTable('tag', tag => {
+            tag.increments('id').primary();
+            tag.string('tag', 60).notNullable();
+            tag.string('category', 60).notNullable();
+        }).then( table => {
+            console.log('Created new "tag" table', table);
         });
     }
 });
@@ -91,22 +108,10 @@ db.knex.hasTable('event_tag').then( exists => {
     if (!exists) {
         db.knex.createTable('event_tag', eventTag => {
             eventTag.increments('id').primary();
-            eventTag.string('tag', 60).notNullable();
-            eventTag.string('category', 60).notNullable();
+            eventTag.integer('event_id').references('event.id');
+            eventTag.integer('tag_id').references('eventTag.id');
         }).then( table => {
             console.log('Created new "event_tag" table', table);
-        });
-    }
-});
-
-db.knex.hasTable('tag_event_join').then( exists => {
-    if (!exists) {
-        db.knex.createTable('tag_event_join', tagEventsJoin => {
-            tagEventsJoin.increments('id').primary();
-            tagEventsJoin.integer('event_id').references('event.id');
-            tagEventsJoin.integer('tag_id').references('eventTag.id');
-        }).then( table => {
-            console.log('Created new "tag_event_join" table', table);
         });
     }
 });
