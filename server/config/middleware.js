@@ -20,7 +20,7 @@ module.exports = (app, express) => {
     app.use(passport.session());
     // app.use(express.static(path.join(_dirname, 'CLIENT FOLDER')))
     // app.use(express.static(path.join(_dirname, 'NODE MODULES FOLDER')))
-    app.use('/auth', authRouter);
+    app.use(authRouter);
     app.use('/events', eventRouter);
     app.use('/users', userRouter);
     app.use('/rating', ratingRouter);

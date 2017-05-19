@@ -1,11 +1,12 @@
-
-const routes = require('express').Router();
+const authRouter = require('express').Router();
 const passport = require('passport');
 
 
-routes.get('/auth/google', passport.authenticate('google', {scope: ['profile']}));
+authRouter.get('/auth/google', passport.authenticate('google', {scope: ['profile']}));
+authRouter.get('/auth/facebook', passport.authenticate('facebook'))
 
-routes.get('/auth/google/callback', 
+
+authRouter.get('/auth/google/callback', 
   passport.authenticate('google', {failureRedirect: '/fail'}),
   (req, res) => {
     /**
@@ -32,6 +33,6 @@ authRouter.get('/auth/loggedIn', (req, res) => {
   }
 });
 
-routes.get('/auth/logout', (req, res) => {/* Log user out */});
+authRouter.get('/auth/logout', (req, res) => {/* Log user out */});
 
-module.exports = routes;
+module.exports = authRouter;
