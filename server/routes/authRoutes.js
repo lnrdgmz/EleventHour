@@ -14,7 +14,17 @@ routes.get('/auth/google/callback',
     res.send(`Log in succeeded! Welcome, ${JSON.stringify(req.user)}`);
   });
 
-routes.get('/auth/loggedIn', (req, res) => {
+authRouter.get('/auth/facebook/callback', 
+  passport.authenticate('facebook', {failureRedirect: '/fail'}), 
+  (req, res) => {
+    /*  
+     * Set some cookie data and send the appropriate response code
+     */
+    res.send(`Log in succeeded! Welcome, ${JSON.stringify(req.user)}`);
+  });
+
+
+authRouter.get('/auth/loggedIn', (req, res) => {
   if (req.isAuthenticated()) {
     res.send('true');
   } else {
