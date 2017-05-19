@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 // Put all routing for user skill and peer ratings here// Put all routing for events here
->>>>>>> refactor($server): Routes skeleton
 const ratingRouter = require('express').Router();
 const ratingUtils = require('../utils/ratingUtils.js')
 
@@ -24,9 +21,4 @@ ratingRouter.route('/:ratingId')
     });
 
 
-
-<<<<<<< HEAD
 module.exports = ratingRouter;
-=======
-module.exports = ratingRouter;
->>>>>>> refactor($server): Routes skeleton
