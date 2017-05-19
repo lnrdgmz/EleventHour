@@ -7,7 +7,7 @@ const app = express();
 // CONFIGURATION =============================================
 // configure our server with all the middlware and routing
 require('./config/middleware.js')(app, express);
-equire('./config/auth')(app);
+require('./config/auth')(app);
 
 
 

@@ -16,7 +16,7 @@ authRouter.get('/auth/google/callback',
   });
 
 authRouter.get('/auth/facebook/callback', 
-  passport.authenticate({failureRedirect: '/fail'}), 
+  passport.authenticate('facebook', {failureRedirect: '/fail'}), 
   (req, res) => {
     /*  
      * Set some cookie data and send the appropriate response code
