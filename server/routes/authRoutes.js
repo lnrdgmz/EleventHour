@@ -24,3 +24,4 @@ routes.get('/auth/loggedIn', (req, res) => {
 routes.get('/auth/logout', (req, res) => {/* Log user out */});
 
 module.exports = routes;
+
