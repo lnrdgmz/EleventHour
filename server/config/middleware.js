@@ -24,3 +24,4 @@ module.exports = (app, express) => {
     app.use('/users', userRouter);
     app.use('/rating', ratingRouter);
 }
+
