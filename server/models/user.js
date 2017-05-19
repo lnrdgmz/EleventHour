@@ -1,0 +1,1 @@
+// create bookshelf model of user from knex schema here

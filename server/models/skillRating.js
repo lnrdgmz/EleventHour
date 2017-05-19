@@ -1,0 +1,1 @@
+// create bookshelf model of skillRatings from knex schema here
