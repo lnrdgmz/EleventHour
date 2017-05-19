@@ -1,0 +1,1 @@
+// create bookshelf model of waitList from knex schema here

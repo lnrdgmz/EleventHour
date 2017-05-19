@@ -43,6 +43,14 @@
     }
   },
   "dependencies": {
+    "body-parser": "^1.17.2",
+    "bookshelf": "^0.10.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "knex": "^0.13.0",
+    "moment": "^2.18.1",
+    "morgan": "^1.8.1",
+    "mysql": "^2.13.0"
     "flexboxgrid": "^6.3.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

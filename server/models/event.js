@@ -1,0 +1,1 @@
+// create bookshelf model of events from knex schema here
