@@ -19,13 +19,13 @@ module.exports = {
     loaders: [
     // js
     {
-      test: /\.jsx$/,
+      test: /\.(js|jsx)$/,
       loaders: ['babel-loader'],
       include: path.join(__dirname, 'client')
     },
     // CSS
-    { 
-      test: /\.styl$/, 
+    {
+      test: /\.styl$/,
       include: path.join(__dirname, 'client'),
       loader: 'style-loader!css-loader!stylus-loader'
     }
