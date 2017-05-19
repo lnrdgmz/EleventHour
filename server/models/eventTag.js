@@ -1,0 +1,1 @@
+// create bookshelf model of eventTags from knex schema here

@@ -1,0 +1,1 @@
+// create bookshelf model of userRating from knex schema here
