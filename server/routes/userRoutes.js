@@ -7,19 +7,22 @@ const User = require('../models/user');
 
 // Create route handles for users
 
-userRouter.route('/')
-  /**
-   * When would we need to return a list of all users?
-   */
-  .get((req, res) => {
-      res.send('Returns a list of users.')
-  })
-  /**
-   * Do we need this, or just handle user creation in the /auth routes?
-   */
-  .post((req, res) => {
-      res.send('Create a user')
-  })
+/*
+ * These two endpoints seem unnecessary. Implement?
+ */
+// userRouter.route('/')
+//   /**
+//    * When would we need to return a list of all users?
+//    */
+//   .get((req, res) => {
+//       res.send('Returns a list of users.')
+//   })
+//   /**
+//    * Do we need this, or just handle user creation in the /auth routes?
+//    */
+//   .post((req, res) => {
+//       res.send('Create a user')
+//   })
 
 userRouter.route('/:userId')
   /**
