@@ -16,13 +16,19 @@ db.knex.schema.hasTable('user').then((exists) => {
     if (!exists) {
         db.knex.schema.createTable('user', (user) => {
             user.increments('id').primary();
-            user.integer('google_id').notNullable();
-            user.integer('facebook_id').notNullable();
+
+            /**
+             * Users will log in with either Google or Facebook, not both. Record the provider
+             * and the provider id
+             */
+            user.string('oauth_provider', 20).notNullable();
+            user.integer('provider_id').notNullable();
+            
             user.string('display_name', 100).notNullable();
-            user.string('.img_url', 250);
-            user.integer('contact_number');
+            user.string('img_url', 250);
+            user.string('contact_number', 15);
             user.string('email', 100);
-            user.string('bio',280);
+            user.string('bio', 280);
             user.integer('age');
             user.date('created_at');
             user.date('updated_at');
