@@ -1,1 +1,0 @@
-// create collection from tagEventJoin table 
