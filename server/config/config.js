@@ -46,12 +46,22 @@ db.knex.schema.hasTable('event').then( exists => {
     if (!exists) {
         db.knex.schema.createTable('event', event => {
             event.increments('id').primary();
-            event.integer('creator_id').references('user.id');
-            event.integer('wait_list_id').references('wait_list.id')
+
+            /**
+             * FIXME The following line breaks the schema. 
+             */
+            event.integer('creator_id').references('user.id').notNullable();
+
+            /**
+             * Should an event have a waitlist id? Is it not enough for a 
+             * waitlist entry to have an event id and a user id?
+             */
+            // event.integer('wait_list_id').references('wait_list.id')
+
             event.string('title').notNullable();
             event.string('description').notNullable();
             event.date('date_time', 100).notNullable();
-            event.string('.img_url', 250);
+            event.string('img_url', 250);
             event.string('location');
             event.integer('skill_level');
             event.string('habitat', 60);
@@ -59,7 +69,8 @@ db.knex.schema.hasTable('event').then( exists => {
             event.date('updated_at');
         }).then( table => {
             console.log('Created new "event" table', table);
-        });
+        })
+        .catch(err => console.log('Error creating event table.', err));
     }
 });
 
