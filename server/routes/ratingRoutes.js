@@ -1,3 +1,4 @@
+// Put all routing for user skill and peer ratings here// Put all routing for events here
 const ratingRouter = require('express').Router();
 const ratingUtils = require('../utils/ratingUtils.js')
 
@@ -18,7 +19,6 @@ ratingRouter.route('/:ratingId')
     .delete((req, res) => {
         //return ratings
     });
-
 
 
 module.exports = ratingRouter;
