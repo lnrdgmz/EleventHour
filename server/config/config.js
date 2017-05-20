@@ -74,7 +74,7 @@ db.knex.schema.hasTable('wait_list').then( exists => {
 
 db.knex.schema.hasTable('user_rating').then( exists => {
     if (!exists) {
-        db.knex.createTable('user_rating', userRating => {
+        db.knex.schema.createTable('user_rating', userRating => {
             userRating.increments('id').primary();
             userRating.integer('rater_id').references('user.id');
             userRating.integer('ratee_id').references('user.id');
@@ -85,9 +85,10 @@ db.knex.schema.hasTable('user_rating').then( exists => {
     }
 });
 
-db.knex.hasTable('skill_rating').then( exists => {
+console.log('passed user_rating')
+db.knex.schema.hasTable('skill_rating').then( exists => {
     if (!exists) {
-        db.knex.createTable('skill_rating', skillRating => {
+        db.knex.schema.createTable('skill_rating', skillRating => {
             skillRating.increments('id').primary();
             skillRating.integer('user_id').references('user.id');
             skillRating.integer('tag_id').references('tag.id');
@@ -98,9 +99,10 @@ db.knex.hasTable('skill_rating').then( exists => {
     }
 });
 
-db.knex.hasTable('tag').then( exists => {
+console.log('passed skill_rating')
+db.knex.schema.hasTable('tag').then( exists => {
     if (!exists) {
-        db.knex.createTable('tag', tag => {
+        db.knex.schema.createTable('tag', tag => {
             tag.increments('id').primary();
             tag.string('tag', 60).notNullable();
             tag.string('category', 60).notNullable();
@@ -110,12 +112,13 @@ db.knex.hasTable('tag').then( exists => {
     }
 });
 
-db.knex.hasTable('event_tag').then( exists => {
+console.log('passed tag')
+db.knex.schema.hasTable('event_tag').then( exists => {
     if (!exists) {
-        db.knex.createTable('event_tag', eventTag => {
+        db.knex.schema.createTable('event_tag', eventTag => {
             eventTag.increments('id').primary();
             eventTag.integer('event_id').references('event.id');
-            eventTag.integer('tag_id').references('eventTag.id');
+            eventTag.integer('tag_id').references('tag.id');
         }).then( table => {
             console.log('Created new "event_tag" table', table);
         });
