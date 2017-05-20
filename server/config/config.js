@@ -30,8 +30,12 @@ db.knex.schema.hasTable('user').then((exists) => {
             user.string('email', 100);
             user.string('bio', 280);
             user.integer('age');
-            user.date('created_at');
-            user.date('updated_at');
+            /**
+             * Using user.timestamps, we shouldn't need to specify created_at and updated_at separately
+             */
+            user.timestamps();
+            // user.date('created_at');
+            // user.date('updated_at');
         }).then( table => {
             console.log('Created new "user" table', table);
         });
