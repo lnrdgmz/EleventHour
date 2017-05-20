@@ -23,5 +23,4 @@ eventRouter.route('/:eventId')
     });
 
 
-
 module.exports = eventRouter;
