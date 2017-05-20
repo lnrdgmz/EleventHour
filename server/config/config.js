@@ -22,7 +22,7 @@ db.knex.schema.hasTable('user').then((exists) => {
              * and the provider id
              */
             user.string('oauth_provider', 20).notNullable();
-            user.integer('provider_id').notNullable();
+            user.string('provider_id', 50).notNullable();
             
             user.string('display_name', 100).notNullable();
             user.string('img_url', 250);
