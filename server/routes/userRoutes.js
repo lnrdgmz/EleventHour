@@ -37,7 +37,6 @@ userRouter.route('/:userId')
         })
   })
   .put((req, res) => {
-    console.log(req.body);
     new User({id: req.params.userId}).fetch()
       .then(model => {
         if (!model) {
@@ -52,10 +51,22 @@ userRouter.route('/:userId')
       .then(model => {
         res.send(model)
       })
-      // res.send(`Update the profile of user ${userId}`)
   })
   .delete((req, res) => {
-      res.send(`Delete user ${userId}`)
+    new User({id: req.params.userId}).fetch()
+      .then(model => {
+        if (!model) {
+          res.status(404).send();
+        } else {
+          return model;
+        }
+      })
+      .then(model => {
+        return model.destroy();
+      })
+      .then(model => {
+        res.send(model);
+      })
   });
 
 module.exports = userRouter;
