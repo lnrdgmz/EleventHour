@@ -1,5 +1,12 @@
+# config files
+.vscode/
+
+# Modules and compiled files
 node_modules/
+dist/
 
 # Secret stuff
 .env
-dist/
+
+# Other
+.DS_Store
