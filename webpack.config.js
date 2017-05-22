@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './client/src/Components/App.jsx',
+    './client/src/index.jsx',
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -18,17 +18,22 @@ module.exports = {
   module: {
     loaders: [
     // js
-    {
-      test: /\.(js|jsx)$/,
-      loaders: ['babel-loader'],
-      include: path.join(__dirname, 'client')
-    },
+      {
+        exclude: '/node_modules/',
+        test: /\.jsx?$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: ['lodash'],
+            presets: ['es2015', 'react', 'stage-2'],
+          },
+        },
+      },
     // CSS
-    {
-      test: /\.styl$/,
-      include: path.join(__dirname, 'client'),
-      loader: 'style-loader!css-loader!stylus-loader'
-    }
-    ]
-  }
+      {
+        test: /\.css$/,
+        loaders: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
 };

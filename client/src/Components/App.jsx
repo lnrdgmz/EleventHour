@@ -1,12 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
-import styles from '.././app.css'
+import UserProfile from './UserProfile.jsx';
+import MenuBar from './MenuBar.jsx';
 
 class App extends React.Component {
   render() {
     return (
-      <h1 id="spash">+One</h1>
+      <div>
+        <div id="menuBar">
+          <MenuBar />
+        </div>
+        <div id="profile">
+          <UserProfile />
+        </div>
+      </div>
     );
   }
 }
-render(<App />, document.getElementById('app'));
+
+export default App;
