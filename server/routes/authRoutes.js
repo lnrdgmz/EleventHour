@@ -4,6 +4,19 @@ const moment = require('moment');
 
 const User = require('../models/user');
 
+/**
+ * Check if a user is logged in by making a GET request to 
+ * /auth/loggedIn. Returns 'true' or 'false' in the body.
+ *
+ * Users can login via /auth/google or /auth/facebook
+ *
+ * After a successful login, the following cookies will be written:
+ *  user_id: Number
+ *  displayName: String
+ *  events: an array of { event_id, user_role }
+ *
+ */
+
 const callbackHandler = (req, res) => {
   /**
    * Set some cookie data and send the appropriate response code
