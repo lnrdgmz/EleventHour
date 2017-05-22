@@ -8,7 +8,27 @@ const Event = require('../models/event');
 
 eventRouter.route('/')
   .get((req, res) => {
-    //return events
+    /**
+     * takes a query param: page. Return 5 events at a time.
+     * Increase to 50 once things are working.
+     * 
+     * Add a query param for category or tags? Return 50 events 
+     * satisfying that search.
+     */
+    new Event().fetchPage({
+      pageSize: 5, 
+      page: req.query.page || 1,
+      /**
+       * withRelated property needed to pull creator info, but this
+       * crashes the server
+       */
+      // withRelated: 'creator',
+  })
+    // new Event().fetchAll()
+      .then(model => {
+        // model.creator = model.related('creator');
+        res.send(model)
+      })
   })
   .post((req, res) => {
     const eventObj = req.body;

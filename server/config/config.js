@@ -11,6 +11,7 @@ const knex = require('knex')({
 });
 
 const db = require('bookshelf')(knex);
+db.plugin('pagination');
 
 db.knex.schema.hasTable('user').then((exists) => {
     if (!exists) {
@@ -100,7 +101,6 @@ db.knex.schema.hasTable('user_rating').then( exists => {
     }
 });
 
-console.log('passed user_rating')
 db.knex.schema.hasTable('skill_rating').then( exists => {
     if (!exists) {
         db.knex.schema.createTable('skill_rating', skillRating => {
@@ -114,7 +114,6 @@ db.knex.schema.hasTable('skill_rating').then( exists => {
     }
 });
 
-console.log('passed skill_rating')
 db.knex.schema.hasTable('tag').then( exists => {
     if (!exists) {
         db.knex.schema.createTable('tag', tag => {
@@ -127,7 +126,6 @@ db.knex.schema.hasTable('tag').then( exists => {
     }
 });
 
-console.log('passed tag')
 db.knex.schema.hasTable('event_tag').then( exists => {
     if (!exists) {
         db.knex.schema.createTable('event_tag', eventTag => {
