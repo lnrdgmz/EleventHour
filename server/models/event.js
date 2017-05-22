@@ -8,9 +8,9 @@ const Category = require('./category.js');
 let Event = db.Model.extend({
     tableName: 'event',
     hasTimestamps: true,
-    users: this.belongsToMany(User).through(Attendee),
-    tags: this.hasMany(Tags).through(EventTag),
-    category: this.belongsTo(Category)
+    users: () => this.belongsToMany(User).through(Attendee),
+    tags: () => this.hasMany(Tags).through(EventTag),
+    category: () => this.belongsTo(Category)
 
 });
 

@@ -6,8 +6,8 @@ const Tag = require('./tag.js');
 let SkillRating = db.Model.extend({
     tableName: 'skill_rating',
     hasTimestamps: true,
-    user: this.belongsTo(User),
-    tag: this.belongsTo(Tag)
+    user: () => this.belongsTo(User),
+    tag: () => this.belongsTo(Tag)
 });
 
 module.exports = SkillRating;

@@ -5,8 +5,8 @@ const User = require('./user')
 let UserRating = db.Model.extend({
     tableName: 'user_rating',
     hasTimestamps: true,
-    rater: this.belongsTo(User),
-    ratee: this.belongsTo(User),
+    rater: () => this.belongsTo(User),
+    ratee: () => this.belongsTo(User),
 });
 
 module.exports = UserRating;

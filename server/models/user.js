@@ -8,9 +8,9 @@ const SkillRating = require('./skillRating.js');
 let User = db.Model.extend({
     tableName: 'user',
     hasTimestamps: true,
-    events: this.belongsToMany(Event).through(Attendee),
-    userRatings: this.hasMany(UserRating),
-    skillRatings: this.hasMany(SkillRating)
+    events: () => this.belongsToMany(Event).through(Attendee),
+    userRatings: () => this.hasMany(UserRating),
+    skillRatings: () => this.hasMany(SkillRating)
 });
 
 module.exports = User;

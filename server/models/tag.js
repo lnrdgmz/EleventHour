@@ -6,8 +6,8 @@ const EventTag = require('./eventTag.js')
 let Tag = db.Model.extend({
     tableName: 'tag',
     hasTimestamps: true,
-    skillRating: this.hasMany(SkillRating),
-    events: this.hasMany(Event).through(EventTag),
+    skillRating: () => this.hasMany(SkillRating),
+    events: () => this.hasMany(Event).through(EventTag),
 });
 
 module.exports = Tag;
