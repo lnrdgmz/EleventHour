@@ -11,18 +11,28 @@ const callbackHandler = (req, res) => {
     oauth_provider: req.user.provider,
     provider_id: req.user.id,
   });
-  userObj.fetch()
-    .then(model => {
+  userObj.fetch({ withRelated: 'attendee.event' })
+    .then((model) => {
       if (model) {
+        /**
+         * TODO Add an events cookie. Depends on attendee table being populated.
+         * Events cookie is an object of { event_id, user_role }
+         */
+        res.cookie('userId', model.get('id'));
+        res.cookie('displayName', model.get('display_name'));
+        res.cookie('events', undefined /* FIXME */);
+
         res.send(`Found ${JSON.stringify(model)} in the database`);
       } else {
-        userObj.set({display_name: req.user.displayName}).save()
-          .then(model => {
+        userObj.set({ display_name: req.user.displayName }).save()
+          .then((model) => {
+            res.cookie('userId', model.get('id'));
+            res.cookie('displayName', model.get('display_name'));
             res.send(`Added ${JSON.stringify(model)} to the database`);
-          })
+          });
       }
-    })
-}
+    });
+};
 
 authRouter.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 authRouter.get('/auth/facebook', passport.authenticate('facebook'))
