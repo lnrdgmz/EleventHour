@@ -44,10 +44,39 @@ eventRouter.route('/')
 
 eventRouter.route('/:eventId')
   .put((req, res) => {
-    //return events
+    /*
+     * TODO Same code as user PUT endpoint. Refactor.
+     */
+    new Event({id: req.params.eventId}).fetch()
+      .then(model => {
+        if (!model) {
+          res.status(404).send();
+        } else {
+          return model;
+        }
+      })
+      .then(model => {
+        return model.save(req.body, {patch: true});
+      })
+      .then(model => {
+        res.send(model)
+      })
   })
   .delete((req, res) => {
-    //return events
+    new Event({id: req.params.eventId}).fetch()
+      .then(model => {
+        if (!model) {
+          res.status(404).send();
+        } else {
+          return model;
+        }
+      })
+      .then(model => {
+        return model.destroy();
+      })
+      .then(model => {
+        res.send(model);
+      })
   });
 
 
