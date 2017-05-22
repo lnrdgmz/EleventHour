@@ -8,6 +8,7 @@ const authRouter = require('../routes/authRoutes');
 const eventRouter = require('../routes/eventRoutes');
 const userRouter = require('../routes/userRoutes');
 const ratingRouter = require('../routes/ratingRoutes');
+const testRouter = require('../routes/testRoutes');
 
 // export middleware
 
@@ -19,6 +20,7 @@ module.exports = (app, express) => {
     app.use(passport.session());
     app.use(express.static(path.join(__dirname, '../../client')))
     app.use(authRouter);
+    app.use(testRouter);
     app.use('/events', eventRouter);
     app.use('/users', userRouter);
     app.use('/rating', ratingRouter);

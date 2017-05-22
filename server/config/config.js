@@ -86,6 +86,7 @@ db.knex.schema.hasTable('user_rating').then( exists => {
             userRating.integer('rater_id').references('user.id');
             userRating.integer('ratee_id').references('user.id');
             userRating.integer('rating');
+            userRating.timestamps();
         }).then( table => {
             console.log('Created new "user_rating" table', table);
         });
@@ -99,6 +100,7 @@ db.knex.schema.hasTable('skill_rating').then( exists => {
             skillRating.integer('user_id').references('user.id');
             skillRating.integer('tag_id').references('tag.id');
             skillRating.integer('rating');
+            skillRating.timestamps();
         }).then( table => {
             console.log('Created new "skill_rating" table', table);
         });
@@ -110,6 +112,7 @@ db.knex.schema.hasTable('tag').then( exists => {
         db.knex.schema.createTable('tag', tag => {
             tag.increments('id').primary();
             tag.string('tag', 60).notNullable();
+            tag.timestamps();
         }).then( table => {
             console.log('Created new "tag" table', table);
         });
@@ -122,6 +125,7 @@ db.knex.schema.hasTable('event_tag').then( exists => {
             eventTag.increments('id').primary();
             eventTag.integer('event_id').references('event.id');
             eventTag.integer('tag_id').references('tag.id');
+            eventTag.timestamps();
         }).then( table => {
             console.log('Created new "event_tag" table', table);
         });
@@ -133,6 +137,7 @@ db.knex.schema.hasTable('category').then( exists => {
         db.knex.schema.createTable('category', category => {
             category.increments('id').primary();
             category.string('category');
+            category.timestamps();
         }).then( table => {
             console.log('Created new "category" table', table);
         });
