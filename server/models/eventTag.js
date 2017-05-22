@@ -6,8 +6,8 @@ const Event = require('./event');
 let EventTag = db.Model.extend({
     tableName: 'event_tag',
     hasTimestamps: true,
-    tags: this.belongsToMany(Tag),
-    events: this.belongsToMany(Event)
+    tags: () => this.belongsToMany(Tag),
+    events: () => this.belongsToMany(Event)
 });
 
 module.exports = EventTag;

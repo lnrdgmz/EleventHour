@@ -5,7 +5,7 @@ const Event = require('./event.js')
 let Category = db.Model.extend({
     tableName: 'category',
     hasTimestamps: false,
-    events: this.hasMany(Event)
+    events: () => this.hasMany(Event)
 });
 
 module.exports = Category;
