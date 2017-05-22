@@ -4,7 +4,7 @@ const Tag = require('./tag');
 const Event = require('./event');
 
 let EventTag = db.Model.extend({
-    tableName: 'tag_event_join',
+    tableName: 'event_tag',
     hasTimestamps: true,
     tags: this.belongsToMany(Tag),
     events: this.belongsToMany(Event)
