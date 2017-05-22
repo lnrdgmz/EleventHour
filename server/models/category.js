@@ -4,7 +4,7 @@ const Event = require('./event.js')
 
 let Category = db.Model.extend({
     tableName: 'category',
-    hasTimestamps: false,
+    hasTimestamps: true,
     events: () => this.hasMany(Event)
 });
 
