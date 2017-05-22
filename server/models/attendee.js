@@ -3,9 +3,11 @@ const db = require('../config/config');
 const User = require('./user')
 const Event = require('./event')
 
-let WaitList = db.Model.extend({
+let Attendee = db.Model.extend({
     tableName: 'wait_list',
-    hasTimestamps: true
+    hasTimestamps: true,
+    user: this.belongsToMany(User),
+    event: this.belongsToMany(Event)
 });
 
-module.exports = WaitList;
+module.exports = Attendee;
