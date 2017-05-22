@@ -4,6 +4,7 @@
 # Modules and compiled files
 node_modules/
 dist/
+yarn.lock
 
 # Secret stuff
 .env
