@@ -47,21 +47,10 @@ db.knex.schema.hasTable('event').then( exists => {
     if (!exists) {
         db.knex.schema.createTable('event', event => {
             event.increments('id').primary();
-
-            /**
-             * FIXME The following line breaks the schema. 
-             */
-            event.integer('creator_id').references('user.id').notNullable();
-
-            /**
-             * Should an event have a waitlist id? Is it not enough for a 
-             * waitlist entry to have an event id and a user id?
-             */
-            // event.integer('wait_list_id').references('wait_list.id')
-
             event.string('title').notNullable();
             event.string('description').notNullable();
             event.date('date_time', 100).notNullable();
+            event.string('category').references('category.id');
             event.string('img_url', 250);
             event.string('location');
             event.integer('skill_level');
@@ -75,15 +64,15 @@ db.knex.schema.hasTable('event').then( exists => {
     }
 });
 
-db.knex.schema.hasTable('wait_list').then( exists => {
+db.knex.schema.hasTable('attendee').then( exists => {
     if (!exists) {
-        db.knex.schema.createTable('wait_list', waitList => {
-            waitList.increments('id').primary();
-            waitList.integer('event_it').references('event.id');
-            waitList.integer('user_id').references('user.id');
-            waitList.string('flag', 60).notNullable();
+        db.knex.schema.createTable('attendee', attendee => {
+            attendee.increments('id').primary();
+            attendee.integer('event_it').references('event.id');
+            attendee.integer('user_id').references('user.id');
+            attendee.string('flag', 60).notNullable();
         }).then( tables => {
-            console.log('Created new "wait_list" table', table);
+            console.log('Created new "attendee" table', table);
         })
     }
 });
@@ -119,7 +108,6 @@ db.knex.schema.hasTable('tag').then( exists => {
         db.knex.schema.createTable('tag', tag => {
             tag.increments('id').primary();
             tag.string('tag', 60).notNullable();
-            tag.string('category', 60).notNullable();
         }).then( table => {
             console.log('Created new "tag" table', table);
         });
@@ -134,6 +122,17 @@ db.knex.schema.hasTable('event_tag').then( exists => {
             eventTag.integer('tag_id').references('tag.id');
         }).then( table => {
             console.log('Created new "event_tag" table', table);
+        });
+    }
+});
+
+db.knex.schema.hasTable('category').then( exists => {
+    if (!exists) {
+        db.knex.schema.createTable('category', category => {
+            category.increments('id').primary();
+            category.string('category');
+        }).then( table => {
+            console.log('Created new "category" table', table);
         });
     }
 });
