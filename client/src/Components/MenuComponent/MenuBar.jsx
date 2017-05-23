@@ -10,7 +10,7 @@ class MenuBar extends Component {
     const { activeItem } = this.state
 
     return (
-      <div>
+      <div id="menuBar">
         <Menu attached="top" stackable color="green">
           <Menu.Item>
             <img src="http://i.imgur.com/9fVGvPD.png" alt="" />

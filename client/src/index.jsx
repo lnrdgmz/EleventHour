@@ -17,8 +17,8 @@ import {
 
 render(
 <HashRouter>
-  {/*<Route path="/" component={App} />*/}
-  <Route path="/events" component={Events}/>
+  <Route path="/" component={App} /> 
+  {/*<Route path="/events" component={Events}/>*/}
 </HashRouter>,
   
 
