@@ -44,13 +44,18 @@ module.exports = {
       });
   },
 
+/**
+ * getEvent should respond with attendee data, but the models are broken
+ * and the query cannot be run with `{ withRelated: 'users' }`
+ */
+
   getEvent: (req, res) => {
     const eventId = req.params.eventId;
-    Event.where('id', eventId).fetch({ withRelated: ['users'] })
+    Event.where('id', eventId).fetch()
       .then((model) => {
         res.send(model);
       })
-      .catch(err => console.error(err))
+      .catch(err => console.error('There has been a terrible error: ----------', err));
   },
 
   updateEvent: (req, res) => {
@@ -59,7 +64,7 @@ module.exports = {
         if (!model) {
           res.status(404).send()
         } else {
-          return model.save(req.body, { patch: true })
+          return model.save(req.body, { patch: true });
         }
       })
       .then((model) => {
