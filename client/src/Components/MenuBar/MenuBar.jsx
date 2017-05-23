@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+// Import React and Semantic-UI Components
+import React, { Component } from 'react';
+import { Menu } from 'semantic-ui-react';
 
 class MenuBar extends Component {
   state = {}
@@ -7,10 +8,10 @@ class MenuBar extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem } = this.state;
 
     return (
-      <div>
+      <div id="menuBar">
         <Menu attached="top" stackable color="green">
           <Menu.Item>
             <img src="http://i.imgur.com/9fVGvPD.png" alt="" />

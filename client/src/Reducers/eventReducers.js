@@ -15,9 +15,9 @@ const event = (state, action) => {
     // Leave Event
     // Other
     default:
-      return state
+      return state;
   }
-}
+};
 
 const events = (state = [], action) => {
   switch (action.type) {
@@ -25,14 +25,14 @@ const events = (state = [], action) => {
       return [
         ...state,
         event(undefined, action)
-      ]
+      ];
     // Remove Event
     // Join Event
     // Leave Event
     // Other
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default todos
+export default events;

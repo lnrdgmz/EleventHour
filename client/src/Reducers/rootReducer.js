@@ -1,10 +1,13 @@
-import { combineReducers } from 'redux'
-import events from './eventReducers'
-import visibilityFilter from './visibilityFilter'
+// Import Redux Components
+import { combineReducers } from 'redux';
 
-const eventApp = combineReducers({
+// Import Local Components
+import events from './eventReducers';
+import visibilityFilter from './visibilityFilter';
+
+const rootReducer = combineReducers({
   events,
-  visibilityFilter
-})
+  visibilityFilter,
+});
 
-export default eventApp;
+export default rootReducer;

@@ -3,7 +3,7 @@ let nextEventId = 0;
 export const addEvent = (eventInfo) => ({
   type: 'ADD_EVENT',
   id: nextEventId++,
-  eventInfo
+  eventInfo,
 });
 
 export const removeEvent = (event) => ({
@@ -14,10 +14,5 @@ export const removeEvent = (event) => ({
 
 export const setVisibilityFilter = (filter) => ({
   type: 'SET_VISIBILITY_FILTER',
-  filter
+  filter,
 });
-
-export const toggleTodo = (id) => ({
-  type: 'TOGGLE_TODO',
-  id
-})
