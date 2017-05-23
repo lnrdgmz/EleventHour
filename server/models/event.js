@@ -11,7 +11,7 @@ const Event = db.Model.extend({
   tableName: 'event',
   hasTimestamps: true,
   users: function () {
-    return this.belongsToMany(User).through(Attendee);
+    return this.belongsToMany('User').through(Attendee).withPivot(['flag']);
   },
   tags: function () {
     return this.hasMany(Tags).through(EventTag);
@@ -36,4 +36,4 @@ const Event = db.Model.extend({
   },
 });
 
-module.exports = Event;
+module.exports = db.model('Event', Event);
