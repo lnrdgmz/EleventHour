@@ -14,5 +14,10 @@ import reducer from './Reducers';
 
 // Create the Store
 const store = createStore(reducer);
+
 // Render our App
-render(<App />, document.getElementById('app'));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>, document.getElementById('app')
+);
