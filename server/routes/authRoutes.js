@@ -5,7 +5,7 @@ const moment = require('moment');
 const User = require('../models/user');
 
 /**
- * Check if a user is logged in by making a GET request to 
+ * Check if a user is logged in by making a GET request to
  * /auth/loggedIn. Returns 'true' or 'false' in the body.
  *
  * Users can login via /auth/google or /auth/facebook
@@ -25,7 +25,7 @@ const callbackHandler = (req, res) => {
     oauth_provider: req.user.provider,
     provider_id: req.user.id,
   });
-  userObj.fetch(/* { withRelated: 'attendee.event' } */)
+  userObj.fetch({ withRelated: 'events' })
     .then((model) => {
       const maxAge = moment().add(7, 'days');
       if (model) {
@@ -35,11 +35,15 @@ const callbackHandler = (req, res) => {
          * TODO Add an events cookie. Depends on attendee table being populated.
          * Events cookie is an object of { event_id, user_role }
          */
+        const eventsCookieValue = [];
+        model.related('events').forEach((event) => {
+          const pivot = event.parse(event.pivot.attributes);
+          eventsCookieValue.push({ id: event.get('id'), role: pivot.flag });
+        });
         res.cookie('userId', model.get('id'), { maxAge });
         res.cookie('displayName', model.get('display_name'), { maxAge });
-        res.cookie('events', undefined /* FIXME */, { maxAge });
-
-        res.send(`Found ${JSON.stringify(model)} in the database`);
+        res.cookie('events', eventsCookieValue, { maxAge });
+        res.send(model);
       } else {
         userObj.set({ display_name: req.user.displayName }).save()
           .then((model) => {

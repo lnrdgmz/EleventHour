@@ -54,6 +54,7 @@
     "express-session": "^1.15.2",
     "flexboxgrid": "^6.3.1",
     "knex": "^0.13.0",
+    "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",
