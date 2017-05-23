@@ -20,5 +20,3 @@ render(
 
 
   document.getElementById('app')
-
-);
