@@ -6,11 +6,20 @@ const UserRating = require('./userRating.js');
 const SkillRating = require('./skillRating.js');
 
 let User = db.Model.extend({
-    tableName: 'user',
-    hasTimestamps: true,
-    events: () => this.belongsToMany(Event).through(Attendee),
-    userRatings: () => this.hasMany(UserRating),
-    skillRatings: () => this.hasMany(SkillRating)
+  tableName: 'user',
+  hasTimestamps: true,
+  events: function() {
+    return this.belongsToMany(Event).through(Attendee).withPivot(['flag']);
+  },
+  createdEvents: function () {
+    return this.belongsToMany(Event).through(Attendee).query({ where: { flag: 'creator' } });
+  },
+  userRatings: function () {
+    return this.hasMany(UserRating);
+  },
+  skillRatings: function () {
+    return this.hasMany(SkillRating);
+  },
 });
 
 module.exports = User;
