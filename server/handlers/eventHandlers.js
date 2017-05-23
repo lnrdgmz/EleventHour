@@ -62,7 +62,7 @@ module.exports = {
     Event.where('id', req.params.eventId).fetch()
       .then((model) => {
         if (!model) {
-          res.status(404).send()
+          res.status(404).send();
         } else {
           return model.save(req.body, { patch: true });
         }
