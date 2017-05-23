@@ -10,6 +10,12 @@ eventRouter.route('/')
   .get(eventHandlers.getEventList)
   .post(eventHandlers.createEvent);
 
+eventRouter.route('/join/:eventId')
+  .post(eventHandlers.joinEvent);
+
+eventRouter.route('/attendees')
+  .put(eventHandlers.editAttendees);
+
 eventRouter.route('/:eventId')
   .get(eventHandlers.getEvent)
   .put(eventHandlers.updateEvent)
