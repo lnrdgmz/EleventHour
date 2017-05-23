@@ -51,7 +51,7 @@ module.exports = {
 
   getEvent: (req, res) => {
     const eventId = req.params.eventId;
-    Event.where('id', eventId).fetch()
+    Event.where('id', eventId).fetch({ withRelated: 'users' })
       .then((model) => {
         res.send(model);
       })
