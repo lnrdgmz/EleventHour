@@ -13,6 +13,9 @@ const knex = require('knex')({
 const db = require('bookshelf')(knex);
 db.plugin('pagination');
 
+// Should help solve issues with many-to-many relationships
+db.plugin('registry');
+
 db.knex.schema.hasTable('user').then((exists) => {
     if (!exists) {
         db.knex.schema.createTable('user', (user) => {
