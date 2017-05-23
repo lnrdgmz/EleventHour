@@ -1,0 +1,7 @@
+.ui.tabular.menu .item {
+  color: skyblue;
+}
+
+.ui.tabular.menu .item:hover {
+  color: #FC8000;
+}
