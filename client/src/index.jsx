@@ -32,7 +32,6 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-    { /* Tell the Router to use our enhanced history */ }
     <HashRouter basename="/" component={App}>
       <Switch>
         <Route path="/users" component={UserProfile} />
