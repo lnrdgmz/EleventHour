@@ -40,7 +40,7 @@ module.exports = {
             page: req.query.page || 1,
         })
         .then( models => {
-            res.send(models.model)
+            res.send(models);
         })
     },
 
@@ -49,6 +49,7 @@ module.exports = {
         Event.where('id', eventId).fetch({withRelated: ['users']})
             .then( model => {
                 console.log(model)
+                res.send(model);
             })
             .catch( err => console.error(err))
     },
