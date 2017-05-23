@@ -1,12 +1,12 @@
-import React from 'react';
-import { render } from 'react-dom';
+import React, { Component } from 'react';
 import css from './events.css';
+import MenuBar from '../MenuBar/MenuBar.jsx';
 
-
-class Events extends React.Component {
+class Events extends Component {
   render() {
     return (
       <div>
+        <MenuBar />
         <h1>Events</h1>
 
 
@@ -65,7 +65,7 @@ class Events extends React.Component {
 
         </article>
       </div>
-    )
+    );
   }
 }
-export default Events
+export default Events;

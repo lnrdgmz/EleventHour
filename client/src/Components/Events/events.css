@@ -27,10 +27,6 @@ p {
 
 /*  styles for background color, etc; not necessary for this thing to work  */
 
-body {
-  padding: 1em;
-}
-
 h1 {
   font-size: 3rem;
   font-weight: 800;
