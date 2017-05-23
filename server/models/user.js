@@ -9,7 +9,10 @@ let User = db.Model.extend({
   tableName: 'user',
   hasTimestamps: true,
   events: function() {
-    return this.belongsToMany(Event).through(Attendee);
+    return this.belongsToMany(Event).through(Attendee).withPivot(['flag']);
+  },
+  createdEvents: function () {
+    return this.belongsToMany(Event).through(Attendee).query({ where: { flag: 'creator' } });
   },
   userRatings: function () {
     return this.hasMany(UserRating);
