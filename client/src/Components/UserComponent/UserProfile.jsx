@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MenuTabs from './MenuTabs.jsx';
+import MenuTabs from '../MenuComponent/MenuTabs.jsx';
 import { Grid, Image, Header, Segment } from 'semantic-ui-react';
+import style from './users.css'
+
+
+
 class UserProfile extends Component {
 
   render() {
