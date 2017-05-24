@@ -1,6 +1,7 @@
 const db = require('../config/config');
 const Event = require('../models/event');
 const Attendee = require('../models/attendee.js');
+const eventUtils = require('../utils/eventUtils');
 
 module.exports = {
 
@@ -106,8 +107,14 @@ module.exports = {
         }
         return model.save({ flag }, { patch: true });
       })
-    .then((model) => {
-      res.send(model);
-    });
+      .then((updatedAtt) => {
+        // Check if approved attendees fills up the event
+        // if so, switch `full` on the event to true
+        eventUtils.updateEventFull(updatedAtt.get('event_id'));
+        return updatedAtt;
+      })
+      .then((model) => {
+        res.send(model);
+      });
   },
 };
