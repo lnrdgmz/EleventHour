@@ -27,7 +27,7 @@ const callbackHandler = (req, res) => {
   });
   userObj.fetch({ withRelated: 'events' })
     .then((model) => {
-      const maxAge = moment().add(7, 'days');
+      const maxAge = (moment.duration(7, 'days')).asMilliseconds();
       if (model) {
         req.session.user_id = model.get('id');
         req.session.cookie.maxAge = maxAge;
