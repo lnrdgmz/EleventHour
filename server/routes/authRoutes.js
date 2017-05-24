@@ -6,7 +6,8 @@ const User = require('../models/user');
 
 /**
  * Check if a user is logged in by making a GET request to
- * /auth/loggedIn. Returns 'true' or 'false' in the body.
+ * /auth/loggedIn. If logged in, returns a JSON object with user's
+ * data and events. If not logged it, responds with 'false'.
  *
  * Users can login via /auth/google or /auth/facebook
  *
@@ -27,14 +28,10 @@ const callbackHandler = (req, res) => {
   });
   userObj.fetch({ withRelated: 'events' })
     .then((model) => {
-      const maxAge = moment().add(7, 'days');
+      const maxAge = (moment.duration(7, 'days')).asMilliseconds();
       if (model) {
         req.session.user_id = model.get('id');
         req.session.cookie.maxAge = maxAge;
-        /**
-         * TODO Add an events cookie. Depends on attendee table being populated.
-         * Events cookie is an object of { event_id, user_role }
-         */
         const eventsCookieValue = [];
         model.related('events').forEach((event) => {
           const pivot = event.parse(event.pivot.attributes);
@@ -43,7 +40,7 @@ const callbackHandler = (req, res) => {
         res.cookie('userId', model.get('id'), { maxAge });
         res.cookie('displayName', model.get('display_name'), { maxAge });
         res.cookie('events', eventsCookieValue, { maxAge });
-        res.send(model);
+        res.redirect(req.session.redirectTo || '/');
       } else {
         userObj.set({ display_name: req.user.displayName }).save()
           .then((model) => {
@@ -51,14 +48,20 @@ const callbackHandler = (req, res) => {
             req.session.cookie.maxAge = maxAge;
             res.cookie('userId', model.get('id'), { maxAge });
             res.cookie('displayName', model.get('display_name'), { maxAge });
-            res.send(`Added ${JSON.stringify(model)} to the database`);
+            // res.send(`Added ${JSON.stringify(model)} to the database`);
+            res.redirect(req.session.redirectTo || '/');
           });
       }
     });
 };
 
-authRouter.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
-authRouter.get('/auth/facebook', passport.authenticate('facebook'))
+const recordReferer = (req, res, next) => {
+  req.session.redirectTo = req.get('Referer');
+  next();
+};
+
+authRouter.get('/auth/google', recordReferer, passport.authenticate('google', { scope: ['profile'] }));
+authRouter.get('/auth/facebook', recordReferer, passport.authenticate('facebook'));
 
 
 authRouter.get('/auth/google/callback',
@@ -71,7 +74,10 @@ authRouter.get('/auth/facebook/callback',
 
 authRouter.get('/auth/loggedIn', (req, res) => {
   if (req.isAuthenticated()) {
-    res.send('true');
+    new User({ id: req.session.user_id }).fetch({ withRelated: 'events' })
+      .then((model) => {
+        res.send(model);
+      });
   } else {
     res.send('false');
   }
@@ -79,7 +85,7 @@ authRouter.get('/auth/loggedIn', (req, res) => {
 
 authRouter.get('/auth/logout', (req, res) => {
   req.session.destroy((err) => {
-    res.status(500).send();
+    res.status(500).send(err);
   });
   console.log(req.cookies);
   Object.keys(req.cookies).forEach(cookie => res.clearCookie(cookie));
