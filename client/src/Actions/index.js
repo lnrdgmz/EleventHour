@@ -1,5 +1,4 @@
 import moment from 'moment';
-
 let nextEventId = 0;
 
 export const addEvent = eventInfo => ({
