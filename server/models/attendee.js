@@ -7,11 +7,11 @@ let Attendee = db.Model.extend({
   tableName: 'attendee',
   hasTimestamps: true,
   users: function () {
-    return this.belongsToMany(User);
+    return this.belongsTo('User');
   },
   events: function () {
-    return this.belongsToMany(Event);
+    return this.belongsTo(Event);
   },
 });
 
-module.exports = Attendee;
+module.exports = db.model('Attendee', Attendee);
