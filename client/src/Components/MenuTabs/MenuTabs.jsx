@@ -5,8 +5,20 @@ import { Grid, Menu, Segment, Divider, Button, Icon } from 'semantic-ui-react';
 class MenuTabs extends Component {
   state = {
     activeItem: 'bio',
+    currentUser: [],
   }
-
+  componentDidMount() {
+    fetch('/auth/loggedIn', { credentials: 'include' })
+        .then((res) => {
+          res.json()
+            .then((data) => {
+              this.setState({
+                currentUser: data,
+              });
+            });
+        });
+  }
+  
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
@@ -37,9 +49,8 @@ class MenuTabs extends Component {
             </Menu>
           </Grid.Column>
           <Grid.Column stretched width={12} className="userText">
-            <Segment id="userBio" textAlign="center" size="massive" color="orange" inverted vertical padded>
-              <p>I'm the top basketball player in the United States, and am being pursued by the top college basketball programs in the nation.</p>
-              <p>My father, Jake, is a convicted felon serving time at Attica Correctional Facility for accidentally killing my mother, Martha, twelve years ago.</p>
+            <Segment id="userBio" textAlign="center" size="massive" color="orange" inverted vertical>
+              { this.state.currentUser.bio }
             </Segment>
           </Grid.Column>
         </Grid>
