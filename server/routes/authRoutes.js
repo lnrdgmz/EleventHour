@@ -42,7 +42,10 @@ const callbackHandler = (req, res) => {
         res.cookie('events', eventsCookieValue, { maxAge });
         res.redirect(req.session.redirectTo || '/');
       } else {
-        userObj.set({ display_name: req.user.displayName }).save()
+        userObj.set({
+          display_name: req.user.displayName,
+          email: req.user.emails ? req.user.emails[0].value : null,
+        }).save()
           .then((model) => {
             req.session.user_id = model.get('id');
             req.session.cookie.maxAge = maxAge;
@@ -60,7 +63,7 @@ const recordReferer = (req, res, next) => {
   next();
 };
 
-authRouter.get('/auth/google', recordReferer, passport.authenticate('google', { scope: ['profile'] }));
+authRouter.get('/auth/google', recordReferer, passport.authenticate('google', { scope: ['profile', 'email'] }));
 authRouter.get('/auth/facebook', recordReferer, passport.authenticate('facebook'));
 
 
