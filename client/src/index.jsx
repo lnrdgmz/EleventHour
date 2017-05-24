@@ -12,6 +12,7 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 // Import Local Components
 import App from './Components/App/App.jsx';
 import Events from './Components/Events/Events.jsx';
+import CreateEvent from './Components/CreateEvents/createEvent.jsx';
 import UserProfile from './Components/UserProfile/UserProfile.jsx';
 import rootReducer from './Reducers/rootReducer.js';
 import createHistory from 'history/createBrowserHistory';
@@ -36,6 +37,7 @@ render(
       <Switch>
         <Route path="/users" component={UserProfile} />
         <Route path="/events" component={Events} />
+        <Route path="/createEvent" component={CreateEvent} />
         <Route path={HashRouter.basename} component={App} />
       </Switch>
     </HashRouter>
