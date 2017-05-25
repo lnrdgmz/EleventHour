@@ -3,10 +3,11 @@ import React from 'react';
 
 
  function Event(props){
-   return(
+   return (
      <section>
-       <h3>{props.title}</h3>
-       <p>{props.description}</p>
+      
+       <h3> {props.title} </h3>
+       <p> {props.description} </p>
      </section>
 
    )
