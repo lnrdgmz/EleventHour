@@ -4,7 +4,6 @@ import css from './events.css';
 import Event from '.././Event/event.jsx';
 import Menu from '.././MenuBar/MenuBar.jsx';
 import {Link} from 'react-router-dom';
-import Details from '.././Details/Details.jsx';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
  class Events extends React.Component {
@@ -25,9 +24,7 @@ import { Button, Header, Icon, Modal } from 'semantic-ui-react';
        this.setState({events : parsedData});
      })
    }
-  toggleModal = () => {
-    !this.state.toggle ? this.setState({toggle :true }) : this.setState({toggle: false});
-  }
+
    
 
    render() {
