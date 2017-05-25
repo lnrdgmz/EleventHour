@@ -26,9 +26,9 @@ class CreateEvent extends Component {
 // Action <Creator></Creator>
   handleCreateClick = (e) => {
     e.preventDefault();
-    delete this.state.dateFlag;
     console.log(this.state);
     this.props.createEvent(this.state);
+    this.setState({ date: '', title: '', time: '', skill_level: '', needs: '', description: '', dateFlag: false });
   }
 
   handleChange(event) {
@@ -45,10 +45,11 @@ class CreateEvent extends Component {
 
 
   render = () => {
+
     return (
       <div className="wrapper">
         <h1>Create a new Event</h1>
-        <Form className="ui form" warning={this.state.dateFlag || this.state.timeFlag}>
+        <Form className="ui form" warning={this.state.dateFlag}>
           <Form.Field required>
             <label > Title</label>
             <Input name="title" type="text" placeholder="Name your event" required value={this.state.title} onChange={this.handleChange} />
@@ -56,14 +57,14 @@ class CreateEvent extends Component {
           <div className="equal width fields">
             <Form.Field error={this.state.dateFlag} required>
               <label htmlFor> Date</label>
-              <Input name="date" type="date" required onChange={this.handleChange} />
+              <Input name="date" type="date" required value={this.state.date} onChange={this.handleChange} />
             </Form.Field>
             <Form.Field required >
               <label>Time</label>
-              <Input name="time" type="time" required onChange={this.handleChange} />
+              <Input name="time" type="time" required value={this.state.time} onChange={this.handleChange} />
             </Form.Field>
           </div>
-          <Form.Field name="needs" className="six wide" label="Spots to be filled" control="select" required onChange={this.handleChange}>
+          <Form.Field name="needs" className="six wide" label="Spots to be filled" value={this.state.needs} control="select" required onChange={this.handleChange}>
             <option value=""> Choose a number of spots...</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -71,7 +72,7 @@ class CreateEvent extends Component {
             <option value="4">4</option>
             <option value="5">5</option>
           </Form.Field>
-          <Form.Field name="skill_level" className="six wide" label="Required ability" control="select" required onChange={this.handleChange}>
+          <Form.Field name="skill_level" className="six wide" label="Required ability" value={this.state.skill_level} control="select" required onChange={this.handleChange}>
             <option value=""> Choose a skill rating...</option>
             <option value="1">You merely need a body</option>
             <option value="2">That body needs to be able to breath</option>
@@ -81,7 +82,7 @@ class CreateEvent extends Component {
           </Form.Field>
           <Form.Field >
               <label>Event Description</label>
-              <textarea name="description" type="textarea" placeholder="Elaborate on the event.." rows="5" onChange={this.handleChange} />
+              <textarea name="description" type="textarea" placeholder="Elaborate on the event.." value={this.state.description} rows="5" onChange={this.handleChange} />
             </Form.Field>
           <div className="ui warning message">
             <div className="content">
@@ -93,7 +94,7 @@ class CreateEvent extends Component {
           </div>
           <button
             type="submit"
-            disabled={this.state.dateFlag || this.state.timeFlag || !this.state.date || !this.state.title || !this.state.time || !this.state.skill_level || !this.state.needs}
+            disabled={this.state.dateFlag || !this.state.date || !this.state.title || !this.state.time || !this.state.skill_level || !this.state.needs}
             className="ui button" 
             onClick={this.handleCreateClick}
           > Submit </button>
