@@ -2,7 +2,7 @@ let nextEventId = 0;
 
 export const addEvent = eventInfo => ({
   type: 'ADD_EVENT',
-  id: nextEventId + 1,
+  id: nextEventId += 1,
   eventInfo,
 });
 
@@ -18,7 +18,9 @@ export const setVisibilityFilter = filter => ({
 });
 
 export const createEvent = (event) => {
-  return (dispatch) => {
+  console.log('CREATE EVENT ACTION CREATOR CALLED');
+  return function (dispatch) {
+    console.log('DISPATCHED');
     fetch('/events', {
       method: 'POST',
       body: event,
