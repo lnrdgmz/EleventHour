@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 let nextEventId = 0;
 
 export const addEvent = eventInfo => ({
@@ -17,15 +19,20 @@ export const setVisibilityFilter = filter => ({
   filter,
 });
 
-export const createEvent = (event) => {
+export function createEvent(event) {
   console.log('CREATE EVENT ACTION CREATOR CALLED');
+  event.date_time = moment(event.date + ':' + event.time);
+  delete event.date;
+  delete event.time;
+  console.log(event)
   return function (dispatch) {
     console.log('DISPATCHED');
     fetch('/events', {
       method: 'POST',
-      body: event,
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(event),
     })
     .then(resp => dispatch(addEvent(resp.data)))
     .catch(err => console.error(err));
   };
-};
+}

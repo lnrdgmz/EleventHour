@@ -13,8 +13,9 @@ class CreateEvent extends Component {
       date: '',
       title: '',
       time: '',
-      skill: '',
-      spots: '',
+      skill_level: '',
+      needs: '',
+      description: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,7 +25,7 @@ class CreateEvent extends Component {
   handleCreateClick = (e) => {
     e.preventDefault();
     console.log(this.state);
-    createEvent(this.state);
+    this.props.createEvent(this.state);
   }
 
   handleChange(event) {
@@ -52,14 +53,14 @@ class CreateEvent extends Component {
               <Input name="time" type="time" required onChange={this.handleChange} />
             </Form.Field>
           </div>
-          <Form.Field name="spots" className="six wide" label="Spots to be filled" control="select" required onChange={this.handleChange}>
+          <Form.Field name="needs" className="six wide" label="Spots to be filled" control="select" required onChange={this.handleChange}>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
           </Form.Field>
-          <Form.Field name="skill" className="six wide" label="Required ability" control="select" required onChange={this.handleChange}>
+          <Form.Field name="skill_level" className="six wide" label="Required ability" control="select" required onChange={this.handleChange}>
             <option value="1">You merely need a body</option>
             <option value="2">That body needs to be able to breath</option>
             <option value="3">That body is capable of playing the game</option>
