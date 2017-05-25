@@ -17,6 +17,7 @@ import CreateEvent from './Components/CreateEvents/createEvent.jsx';
 import UserProfile from './Components/UserProfile/UserProfile.jsx';
 import rootReducer from './Reducers/rootReducer.js';
 import createHistory from 'history/createBrowserHistory';
+import Details from './Components/Details/Details.jsx';
 
 const history = createHistory();
 const reducers = combineReducers({
