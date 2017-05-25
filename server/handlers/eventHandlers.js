@@ -9,6 +9,7 @@ module.exports = {
   createEvent: (req, res) => {
     const eventObj = req.body;
     if (!['title', 'description', 'date_time'].every(k => k in eventObj)) {
+      console.log('Incomplete form');
       res.status(400).send();
     } else {
       // Assumes the category field is an integer value referencing a category ID.

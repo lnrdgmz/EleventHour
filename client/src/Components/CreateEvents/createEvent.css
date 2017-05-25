@@ -1,0 +1,24 @@
+h1 {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.wrapper {
+  width: 500px;
+  height: 900px;
+  margin: 0 auto;
+}
+
+.form {
+  width: 90%;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
+  margin-left: none;
+}
+
+.time {
+  margin-left: 10px;
+}
