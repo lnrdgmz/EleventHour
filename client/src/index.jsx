@@ -15,6 +15,7 @@ import Events from './Components/Events/Events.jsx';
 import UserProfile from './Components/UserProfile/UserProfile.jsx';
 import rootReducer from './Reducers/rootReducer.js';
 import createHistory from 'history/createBrowserHistory';
+import Details from './Components/Details/Details.jsx';
 
 const history = createHistory();
 // Build the middleware for intercepting and dispatching navigation actions
@@ -36,6 +37,7 @@ render(
       <Switch>
         <Route path="/users" component={UserProfile} />
         <Route path="/events" component={Events} />
+        <Route path="/details" component={Details} />
         <Route path={HashRouter.basename} component={App} />
       </Switch>
     </HashRouter>

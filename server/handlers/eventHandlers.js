@@ -37,7 +37,7 @@ module.exports = {
     * satisfying that search.
     */
     new Event().fetchPage({
-      pageSize: 5,
+      pageSize: 15,
       page: req.query.page || 1,
     })
       .then((models) => {
