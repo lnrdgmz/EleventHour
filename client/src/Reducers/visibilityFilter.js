@@ -1,3 +1,7 @@
+const initialState = { 
+  visibilityFilter : 'SHOW_ALL'
+}
+
 const visibilityFilter = (state = 'SHOW_GROUP_1', action) => {
   switch (action.type) {
     case 'SET_VISIBILITY_FILTER':

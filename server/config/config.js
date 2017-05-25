@@ -49,37 +49,35 @@ db.knex.schema.hasTable('user').then((exists) => {
 db.knex.schema.hasTable('event').then( exists => {
     if (!exists) {
         db.knex.schema.createTable('event', event => {
-            event.increments('id').primary();
-            event.string('title').notNullable();
-            event.string('description').notNullable();
-            event.date('date_time', 100).notNullable();
-            event.boolean('full');
-            event.integer('needs');
-            event.string('category').references('category.id');
-            event.string('img_url', 250);
-            event.string('location');
-            event.integer('skill_level');
-            event.string('habitat', 60);
-            event.timestamps();
-        }).then( table => {
-            console.log('Created new "event" table', table);
+          event.increments('id').primary();
+          event.string('title').notNullable();
+          event.string('description').notNullable();
+          event.date('date_time', 100).notNullable();
+          event.boolean('full');
+          event.integer('needs');
+          event.string('category').references('category.id');
+          event.string('img_url', 250);
+          event.string('location');
+          event.integer('skill_level');
+          event.string('habitat', 60);
+          event.timestamps();
         })
+        .then(table => console.log('Created new "event" table', table))
         .catch(err => console.log('Error creating event table.', err));
     }
 });
 
-db.knex.schema.hasTable('attendee').then( exists => {
-    if (!exists) {
-        db.knex.schema.createTable('attendee', attendee => {
-            attendee.increments('id').primary();
-            attendee.integer('event_id').references('event.id');
-            attendee.integer('user_id').references('user.id');
-            attendee.string('flag', 60).notNullable();
-            attendee.timestamps();
-        }).then( tables => {
-            console.log('Created new "attendee" table', table);
-        })
-    }
+db.knex.schema.hasTable('attendee').then((exists) => {
+  if (!exists) {
+    db.knex.schema.createTable('attendee', (attendee) => {
+      attendee.increments('id').primary();
+      attendee.integer('event_id').references('event.id');
+      attendee.integer('user_id').references('user.id');
+      attendee.string('flag', 60).notNullable();
+      attendee.timestamps();
+    })
+    .then(table => console.log('Created new "attendee" table', table));
+  }
 });
 
 db.knex.schema.hasTable('user_rating').then( exists => {
