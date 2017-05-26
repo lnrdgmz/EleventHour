@@ -27,13 +27,36 @@ class SurveyContainer extends React.Component {
     });
   }
   handleSubmit(event) {
-    return event;
+    event.preventDefault();
+    const surveyAnswers = Object.assign({}, this.state.answers);
+    console.log(surveyAnswers);
+    fetch('/users', {
+      method: 'PUT',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(surveyAnswers),
+    })
+    .then((resp) => {
+      if (resp.status !== 200) {
+        console.error('Profile not updated');
+        return;
+      }
+      return resp.json();
+    })
+    .then((body) => {
+      if (!body) {
+        return;
+      }
+      console.log('Profile updated!');
+      console.log(body);
+    });
   }
   render() {
     return (
       <Survey
         handleInputChange={this.handleInputChange}
         handleSubmit={this.handleSubmit}
+        answers={this.state.answers}
       />
     );
   }
