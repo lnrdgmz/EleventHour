@@ -10,6 +10,7 @@ const Survey = props => (
         name="display_name"
         onChange={props.handleInputChange}
         type="text"
+        value={props.answers.display_name}
       />
     </label>
     <label htmlFor="phone-number-input">
@@ -19,6 +20,7 @@ const Survey = props => (
         name="contact_number"
         onChange={props.handleInputChange}
         type="tel"
+        value={props.answers.contact_number}
       />
     </label>
     <label htmlFor="email-input">
@@ -28,6 +30,7 @@ const Survey = props => (
         name="email"
         onChange={props.handleInputChange}
         type="email"
+        value={props.answers.email}
       />
     </label>
     <label htmlFor="bio-input">
@@ -37,6 +40,7 @@ const Survey = props => (
         name="bio"
         onChange={props.handleInputChange}
         type="text"
+        value={props.answers.bio}
       />
     </label>
     <label htmlFor="age-input">
@@ -48,6 +52,7 @@ const Survey = props => (
         type="number"
         min="18"
         max="120"
+        value={props.answers.age}
       />
     </label>
     <button type="submit" ></button>
@@ -57,6 +62,7 @@ const Survey = props => (
 Survey.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  answers: PropTypes.object.isRequired,
 };
 
 export default Survey;

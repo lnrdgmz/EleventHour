@@ -6,7 +6,7 @@ const emptyFormAnswers = {
   contact_number: '',
   email: '',
   bio: '',
-  age: null,
+  age: undefined,
 };
 
 class SurveyContainer extends React.Component {
@@ -46,10 +46,12 @@ class SurveyContainer extends React.Component {
       return resp.json();
     })
     .then((body) => {
+      this.setState({ 
+        answers: emptyFormAnswers,
+      });
       if (!body) {
         return;
       }
-      this.setState({ answers: emptyFormAnswers });
       console.log('Profile updated!');
       console.log(body);
     });
