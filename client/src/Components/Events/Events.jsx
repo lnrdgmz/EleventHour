@@ -12,8 +12,9 @@ import SearchBar from '.././SearchBar/searchBar.jsx';
      super(props);
      this.state={
        events: [],
+       filteredEvents: [],
        toggle : false,
-       filterByTitle : ""
+       filterByTitle :""
      };
      this.onFilterEvents = this.onFilterEvents.bind(this);
    }
@@ -31,27 +32,35 @@ import SearchBar from '.././SearchBar/searchBar.jsx';
      console.log(event.target.value);
      this.setState({filterByTitle : event.target.value})
    }
-  //  showFilteredData(){
-     
-    //}
-   
-//  
-   render() {
-     return (
 
+  showEvent(){
+    let searchResults = [];
+    this.state.events.forEach((event)=>{
+        if(event.title.indexOf(this.state.filterByTitle) !== -1){
+      searchResults.push(event);
+    }
+    })
+  
+    this.setState({events : searchResults});
+  }
+
+   render() {
+     let searchResults = [];
+     const eventsToShow = this.state.events.filter(ev => ev.title.indexOf(this.state.filterByTitle) > -1)
+     return (
        <div>
-        <Menu />
+           <Menu />
          <h1> Events </h1>
          < SearchBar 
-         filterBy={this.state.filterByTitle}
-         onChange={this.onFilterEvents}
-        onFilterEvents={this.onFilterEvents}
+           filterBy={this.state.filterByTitle}
+           onChange={this.onFilterEvents}
+           onFilterEvents={this.onFilterEvents}
          /> <br />
+         
          <article>
-           {this.state.events.map((eventObject)=> (
-            <div>
-               <Event title={"Title:" + eventObject.title} description={eventObject.description} />
-                <Modal trigger={<Button>Basic Modal</Button>} size='small'>
+           {  eventsToShow.map((eventObject)=> (     
+              <div>
+               <Modal trigger={<button className="btn"><Event title={"Title:" + eventObject.title} description={eventObject.description} /></button>}>
                 <Header content='Event Description' />
                 <Modal.Content>
                 <p>{eventObject.title}</p>
@@ -60,20 +69,14 @@ import SearchBar from '.././SearchBar/searchBar.jsx';
                 <p>{eventObject.location}</p>
                 <p>{eventObject.skill_level}</p>
                </Modal.Content>
-
                 </Modal>
-            </div>
-
-         
-           ))}
-
-           <div>
-           
-           </div>
-          
-         </article>
+            </div> ))}
+        
+           </article>
        </div>
-     )
+     )    
    }
  }
  export default Events;
+
+ 
