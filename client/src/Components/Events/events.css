@@ -24,7 +24,11 @@ p {
   color: white;
 }
 
-
+.btn {
+  background: transparent;
+  border: none;
+  width: 100%;
+}
 /*  styles for background color, etc; not necessary for this thing to work  */
 
 body {
