@@ -1,17 +1,19 @@
 import React from 'react';
 import Survey from './SurveyComponent.jsx';
 
+const emptyFormAnswers = {
+  display_name: '',
+  contact_number: '',
+  email: '',
+  bio: '',
+  age: null,
+};
+
 class SurveyContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      answers: {
-        display_name: '',
-        contact_number: '',
-        email: '',
-        bio: '',
-        age: null,
-      },
+      answers: emptyFormAnswers,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,6 +49,7 @@ class SurveyContainer extends React.Component {
       if (!body) {
         return;
       }
+      this.setState({ answers: emptyFormAnswers });
       console.log('Profile updated!');
       console.log(body);
     });
