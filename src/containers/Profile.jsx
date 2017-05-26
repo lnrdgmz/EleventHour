@@ -52,8 +52,8 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = (jdknf) => {
-  const user = jdknf.user;
+const mapStateToProps = (state) => {
+  const user = state.user;
   return {
     user,
   };
