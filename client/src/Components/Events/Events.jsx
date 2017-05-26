@@ -17,7 +17,7 @@ import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
 
    componentDidMount(){
-     fetch('/events?page=3').then((response) => {
+     fetch('/events?page=5').then((response) => {
        return response.json()
      }).then((parsedData)=> {
        
@@ -40,7 +40,7 @@ import { Button, Header, Icon, Modal } from 'semantic-ui-react';
                 <Modal trigger={<Button>Basic Modal</Button>} basic size='small'>
                 <Header content='Event Description' />
                 <Modal.Content>
-                <p>{eventObject.title}</p>
+                <p> {eventObject.title}</p>
                 <p>{eventObject.description}</p>
                 <p>{eventObject.needs}</p>
                 <p>{eventObject.location}</p>
