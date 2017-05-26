@@ -1,3 +1,5 @@
+import { changeUser } from '../actions/actions.js';
+
 const initalState = {
   userId: 42691,
   username: 'Guest',
@@ -10,9 +12,11 @@ const initalState = {
 };
 
 const user = (state = initalState, action) => {
+  console.log(action);
   switch (action.type) {
     case 'LOGIN_USER':
-      return action.payload;
+    console.log('LOGIN REDUCER CALLED!');
+      return Object.assign({}, state, action.payload);
     default:
       return state;
   }

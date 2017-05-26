@@ -14,7 +14,7 @@ const store = createStore(
   reducers,
   applyMiddleware(thunk),
 );
-
+console.log(store.getState())
 render(
   <Provider store={store}>
     <Routes />
