@@ -4,14 +4,14 @@ import { Route, Switch } from 'react-router';
 import App from '.././containers/App';
 // import Splash from '.././components/Splash';
 import Profile from '.././containers/Profile';
-import Main from '.././containers/Main';
+import Events from '.././containers/Events';
 
 const Routes = () => (
-  <HashRouter basename="/" component={Main}>
+  <HashRouter basename="/" component={App}>
     <Switch>
       <Route path="/users" component={Profile} />
-      <Route path="/home" component={App} />
-      <Route path="/" component={Main} />
+      <Route path="/home" component={Events} />
+      <Route path="/" component={App} />
     </Switch>
   </HashRouter>
 );
