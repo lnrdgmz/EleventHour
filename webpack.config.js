@@ -1,15 +1,18 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './client/src/index.jsx',
+    './src/index.jsx',
   ],
   output: {
-    path: path.join(__dirname, '/client/dist'),
+    path: path.join(__dirname, 'public/dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: 'public/',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -17,6 +20,14 @@ module.exports = {
   ],
   module: {
     loaders: [
+      // Images
+      {
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000000,
+        },
+      },
     // js
       {
         exclude: '/node_modules/',
@@ -31,8 +42,14 @@ module.exports = {
       },
     // CSS
       {
-        test: /\.css$/,
-        loaders: ['style-loader', 'css-loader'],
+        test: /\.scss$/,
+        use: [{
+          loader: 'style-loader',
+        }, {
+          loader: 'css-loader',
+        }, {
+          loader: 'sass-loader',
+        }],
       },
     ],
   },

@@ -5,8 +5,7 @@
 node_modules/
 dist/
 yarn.lock
-public/bundle.js
-public/bundle.js.map
+public/bundle/
 
 # Secret stuff
 .env

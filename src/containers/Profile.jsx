@@ -1,54 +1,47 @@
 // Import React Components
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 // Import Semantic-UI and CSS Components
 import { Grid, Image, Header, Segment, Container } from 'semantic-ui-react';
 
 // Import Local Components
 import MenuBar from '../components/MenuBar.jsx';
+import { loginUser } from '../actions/actions.js';
 import '../../public/styles/profile.scss';
-import fetch from 'isomorphic-fetch';
+
+const loadUser = () => {
+  this.props.loginUser();
+};
 
 class Profile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: [],
-    };
+  static propTypes = {
+    user: PropTypes.object,
   }
-  componentDidMount() {
-    fetch('auth/loggedIn', { credentials: 'include' })
-      .then((res) => {
-        console.log()
-        return res.json();
-      })
-      .then((data) => {
-        if(data === false) {
-          window.location = '/';
-        }
-        this.setState({
-          currentUser: data,
-        });
-      });
+  componentWillReceiveProps() {
+    loadUser();
   }
+
   render() {
+    const { user } = this.props;
     return (
       <div>
         <MenuBar />
         <Container width={16}>
           <Grid stackable>
             <Grid.Column width={4}>
-              <Image shape="rounded" src={this.state.currentUser.img_url} />
+              <Image shape="rounded" src={user.img_url} />
             </Grid.Column>
             <Grid.Column width={12} className="userInfo" verticalAlign="middle" textAlign="center">
               <Segment vertical>
                 <Header as="h1" color="teal">
-                  {this.state.currentUser.display_name}
+                  {user.display_name}
                 </Header>
               </Segment>
               <Segment vertical>
                 <Header as="h2" color="teal">
-                  {this.state.currentUser.age}
+                  {user.age}
                 </Header>
               </Segment>
             </Grid.Column>
@@ -59,4 +52,13 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  const user = state.user;
+  return {
+    user,
+  };
+};
+
+export default connect(mapStateToProps, {
+  loginUser,
+})(Profile);
