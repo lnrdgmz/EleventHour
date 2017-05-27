@@ -1,25 +1,33 @@
 // CSS for Login.jsx
 
-.page-container {
+// Variables
+
+$blue: #004FFF;
+$orange: #FC8000;
+
+body {
+  overflow: hidden;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page-container {
+  width: 100%;
+  height: 100%;
 }
 
 .fullscreen-video {
  position: fixed;
- top: 50%;
- left: 50%;
+ top: 50%; left: 50%;
+ z-index: -100;
  min-width: 100%;
  min-height: 100%;
  width: auto;
  height: auto;
- z-index: -100;
- -ms-transform: translateX(-50%) translateY(-50%);
- -moz-transform: translateX(-50%) translateY(-50%);
- -webkit-transform: translateX(-50%) translateY(-50%);
- transform: translateX(-50%) translateY(-50%);
- background: rgba(0, 0, 0, 0);
- background-size: cover; 
+ transform: translate(-50%, -50%);
+ padding: 0 !important;
 }
 
 .ui.fluid.container.page {
@@ -30,19 +38,23 @@
 }
 
 .ui.grid {
-  font-family: 'Graduate';
+  font-family: 'Viga';
+  display: flex;
+  align-items: center;
 }
 
 .ui.header {
   font-size: 120px !important;
-  font-family: 'Graduate';
-  color: #0331ff;
+  font-family: 'Viga';
+  color: $blue;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
+// CSS for the Login Component
 
 .ui.header .sub.header {
+  font-family: 'Viga';
   font-size: 25px;
-  color: #03ffd1;
+  color: $orange;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 

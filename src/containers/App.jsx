@@ -14,7 +14,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        <MenuBar />
         <Login />
       </div>
     );

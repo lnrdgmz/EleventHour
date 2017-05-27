@@ -1,3 +1,14 @@
-.ui.teal.header {
-  font-family: 'Source Sans Pro' !important;
+// CSS for the Profile Container
+
+$fullWidth: 100vw;
+$fullHeight: 100vh;
+
+body {
+  width: $fullWidth;
+  height: $fullHeight;
+}
+
+.pageContainer {
+  width: $fullWidth;
+  height: $fullHeight;
 }
