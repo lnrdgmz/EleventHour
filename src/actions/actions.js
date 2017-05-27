@@ -33,3 +33,9 @@ export const loginUser = () => {
   };
 };
 
+export const updateUserInfo = (user) => {
+  return {
+    type: 'UPDATE_USER',
+    user,
+  };
+};
