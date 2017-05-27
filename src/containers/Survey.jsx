@@ -1,22 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { pick } from 'lodash';
+
+import { updateUserInfo } from '../actions/actions';
 
 import SurveyComponent from '../components/Survey';
-
-const emptyFormAnswers = {
-  display_name: '',
-  contact_number: '',
-  email: '',
-  bio: '',
-  age: undefined,
-};
 
 class Survey extends React.Component {
   constructor(props) {
     console.log(props)
     super(props);
     this.state = {
-      answers: emptyFormAnswers,
+      answers: {
+        display_name: props.display_name || '',
+        contact_number: props.contact_number || '',
+        email: props.email || '',
+        bio: props.bio || '',
+        age: props.age || undefined,
+      },
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,34 +50,34 @@ class Survey extends React.Component {
       return resp.json();
     })
     .then((body) => {
-      this.setState({ 
-        answers: emptyFormAnswers,
-      });
       if (!body) {
         return;
       }
-      console.log('Profile updated!');
-      console.log(body);
+      this.props.updateUser(body);
     });
   }
   render() {
     return (
-      <div>
-        hello
       <SurveyComponent
         handleInputChange={this.handleInputChange}
         handleSubmit={this.handleSubmit}
         answers={this.state.answers}
       />
-      </div>
     );
   }
 }
 
 const mapStateToProps = state => state.user;
 
-
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => {
+      dispatch(updateUserInfo(user));
+    },
+  };
+};
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(Survey);
