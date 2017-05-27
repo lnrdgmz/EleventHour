@@ -6,7 +6,7 @@ import React from 'react';
 import { Grid, Container, Header, Reveal, Image, Divider } from 'semantic-ui-react';
 
 // Import Local Dependencies
-import '../../public/Styles/login.scss';
+import '../../public/styles/login.scss';
 
 class Login extends React.Component {
   constructor(props) {
