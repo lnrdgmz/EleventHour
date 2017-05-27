@@ -12,8 +12,8 @@ const Routes = () => (
     <Switch>
       <Route path="/users" component={Profile} />
       <Route path="/home" component={Events} />
-      <Route path="/" component={App} />
       <Route path="/survey" component={Survey} />
+      <Route path="/" component={App} />
     </Switch>
   </HashRouter>
 );
