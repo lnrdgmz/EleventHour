@@ -1,5 +1,3 @@
-import { changeUser } from '../actions/actions.js';
-
 const initalState = {
   userId: 42691,
   username: 'Guest',
@@ -12,7 +10,6 @@ const initalState = {
 };
 
 const user = (state = initalState, action) => {
-  console.log(action);
   switch (action.type) {
     case 'LOGIN_USER':
       console.log('LOGIN REDUCER CALLED!');

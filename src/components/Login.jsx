@@ -37,8 +37,8 @@ class Login extends React.Component {
         newHeight = minH;
         newWidth = Math.ceil(newHeight * videoRatio);
       }
-      video.style.width = newWidth + 'px';
-      video.style.height = newHeight + 'px';
+      video.style.width = newWidth.concat('px');
+      video.style.height = newHeight.concat('px');
     };
 
     video.addEventListener('loadedmetadata', setVideoDimensions, false);
@@ -48,14 +48,14 @@ class Login extends React.Component {
     return (
       <div className="page-container">
         <Grid width={16} stretched>
-          <video loop muted autoPlay className="fullscreen-video">
+          <video loop muted autoPlay className="fullscreen-video" width="300" height="200" >
             <source src="https://i.imgur.com/ee9tRfR.mp4" type="video/mp4" />
           </video>
         </Grid>
         <Grid width={16} stretched>
           {/* This Cinemagraph was submitted to reddit.com/r/cinemagraphs by user, rbojunglist */}
-          <Grid container columns={1} centered>
-            <Grid.Column width={16} verticalAlign="middle">
+          <Grid columns={1} centered verticalAlign="middle">
+            <Grid.Column width={16}>
               <Header size="huge" textAlign="center">
                 <Header.Content className="header">
                   LFM
@@ -68,7 +68,6 @@ class Login extends React.Component {
                 <a href="/auth/facebook" className="facebook-login-button">
                   <Image verticalAlign="middle" shape="rounded" src="https://www.transparenttextures.com/patterns/asfalt-light.png" centered size="small" className="facebook-login-button" />
                 </a>
-                <Divider vertical>Or</Divider>
                 <a href="/auth/google" className="google-login-button">
                   <Image verticalAlign="middle" src="https://www.transparenttextures.com/patterns/asfalt-light.png" shape="rounded" centered size="small" className="google-login-button" />
                 </a>

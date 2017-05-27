@@ -7,7 +7,7 @@ export const getEvents = ({ data }) => {
 };
 
 export const changeUser = (user) => {
-  console.log('Called');
+  console.log('User:', user);
   return {
     type: 'LOGIN_USER',
     payload: user,
