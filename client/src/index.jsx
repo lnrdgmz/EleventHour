@@ -18,6 +18,7 @@ import UserProfile from './Components/UserProfile/UserProfile.jsx';
 import rootReducer from './Reducers/rootReducer.js';
 import createHistory from 'history/createBrowserHistory';
 import Details from './Components/Details/Details.jsx';
+import SurveyContainer from './Components/Survey/SurveyContainer.jsx';
 
 const history = createHistory();
 const reducers = combineReducers({
@@ -46,6 +47,7 @@ render(
         <Route path="/users" component={UserProfile} />
         <Route path="/events" component={Events} />
         <Route path="/createEvent" component={CreateEvent} />
+        <Route path="/survey" component={SurveyContainer} />
         <Route path={HashRouter.basename} component={App} />
       </Switch>
     </HashRouter>

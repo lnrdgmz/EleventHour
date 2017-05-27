@@ -10,11 +10,11 @@ import reducers from './reducers/rootReducer.js';
 import Routes from './routes/Routes';
 
 // Create the Store
-const store = createStore(
-  reducers,
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
   applyMiddleware(thunk),
-);
-console.log(store.getState())
+));
+
 render(
   <Provider store={store}>
     <Routes />
