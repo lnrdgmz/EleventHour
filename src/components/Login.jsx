@@ -3,7 +3,8 @@
 import React from 'react';
 
 // Import Semantic-UI Components
-import { Grid, Container, Header, Reveal, Image, Divider } from 'semantic-ui-react';
+import { Grid, Container, Header, Reveal, Image, Popup, Button } from 'semantic-ui-react';
+import LoginModal from './LoginModal.jsx';
 
 // Import Local Dependencies
 import '../../public/styles/login.scss';
@@ -57,7 +58,7 @@ class Login extends React.Component {
           <Grid columns={1} centered verticalAlign="middle">
             <Grid.Column width={16}>
               <Header size="huge" textAlign="center">
-                <Header.Content className="header">
+                <Header.Content className="login-header">
                   LFM
                 </Header.Content>
                 <Header.Subheader className="subHeader">
@@ -65,12 +66,28 @@ class Login extends React.Component {
                 </Header.Subheader>
               </Header>
               <Grid.Row>
-                <a href="/auth/facebook" className="facebook-login-button">
-                  <Image verticalAlign="middle" shape="rounded" src="https://www.transparenttextures.com/patterns/asfalt-light.png" centered size="small" className="facebook-login-button" />
-                </a>
-                <a href="/auth/google" className="google-login-button">
-                  <Image verticalAlign="middle" src="https://www.transparenttextures.com/patterns/asfalt-light.png" shape="rounded" centered size="small" className="google-login-button" />
-                </a>
+                <Popup wide trigger={<LoginModal />} on='click'>
+                  <Grid divided columns='equal'>
+                    <Grid.Column className="centeredButtons">
+                      <Popup
+                        trigger={<a href="/auth/facebook" className="facebook-login-button" />}
+                        content='The story ends. You wake up in your bed and believe whatever you want to believe.'
+                        position='bottom center'
+                        size='small'
+                        inverted
+                      />
+                    </Grid.Column>
+                    <Grid.Column className="centeredButtons">
+                      <Popup
+                        trigger={<a href="/auth/google" className="google-login-button" />}
+                        content='Stay in Wonderland, and I show you how deep the rabbit hole goes.'
+                        position='bottom center'
+                        size='small'
+                        inverted
+                      />
+                    </Grid.Column>
+                  </Grid>
+                </Popup>
               </Grid.Row>
             </Grid.Column>
           </Grid>
