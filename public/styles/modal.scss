@@ -17,7 +17,6 @@
 .item {
   height: 100%;
 }
-
 .ui.center.aligned.header.modalHeader {
   font-size: 48px;
 }
@@ -26,16 +25,20 @@
   width: 80%;
   font-size: 24px;
 }
+
 .ui.grid > .row.progressBar {
   overflow: scroll;
 }
+
 .ui.ordered.steps {
   width: 100%;
   z-index:50;
 }
+
 .ui.rating .selected {
   color: gold !important;
 }
+
 .ui.rating .active.icon {
   color: #FFD700;
 }

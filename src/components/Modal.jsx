@@ -15,7 +15,6 @@ const steps = [
   { completed: false, active: false, title: 'Skill Rating', description: 'Specify a Skill Rating (If Applicable)' },
   { completed: false, active: false, title: 'Event Details', description: 'Additional Details' },
 ];
-
 class Modal extends Component {
   constructor(props) {
     super(props);
@@ -337,7 +336,7 @@ class Modal extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state) => {
   const eventList = state.eventList;
