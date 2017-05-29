@@ -30,10 +30,14 @@ class Profile extends Component {
   render() {
     const { activeItem } = this.state;
     const { user } = this.props;
-    const name = user.display_name;
-    const splitName = name.split(" ");
-    const firstName = splitName[0];
-    const lastName = splitName[splitName.length - 1];
+    let username = user.display_name;
+    if (user.oauth_provider) {
+      const name = user.display_name;
+      const splitName = name.split(' ');
+      const firstName = splitName[0];
+      const lastName = splitName[splitName.length - 1];
+      username = firstName + ' ' + lastName[0] + '.';
+    }
     return (
       <div className="pageContainer">
         <MenuBar />
@@ -45,7 +49,7 @@ class Profile extends Component {
             <Grid.Column width={12} className="userInfo" verticalAlign="middle" textAlign="center">
               <Segment vertical>
                 <Header as="h1" color="teal">
-                  {firstName} {lastName[0]}.
+                  {username}
                 </Header>
               </Segment>
               <Segment vertical>
