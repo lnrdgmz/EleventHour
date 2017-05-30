@@ -6,6 +6,7 @@ import App from '.././containers/App';
 import Profile from '.././containers/Profile';
 import Events from '../containers/Events';
 import Survey from '../containers/Survey';
+import UserEvents from '../containers/UserEvents';
 
 const Routes = () => (
   <HashRouter basename="/" component={App}>
@@ -13,6 +14,7 @@ const Routes = () => (
       <Route path="/users" component={Profile} />
       <Route path="/home" component={Events} />
       <Route path="/survey" component={Survey} />
+      <Route path="/userEvents" component={UserEvents} />
       <Route path="/" component={App} />
     </Switch>
   </HashRouter>
