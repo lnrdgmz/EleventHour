@@ -14,6 +14,7 @@ import { HashRouter } from 'react-router-dom';
 import App from './Components/App/App.jsx';
 import Events from './Components/Events/Events.jsx';
 import CreateEvent from './Components/CreateEvents/createEvent.jsx';
+import UserEvents from './Components/UserEvents/userEvents.jsx';
 import UserProfile from './Components/UserProfile/UserProfile.jsx';
 import rootReducer from './Reducers/rootReducer.js';
 import createHistory from 'history/createBrowserHistory';
@@ -46,6 +47,7 @@ render(
         <Route path="/users" component={UserProfile} />
         <Route path="/events" component={Events} />
         <Route path="/createEvent" component={CreateEvent} />
+        <Route path="/userEvents" component={UserEvents} />
         <Route path={HashRouter.basename} component={App} />
       </Switch>
     </HashRouter>

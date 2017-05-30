@@ -6,14 +6,16 @@ import Details from '.././Details/details.jsx';
 
 
 function Event(props) {
-   return (
-     <section>
-       <h3>{props.title} </h3>
+  return (
+    <section>
+      <h3>
+        {props.event.title}
+        </h3>
 
-       <p> {props.description} </p>
-     </section>
+      <p> {props.event.description} </p>
+    </section>
 
-   )
+  )
  }
 
 
