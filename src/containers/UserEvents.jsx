@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Button, Container, Header, Icon, Grid, Divider, Modal } from 'semantic-ui-react';
-import { deleteEvent, updateEvent, updateAttendeeStatus } from '../../Actions/index';
-import Event from '../Event/event.jsx';
+import { deleteEvent, updateEvent, updateAttendeeStatus } from '../actions/actions';
+import Event from '../components/Event';
 
 class UserEvents extends Component {
 
@@ -77,7 +77,7 @@ class UserEvents extends Component {
     };
 
     return (
-      <Container className="page-container">
+      <Container className="userEvents-container">
         <Grid centered columns={4} textAlign="center">
           <Grid.Column >
             <Header as="h1" icon >
