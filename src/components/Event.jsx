@@ -2,12 +2,12 @@ import React from 'react';
  // import {render} from 'react-dom';
 
 function Event(props) {
-  const { event } = this.props;
+  const { event } = props;
   return (
-    <section>
+    <div>
       <h3>{event.title} </h3>
       <p> {event.description} </p>
-    </section>
+    </div>
   );
 }
 
