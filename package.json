@@ -60,10 +60,7 @@
     }
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
     "animate.css": "^3.5.2",
->>>>>>> improvements
     "animejs": "^2.0.2",
     "body-parser": "^1.17.2",
     "bookshelf": "^0.10.3",
