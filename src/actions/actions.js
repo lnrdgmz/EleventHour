@@ -39,3 +39,23 @@ export const updateUserInfo = (user) => {
     user,
   };
 };
+
+export function removeEvent(event) {
+  return ({
+    type: 'REMOVE_EVENT',
+    payload: event.id,
+  });
+}
+
+export function deleteEvent(event) {
+  return function (dispatch) {
+    console.log('DISPATCHED');
+    fetch(`/events/${event.id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(event),
+    })
+    .then(resp => dispatch(removeEvent(event)))
+    .catch(err => console.error(err));
+  };
+}
