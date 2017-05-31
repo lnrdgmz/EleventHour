@@ -31,7 +31,6 @@ const events = (state = {}, action) => {
       return {...state,
         events: action.payload
 
-
       }
     }
   }

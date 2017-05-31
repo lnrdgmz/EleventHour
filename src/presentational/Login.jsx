@@ -8,7 +8,6 @@ import LoginModal from './LoginModal.jsx';
 
 // Import Local Dependencies
 
-import '../../public/styles/login.scss';
 
 import '../../public/Styles/Login.scss';
 
