@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Grid, Image, Header, Segment, Container, Menu } from 'semantic-ui-react';
 
 // Import Local Components
-import MenuBar from '../presentational/MenuBar.jsx';
+import MenuBar from '../components/MenuBar.jsx';
 import { loginUser } from '../actions/actions.js';
 import '../../public/styles/profile.scss';
 
