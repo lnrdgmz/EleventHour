@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // Import Semantic-UI Dependencies
 import { Menu, Image, Popup } from 'semantic-ui-react';
-import Modal from './Modal.jsx';
+import Modal from '../components/Modal.jsx';
 import '../../public/styles/menuBar.scss';
 
 class MenuBar extends Component {
