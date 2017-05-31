@@ -25,9 +25,11 @@ export function fetchEvents() {
   return function (dispatch) {
     console.log('arguments is', arguments)
  
-    return fetch('/events')
-    .then(response => response.json())
-    .then(parsedData => {
+
+    return fetch('/events?page=2')
+    .then((response) => { return response.json()  } )
+    .then((parsedData)=> {
+
       console.log(parsedData);
       dispatch({ type: RECEIVE_EVENTS, payload: parsedData });
     });
