@@ -20,6 +20,7 @@ const sendEmailNotification = (options) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error(error);
+      return;
     }
     console.log('Sent an email:', info.messageId, info.response);
   });
@@ -61,6 +62,9 @@ const emailCreator = (eventId, userId) => {
   ];
   Promise.all(data)
     .then((arr) => {
+      if (!arr[0].email) {
+        Promise.reject(new Error('No email address for creator found'));
+      }
       const emailOptions = {
         to: arr[0].email,
         subject: 'Someone has requested to join your event',
@@ -81,6 +85,9 @@ const emailApprovedUser = (userId, eventId) => {
   ];
   Promise.all(data)
     .then((arr) => {
+      if (!arr[2].email) {
+        Promise.reject(new Error('No email found for user.'));
+      }
       const emailOptions = {
         to: arr[2].email,
         subject: 'You\'ve been accepted',
