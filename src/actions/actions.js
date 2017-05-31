@@ -48,17 +48,28 @@ export const getEvents = ({ data }) => {
 };
 
 export function addEvent(eventInfo) {
+<<<<<<< HEAD
   nextEventId += 1;
   return ({
     type: 'ADD_EVENT',
     id: nextEventId,
+=======
+  console.log('ADD EVENT CALLED', eventInfo);
+  return ({
+    type: 'ADD_EVENT',
+>>>>>>> improvements
     eventInfo,
   });
 }
 
 export const createEvent = (event) => {
+<<<<<<< HEAD
   console.log('CREATE EVENT ACTION CREATOR CALLED');
   event.date_time = moment(event.date + ':' + event.time);
+=======
+  console.log('CREATE EVENT ACTION CREATOR CALLED', event);
+  event.date_time = moment(event.date);
+>>>>>>> improvements
   delete event.date;
   delete event.time;
   delete event.dateFlag;

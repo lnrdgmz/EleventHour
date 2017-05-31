@@ -2,15 +2,32 @@
 
 .modal-container {
   width: 900px !important;
+<<<<<<< HEAD
   height: 500px;
   display: flex;
   justify-content: center;
 }
+=======
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+>>>>>>> improvements
 .modal {
   width: 100%;
   height: 100%;
   top: 0 !important;
 }
+<<<<<<< HEAD
+=======
+
+.item {
+  height: 100%;
+}
+
+>>>>>>> improvements
 .ui.center.aligned.header.modalHeader {
   font-size: 48px;
 }
@@ -18,4 +35,33 @@
 .ui.input input {
   width: 80%;
   font-size: 24px;
+<<<<<<< HEAD
+=======
+}
+.ui.grid > .row.progressBar {
+  overflow: scroll;
+}
+.ui.ordered.steps {
+  width: 100%;
+  z-index:50;
+}
+.ui.rating .selected {
+  color: gold !important;
+}
+.ui.rating .active.icon {
+  color: #FFD700;
+}
+
+.ui.fluid.buttons.buttonGroup {
+  width: 50%;
+}
+
+.ui.container.modal-frame {
+  overflow-x: hidden;
+  animation-duration: 1s
+}
+
+.ui.positive.button.submit {
+  display: none;
+>>>>>>> improvements
 }

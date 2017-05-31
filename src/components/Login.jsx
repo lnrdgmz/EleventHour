@@ -3,7 +3,11 @@
 import React from 'react';
 
 // Import Semantic-UI Components
+<<<<<<< HEAD
 import { Grid, Container, Header, Reveal, Image, Popup, Button } from 'semantic-ui-react';
+=======
+import { Grid, Header, Popup } from 'semantic-ui-react';
+>>>>>>> improvements
 import LoginModal from './LoginModal.jsx';
 
 // Import Local Dependencies
@@ -66,6 +70,7 @@ class Login extends React.Component {
                 </Header.Subheader>
               </Header>
               <Grid.Row>
+<<<<<<< HEAD
                 <Popup wide trigger={<LoginModal />} on='click'>
                   <Grid divided columns='equal'>
                     <Grid.Column className="centeredButtons">
@@ -88,6 +93,9 @@ class Login extends React.Component {
                     </Grid.Column>
                   </Grid>
                 </Popup>
+=======
+                <Popup trigger={<LoginModal />} />
+>>>>>>> improvements
               </Grid.Row>
             </Grid.Column>
           </Grid>

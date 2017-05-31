@@ -60,6 +60,10 @@
     }
   },
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "animate.css": "^3.5.2",
+>>>>>>> improvements
     "animejs": "^2.0.2",
     "body-parser": "^1.17.2",
     "bookshelf": "^0.10.3",
@@ -70,6 +74,7 @@
     "express-session": "^1.15.2",
     "flexboxgrid": "^6.3.1",
     "history": "^4.6.1",
+    "input-moment": "^0.3.2",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.2.1",
     "knex": "^0.13.0",
