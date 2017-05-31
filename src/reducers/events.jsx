@@ -16,6 +16,16 @@ const events = (state = initialState, action) => {
         ...state.eventsList.slice(0, action.payload),
         ...state.eventsList.slice(action.payload + 1),
       ];
+      break;
+    case 'ADD_EVENT':
+      console.log('adding event to state', state.eventsList);
+      return {
+        ...state,
+          eventsList: [...state.eventsList, action.eventInfo],
+          visibleEvents: [...state.visibleEvents, action.eventInfo],
+        ...state.user,
+      };
+
     default:
       return state;
   }

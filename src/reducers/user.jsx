@@ -1,11 +1,12 @@
 const initalState = {
-  userId: 42691,
-  username: 'Guest',
-  age: 18,
-  email: 'guest@lfm.io',
-  bio: "You're our guest! Make yourself at home!",
+  id: 1000,
+  display_name: 'Jian Yang',
+  age: 20,
+  email: 'mr_jian_yang@lfm.io',
+  bio: "Question for you: What's better than one Octopus recipe? Answer for you: Eight Octopus Recipes",
   cell: '555-555-5555',
   created_at: '2017-05-22',
+  img_url: 'https://static1.squarespace.com/static/51b3dc8ee4b051b96ceb10de/t/5919b7dcff7c50802f096d27/1494857695234/',
   authenticated: false,
   events: [
     {

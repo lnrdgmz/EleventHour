@@ -1,0 +1,56 @@
+.modal-container {
+  width: 900px !important;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  top: 0 !important;
+}
+
+.item {
+  height: 100%;
+}
+
+.ui.center.aligned.header.modalHeader {
+  font-size: 48px;
+}
+
+.ui.input input {
+  width: 80%;
+  font-size: 24px;
+}
+
+.ui.grid > .row.progressBar {
+  overflow: scroll;
+}
+
+.ui.ordered.steps {
+  width: 100%;
+  z-index:50;
+}
+
+.ui.rating .selected {
+  color: gold !important;
+}
+
+.ui.rating .active.icon {
+  color: #FFD700;
+}
+
+.ui.fluid.buttons.buttonGroup {
+  width: 50%;
+}
+
+.ui.container.modal-frame {
+  overflow-x: hidden;
+  animation-duration: 1s
+}
+
+.ui.positive.button.submit {
+  display: none;
+}
