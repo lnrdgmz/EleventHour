@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 
 // Import Local Dependencies
-import MenuBar from '../components/MenuBar';
-import Login from '../components/Login';
+import MenuBar from '../presentational/MenuBar';
+import Login from '../presentational/Login';
 import { loginUser } from '../actions/actions.js';
 import { connect } from 'react-redux';
 

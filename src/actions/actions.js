@@ -1,10 +1,3 @@
-export const getEvents = ({ data }) => {
-  data.forEach((event, index) => { event.id = index; });
-  return {
-    type: 'GET_EVENTS',
-    payload: data,
-  };
-};
 
 export const changeUser = (user) => {
   console.log('Called');
