@@ -4,7 +4,7 @@ import React from 'react';
 
 // Import Semantic-UI Components
 import { Grid, Header, Popup } from 'semantic-ui-react';
-import LoginModal from './LoginModal.jsx';
+import LoginModal from '../components/LoginModal.jsx';
 
 // Import Local Dependencies
 
