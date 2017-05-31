@@ -4,12 +4,12 @@ import React from 'react';
 
 // Import Semantic-UI Components
 import { Grid, Header, Popup } from 'semantic-ui-react';
-import LoginModal from '../components/LoginModal.jsx';
+import LoginModal from '../components/LoginModal';
 
 // Import Local Dependencies
 
 
-import '../../public/Styles/Login.scss';
+import '../../public/styles/login.scss';
 
 
 class Login extends React.Component {
