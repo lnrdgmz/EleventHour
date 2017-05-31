@@ -1,3 +1,4 @@
+const moment = require('moment');
 const db = require('../config/config');
 const Event = require('../models/event');
 const Attendee = require('../models/attendee.js');
@@ -38,7 +39,10 @@ module.exports = {
     * Add a query param for category or tags? Return 50 events
     * satisfying that search.
     */
-    new Event().fetchPage({
+    new Event().where({ full: 0 })
+      .query('where', 'date_time', '>', moment.utc().format())
+      .orderBy('date_time', 'ASC')
+      .fetchPage({
       pageSize: 15,
       page: req.query.page || 1,
     })

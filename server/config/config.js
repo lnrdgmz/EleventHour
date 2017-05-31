@@ -52,7 +52,7 @@ db.knex.schema.hasTable('event').then( exists => {
           event.increments('id').primary();
           event.string('title').notNullable();
           event.string('description').notNullable();
-          event.date('date_time', 100).notNullable();
+          event.dateTime('date_time', 100).notNullable();
           event.boolean('full');
           event.integer('needs');
           event.string('category').references('category.id');
