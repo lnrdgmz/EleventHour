@@ -11,15 +11,13 @@ export const requestEvents = (eventObject) => {
   }
 }
 
-export const recieveEvents = (json) =>{
-  console.log('Im in recieveEvents and the json is:')
-  console.log(json)
-
+export const receiveEvents = (json) =>{
   return {
     type: RECEIVE_EVENTS,
     payload: json
   }
 }
+// export const boundReceiveEvents = () =>{}
 /* Async Action Creators*/
 
 export function fetchEvents(){
