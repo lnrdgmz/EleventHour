@@ -19,61 +19,7 @@ class LoginModal extends Component {
   closeModal() {
     this.refs.modal.hide();
   }
-    this.state = {
-      modalText: 'Name Your Event',
-      nextOrCloseText: 'Next',
-      placeHolderText: 'Laughing at Duncan...',
-    }
-    this.showModal = this.showModal.bind(this);
-    this.nextOrClose = this.nextOrClose.bind(this);
-  }
-  showModal() {
-    this.refs.modal.show();
-  }
-  nextOrClose() {
-    if (this.state.modalText === 'Name Your Event') {
-      this.refs.modal.hide();
-      setTimeout(() => {
-        this.setState({
-          modalText: 'When is Your Event?',
-          nextOrCloseText: 'Next',
-          placeHolderText: 'All the Time!',
-        });
-        $('.modal-container').removeClass('animated slideOutRight').addClass('animated slideInLeft');
-        this.refs.modal.show();
-      }, 500);
-    } else if (this.state.modalText === 'When is Your Event?') {
-      this.refs.modal.hide();
-      setTimeout(() => {
-        this.setState({
-          modalText: "Where is Your Event?",
-          nextOrCloseText: 'Next',
-          placeHolderText: '369 Lexington Ave',
-        });
-        this.refs.modal.show();
-      }, 500);
-    } else if (this.state.modalText === 'Where is Your Event?') {
-      this.refs.modal.hide();
-      setTimeout(() => {
-        this.setState({
-          modalText: "How Many People Are You Looking For?",
-          nextOrCloseText: 'Close',
-          placeHolderText: '1 - 1,000,000,000',
-        });
-        this.refs.modal.show();
-      }, 500);
-    } else {
-      this.refs.modal.hide();
-      setTimeout(() => {
-        this.setState({
-          modalText: "Name Your Event",
-          nextOrCloseText: 'Next',
-          placeHolderText: 'Laughing at Duncan...',
-        });
-      }, 500);
-    }
-  }
->>>>>>> feat($browser): Added Modal and Styles to Splash Page.  Began Modal for Event Creation
+
   render() {
     return (
       <div>

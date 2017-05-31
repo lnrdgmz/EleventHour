@@ -1,22 +1,22 @@
-// // CSS for Login.jsx
+// CSS for Login.jsx
 
-// // Variables
+// Variables
 
-// $blue: #004FFF;
-// $orange: #FC8000;
+$blue: #004FFF;
+$orange: #FC8000;
 
-// body {
-//   overflow: hidden;
-//   width: 100vw;
-//   height: 100vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
-// .page-container {
-//   width: 100%;
-//   height: 100%;
-// }
+body {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page-container {
+  width: 100%;
+  height: 100%;
+}
 
 .fullscreen-video {
  position: fixed;
@@ -44,19 +44,18 @@
 //   vertical-align: baseline;
 // }
 
-// .ui.grid {
-//   font-family: 'Viga';
-//   display: flex;
-//   align-items: center;
-// }
+.ui.grid {
+  font-family: 'Viga';
+  display: flex;
+  align-items: center;
+}
 
-// .login-header {
-//   font-size: 120px;
-//   font-family: 'Viga';  
-//   color: $blue;
-//   text-shadow: 0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 0.5px black;
-// }
-// // CSS for the Login Component
+.login-header {
+  font-size: 120px;
+  font-family: 'Viga';  
+  color: $blue;
+  text-shadow: 0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 0.5px black;
+}
 
 // .ui.header .sub.header {
 //   font-family: 'Viga';
@@ -65,10 +64,10 @@
 //   text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
 // }
 
-// .ui.middle.aligned.image {
-//   width: 201px;
-//   height: 46px;
-// }
+.ui.middle.aligned.image {
+  width: 201px;
+  height: 46px;
+}
 
 .google-login-button:hover {
   background: url('../assets/google-focus.png');
