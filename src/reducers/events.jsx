@@ -11,7 +11,11 @@ const events = (state = initialState, action) => {
         eventsList: action.payLoad,
         visibleEvents: action.payLoad.slice(0, 51),
       };
-
+    case 'REMOVE_EVENT':
+      return [
+        ...state.eventsList.slice(0, action.payload),
+        ...state.eventsList.slice(action.payload + 1),
+      ];
     default:
       return state;
   }

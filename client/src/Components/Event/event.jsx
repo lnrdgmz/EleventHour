@@ -6,21 +6,7 @@ import Details from '.././Details/details.jsx';
 
 
 function Event(props) {
-<<<<<<< HEAD
-   return <section> <h3>{props.title} </h3>  <p> {props.description} </p> </section>
-=======
-  return (
-    <section>
-      <h3>
-        {props.event.title}
-        </h3>
+  return <section> <h3>{props.title} </h3>  <p> {props.description} </p> </section>
+}
 
-      <p> {props.event.description} </p>
-    </section>
-
-  )
->>>>>>> feat($userEvent): created user event component
- }
-
-
- export default Event;
+export default Event;
