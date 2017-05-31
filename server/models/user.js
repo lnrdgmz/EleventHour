@@ -34,6 +34,7 @@ let User = db.Model.extend({
     if (this.pivot) {
       const pivot = this.parse(this.pivot.attributes);
       attrs.role = pivot.flag;
+      attrs.attendee_id = pivot.id;
     }
     return attrs;
   },
