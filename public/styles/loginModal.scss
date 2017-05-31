@@ -1,0 +1,96 @@
+$blue: #004FFF;
+$green: #53FF45;
+
+@keyframes sheen {
+  0% {
+    transform: skewY(-45deg) translateX(0);
+  }
+  100% {
+    transform: skewY(-45deg) translateX(12.5em);
+  }
+}
+.ui.button.splash-button {
+  padding: 0.75em 2em;
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid $green;
+  font-size: 18px;
+  display: inline-block;
+  color: #FFFFFF;
+  border-radius: 0.3em;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  &:before {
+    content: "";
+    background-color: rgba(255,255,255,0.5);
+    height: 100%;
+    width: 3em;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -4.5em;
+    transform: skewX(-45deg) translateX(0);
+    transition: none;
+  }
+  &:hover {
+    background-color: $green;
+    color: rgba(0, 0, 0, 0.5);
+    &:before {
+      transform: skewX(-45deg) translateX(13.5em);
+     transition: all 0.5s ease-in-out;
+    }
+  }
+}
+
+
+.ui.button.fluid.loginButton {
+  background: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+}
+
+.segment.login-segment {
+  width: 50%;
+}
+
+.facebook-login-button {
+  background: url('../assets/facebook-login.png');
+  background-size: 100% 100% !important;
+  width: 200px;
+  height: 45px;
+  overflow: hidden;
+  position: relative;
+  
+  span {
+    z-index: 20;
+  }
+  
+  &:after {
+    background: #fff;
+    content: "";
+    height: 155px;
+    left: -75px;
+    opacity: .2;
+    position: absolute;
+    top: -50px;
+    transform: rotate(35deg);
+    transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+    width: 50px;
+  }
+}
+
+.facebook-login-button:hover {
+  &:after {
+    left: 120%;
+    transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+  }
+}
+
+.google-login-button {
+  width: 205px !important;
+  height: 50px !important;
+  background: url('../assets/google.png');
+  background-size: 100% 100% !important;
+}

@@ -1,10 +1,7 @@
-export const getEvents = ({ data }) => {
-  data.forEach((event, index) => { event.id = index; });
-  return {
-    type: 'GET_EVENTS',
-    payload: data,
-  };
-};
+// Import Moment
+import moment from 'moment';
+
+// User Actions
 
 export const changeUser = (user) => {
   console.log('User:', user);
@@ -37,5 +34,42 @@ export const updateUserInfo = (user) => {
   return {
     type: 'UPDATE_USER',
     user,
+  };
+};
+
+// Event Actions
+
+export const getEvents = ({ data }) => {
+  data.forEach((event, index) => { event.id = index; });
+  return {
+    type: 'GET_EVENTS',
+    payload: data,
+  };
+};
+
+export function addEvent(eventInfo) {
+  console.log('ADD EVENT CALLED', eventInfo);
+  return ({
+    type: 'ADD_EVENT',
+    eventInfo,
+  });
+}
+
+export const createEvent = (event) => {
+  console.log('CREATE EVENT ACTION CREATOR CALLED', event);
+  event.date_time = moment(event.date);
+  delete event.date;
+  delete event.time;
+  delete event.dateFlag;
+  return function (dispatch) {
+    console.log('DISPATCHED');
+    fetch('/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(event),
+    })
+    .then(resp => resp.json())
+    .then(body => dispatch(addEvent(body)))
+    .catch(err => console.error(err));
   };
 };
