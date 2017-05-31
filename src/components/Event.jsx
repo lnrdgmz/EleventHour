@@ -1,11 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import { connect } from 'react-redux';
 import { Card, Image, Button, Rating, Header, Divider } from 'semantic-ui-react';
-import DeleteButton from '../containers/DeleteButton';
 
 function Event(props) {
-  const { event } = props;
+  const { event, deleteClick } = props;
   const role = event.role;
   const roleStyle = {
     color: 'green',
@@ -46,13 +44,13 @@ function Event(props) {
             <span>
               <p>This event's roster is curently <strong style={roleStyle}>full</strong>! 
               </p>
-              <DeleteButton event={event} />
+              <Button negative onClick={props.deleteClick(event)}>Delete Event</Button>
             </span>
           ) : (
             <Button.Group widths={2}>
               <Button >View Roster</Button>
               <Button.Or />
-              <DeleteButton event={event} />
+              <Button negative onClick={props.deleteClick(event)}>Delete Event</Button>
             </Button.Group>
           )
         ) : (

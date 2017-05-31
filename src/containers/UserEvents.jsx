@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Button, Container, Header, Icon, Grid, Divider, Modal, Card } from 'semantic-ui-react';
-import { deleteEvent, updateEvent, updateAttendeeStatus, loginUser } from '../actions/actions';
+import { deleteEvent, updateAttendeeStatus, loginUser } from '../actions/actions';
 import Event from '../components/Event';
 
 class UserEvents extends Component {
@@ -15,6 +15,7 @@ class UserEvents extends Component {
     };
 
     this.filterClick = this.filterClick.bind(this);
+    this.deleteClick = this.deleteClick.bind(this);
   }
 
   componentWillReceiveProps = () => {
@@ -26,12 +27,11 @@ class UserEvents extends Component {
     else this.setState({ creatorVisibile: false });
   }
 
+  deleteClick = event => this.props.deleteEvent(event);
+
   render = () => {
     const { user } = this.props;
-    const { creatorVisibile } = this.state; 
-    const divStyle = {
-      textAlign: 'center',
-    };
+    const { creatorVisibile } = this.state;
     const filteredListLength = user.events.filter(event => creatorVisibile ? event.role === 'Creator' : event.role !== 'Creator').length;
 
     return (
@@ -83,7 +83,7 @@ class UserEvents extends Component {
                   </Card.Content>
                   <Card.Content>
                     <Modal dimmer="blurring" trigger={<Button >More info</Button>} basic size="small">
-                      <Event event={event} />
+                      <Event event={event} deleteClick={this.deleteClick} />
                     </Modal>
                   </Card.Content>
                 </Card>
@@ -101,7 +101,6 @@ export default connect(
   mapStateToProps,
   {
     deleteEvent,
-    updateEvent,
     updateAttendeeStatus,
     loginUser,
   },
