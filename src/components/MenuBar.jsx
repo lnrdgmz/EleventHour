@@ -1,10 +1,9 @@
 // Import React Dependencies
 import React, { Component } from 'react';
 // Import Semantic-UI Dependencies
-import { Menu, Image } from 'semantic-ui-react';
-import Modal from './Modal';
-
-const OutlineModal = require('boron/OutlineModal');
+import { Menu, Image, Popup } from 'semantic-ui-react';
+import Modal from './Modal.jsx';
+import '../../public/styles/menuBar.scss';
 
 class MenuBar extends Component {
   state = {
@@ -16,7 +15,7 @@ class MenuBar extends Component {
       case 'profile':
         return <Modal />;
       case 'createEvent':
-        OutlineModal.show();
+        return <Modal />;
         break;
       default:
         window.location = '/';
@@ -27,8 +26,8 @@ class MenuBar extends Component {
     const { activeItem } = this.state;
 
     return (
+      <div>
         <Menu stackable>
-          <Modal />
           <Menu.Item
             name="home"
             active={activeItem === 'home'}
@@ -36,13 +35,7 @@ class MenuBar extends Component {
           >
             <Image src="http://i.imgur.com/MdYaRqm.png" size="mini" />
           </Menu.Item>
-          <Menu.Item
-            name='createEvent'
-            active={activeItem === 'createEvent'}
-            onClick={this.handleItemClick}
-          >
-            <OutlineModal />
-          </Menu.Item>
+          <Modal />
           <Menu.Item
             name='profile'
             active={activeItem === 'profile'}
@@ -51,6 +44,7 @@ class MenuBar extends Component {
             Profile
           </Menu.Item>
         </Menu>
+        </div>
     );
   }
 }
