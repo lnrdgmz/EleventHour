@@ -1,14 +1,17 @@
+//external dependencies
 import React from 'react';
 import { HashRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
+//local dependencies
 import App from '.././containers/App';
-// import Splash from '.././components/Splash';
 import Profile from '.././containers/Profile';
+
 import Events from '../containers/Events';
 import EventCreator from '../containers/EventCreator';
 import Survey from '../containers/Survey';
 import UserEvents from '../containers/UserEvents';
 import Modal from '../components/Modal';
+
 
 const Routes = () => (
   <HashRouter basename="/" component={App}>

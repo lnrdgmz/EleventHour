@@ -3,77 +3,59 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+//local dependencies
+import MenuBar from '../presentational/MenuBar';
+import Event from '../presentational/event.jsx';
+import { Button, Header, Icon, Modal } from 'semantic-ui-react';
+import '../../public/styles/events.scss';
+import {fetchEvents, receiveEvents } from '../actions/eventActions.js';
+import {store } from '../index.jsx'
+
 class Events extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      events: [],
-      visibleEvents: [],
-      user: {
-        userId: 42691,
-        username: 'Guest',
-        age: 18,
-        email: 'guest@lfm.io',
-        bio: "You're our guest! Make yourself at home!",
-        cell: '555-555-5555',
-        created_at: '2017-05-22',
-        authenticated: false,
-      },
-      loadingAnimation: false,
-    };
+    this.state = {};
   }
 
-  componentWillMount() {
-    // Check if the User is Logged In
-    fetch('/auth/loggedIn', { credentials: 'include' })
-      // If so, Update the State with the User's Information
-      .then((res) => {
-        console.log('hey');
-        return res.json();
-      })
-      .then((data) => {
-        console.log('hi');
-        if (data !== false) {
-          this.setState({
-            ...this.state,
-            user: {
-              userId: res.id,
-              username: res.display_name,
-              age: res.age,
-              email: res.email,
-              bio: res.bio,
-              cell: res.contact_number,
-              created_at: res.created_at,
-              authenticated: true,
-            },
-          });
-        } else {
-          // If not, Redirect the User to the Splash Page
-          window.location = '/#/home';
-        }
-      })
-      .catch((err) => {
-        console.error('Authentication Error:', err);
-      });
-  }
-  // To-Do:
-    // Render a Default Events List
-    // Render a User-Tailored Events List
-    //
+  eventsToShow = (events, filter) => {
+    switch(filter) {
 
+      case 'SHOW_ALL' : 
+      return componentDidMount()
+
+      case "FILTER_BY_TITLE" : 
+      return eventsToShow = this.state.events.filter(ev => ev.title.indexOf(this.state.filterByTitle) > -1);
+
+    }
+
+  }
   render() {
-    return (
-      <div>
-        <h1> Events go Hurr </h1>
-      </div>
-    );
+
+    // const eventsToShow = this.props.events.events.filter(ev => ev.title.indexOf(this.state.filterByTitle) > -1);
+      return (
+        <div>
+          <MenuBar />
+          {"Events events events: " + console.log(this.props.events.events)}
+          {this.props.events.events === undefined ? null : this.props.events.events.map((event) => {
+            console.log('MAP IS FIRING');
+            return <Event title={event.title} description={event.description} />
+          })} 
+          <button onClick={this.props.fetchEvents()}> Dispatch an Action</button>
+        </div>
+      )
+   }
+  }
+
+
+const mapStatetoProps = function(state){
+  return { events : state.events}
+};
+
+const mapDispatchtoProps = function(dispatch){
+  return {
+    fetchEvents
   }
 }
 
-const mapStatetoProps = ({ events }) => ({
-  events: events.eventsList,
-  visibleEvents: events.visibleEvents,
-});
 
-
-export default connect(mapStatetoProps, {})(Events);
+export default connect(mapStatetoProps, mapDispatchtoProps)(Events);
