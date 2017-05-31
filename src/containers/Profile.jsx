@@ -11,10 +11,6 @@ import MenuBar from '../components/MenuBar.jsx';
 import { loginUser } from '../actions/actions.js';
 import '../../public/styles/profile.scss';
 
-export const loadUser = () => {
-  this.props.loginUser();
-};
-
 class Profile extends Component {
   static propTypes = {
     user: PropTypes.object,
@@ -22,8 +18,8 @@ class Profile extends Component {
 
   state = { activeItem: 'bio' };
 
-  componentWillReceiveProps() {
-    loadUser();
+  componentDidMount() {
+    this.props.loginUser();
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })

@@ -84,6 +84,7 @@ export const createEvent = (event) => {
     console.log('DISPATCHED');
     fetch('/events', {
       method: 'POST',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(event),
     })

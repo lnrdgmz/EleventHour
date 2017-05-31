@@ -18,7 +18,7 @@ class UserEvents extends Component {
     this.deleteClick = this.deleteClick.bind(this);
   }
 
-  componentWillReceiveProps = () => {
+  componentWillMount = () => {
     this.props.loginUser();
   }
 
