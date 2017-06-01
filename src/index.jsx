@@ -1,7 +1,7 @@
 // Import React and Redux Dependencies
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reduxLogger from 'redux-logger';
