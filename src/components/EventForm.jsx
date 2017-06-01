@@ -319,53 +319,55 @@ class EventForm extends Component {
         >
         Create an Event
         </Menu.Item>
-        <OutlineModal ref="modal" className="modal-container">
-          <Grid className="modal" centered stretched textAlign="center" verticalAlign="top">
-            <Grid.Row centered className="progressBar">
-              <Step.Group ordered items={steps} className="creationProgress" />
-            </Grid.Row>
-            <Container className="modal-frame">
+        <div className="modal-middle">
+          <OutlineModal ref="modal" className="modal-container">
+            <Grid className="modal" centered container textAlign="center" verticalAlign="top">
+              <Grid.Row centered className="progressBar">
+                <Step.Group ordered items={steps} className="creationProgress" />
+              </Grid.Row>
+              <Container className="modal-frame">
+                <Grid.Row centered>
+                  <Header as='h1'textAlign="center" className="modalHeader">{this.state.modalInfo.headerText}</Header>
+                </Grid.Row>
+                <Grid.Row centered>
+                  {this.state.modalToRender}
+                </Grid.Row>
+              </Container>
               <Grid.Row centered>
-                <Header as='h1'textAlign="center" className="modalHeader">{this.state.modalInfo.headerText}</Header>
+                <Button.Group fluid className="buttonGroup">
+                  <Button name="previous" className="previous" animated negative onClick={this.previousButtonClick}>
+                    <Button.Content visible>Previous</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name='left arrow' className="previous" />
+                    </Button.Content>
+                  </Button>
+                  <Button name="next" className="next" animated positive onClick={this.nextButtonClick}>
+                    <Button.Content visible>Next</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name='right arrow' className="next" />
+                    </Button.Content>
+                  </Button>
+                </Button.Group>
               </Grid.Row>
               <Grid.Row centered>
-                {this.state.modalToRender}
+                <Button.Group fluid className="buttonGroup">
+                  <Button name="cancel" animated negative onClick={this.cancelButtonClick}>
+                    <Button.Content visible>Cancel</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name="trash outline" />
+                    </Button.Content>
+                  </Button>
+                  <Button className="submit" positive animated onClick={this.submitClick}>
+                    <Button.Content visible>Submit</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name="checkmark" />
+                    </Button.Content>
+                  </Button>
+                </Button.Group>
               </Grid.Row>
-            </Container>
-            <Grid.Row centered>
-              <Button.Group fluid className="buttonGroup">
-                <Button name="previous" className="previous" animated negative onClick={this.previousButtonClick}>
-                  <Button.Content visible>Previous</Button.Content>
-                  <Button.Content hidden>
-                    <Icon name='left arrow' className="previous" />
-                  </Button.Content>
-                </Button>
-                <Button name="next" className="next" animated positive onClick={this.nextButtonClick}>
-                  <Button.Content visible>Next</Button.Content>
-                  <Button.Content hidden>
-                    <Icon name='right arrow' className="next" />
-                  </Button.Content>
-                </Button>
-              </Button.Group>
-            </Grid.Row>
-            <Grid.Row centered>
-              <Button.Group fluid className="buttonGroup">
-                <Button name="cancel" animated negative onClick={this.cancelButtonClick}>
-                  <Button.Content visible>Cancel</Button.Content>
-                  <Button.Content hidden>
-                    <Icon name="trash outline" />
-                  </Button.Content>
-                </Button>
-                <Button className="submit" positive animated onClick={this.submitClick}>
-                  <Button.Content visible>Submit</Button.Content>
-                  <Button.Content hidden>
-                    <Icon name="checkmark" />
-                  </Button.Content>
-                </Button>
-              </Button.Group>
-            </Grid.Row>
-          </Grid>
-        </OutlineModal>
+            </Grid>
+          </OutlineModal>
+        </div>
       </div>
     );
   }

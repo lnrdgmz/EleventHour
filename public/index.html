@@ -8,9 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.js"></script>
   </head>
   <body>
     <div id="app"></div>
      <script src="./dist/bundle.js"></script>
+      <script>
+        const socket = io('http://localhost:3000');
+        socket.on('connect', (data) => {
+          console.log('Socket.IO:', data);
+          socket.emit('my other event', { my: 'data' });
+        });
+      </script>
   </body>
 </html>
