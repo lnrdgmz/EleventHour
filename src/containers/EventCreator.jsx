@@ -7,7 +7,7 @@ import { Container, Header, Form, Input } from 'semantic-ui-react';
 import moment from 'moment';
 
 // Import Local Dependencies
-import '../../public/styles/eventCreator.scss';
+import '../../public/styles/modal.scss';
 import { createEvent } from '../actions/actions';
 
 

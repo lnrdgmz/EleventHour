@@ -16,7 +16,7 @@ let steps = [
   { completed: false, active: false, title: 'Event Details', description: 'Additional Details' },
 ];
 
-class Modal extends Component {
+class EventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -380,4 +380,4 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   createEvent,
-})(Modal);
+})(EventForm);
