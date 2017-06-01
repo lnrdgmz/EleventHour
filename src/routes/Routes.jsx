@@ -10,7 +10,7 @@ import Events from '../containers/Events';
 import Survey from '../containers/Survey';
 import UserEvents from '../containers/UserEvents';
 import EventForm from '../components/EventForm';
-
+import LoginModal from '../components/LoginModal';
 
 const Routes = () => (
   <HashRouter basename="/" component={App}>
@@ -20,6 +20,7 @@ const Routes = () => (
       <Route path="/events" component={Events} />
       <Route path="/survey" component={Survey} />
       <Route path="/userEvents" component={UserEvents} />
+      <Route path="/loginModal" component={LoginModal} />
       <Route path="/" component={App} />
     </Switch>
   </HashRouter>
