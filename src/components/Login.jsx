@@ -5,7 +5,7 @@ import React from 'react';
 // Import Semantic-UI Components
 import { Grid, Header, Popup } from 'semantic-ui-react';
 import LoginModal from './LoginModal.jsx';
-
+import Events from '../containers/Events.jsx'
 // Import Local Dependencies
 import '../../public/styles/login.scss';
 
@@ -15,35 +15,6 @@ class Login extends React.Component {
     this.state = {
       showAbout: false,
     };
-  }
-  componentDidMount() {
-    const video = document.querySelector('.fullscreen-video');
-    const container = document.querySelector('.video-container');
-    let newWidth;
-    let newHeight;
-    const setVideoDimensions = () => {
-      const w = video.videoWidth;
-      const h = video.videoHeight;
-      const videoRatio = (w / h).toFixed(2);
-      const containerStyles = window.getComputedStyle(container);
-      const minW = parseInt(containerStyles.getPropertyValue('width'));
-      const minH = parseInt(containerStyles.getPropertyValue('height'));
-      const widthRatio = minW / w;
-      const heightRatio = minH / h;
-      
-      if (widthRatio > heightRatio) {
-        newWidth = minW;
-        newHeight = Math.ceil(newWidth / videoRatio);
-      } else {
-        newHeight = minH;
-        newWidth = Math.ceil(newHeight * videoRatio);
-      }
-      video.style.width = newWidth.concat('px');
-      video.style.height = newHeight.concat('px');
-    };
-
-    video.addEventListener('loadedmetadata', setVideoDimensions, false);
-    window.addEventListener('resize', setVideoDimensions, false);
   }
   render() {
     return (

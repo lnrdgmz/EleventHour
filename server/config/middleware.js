@@ -21,6 +21,7 @@ module.exports = (app, express) => {
   app.use(passport.session());
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, '../../public')));
+  app.use(express.static(path.join(__dirname, '../../public/assets')));
   app.use(authRouter);
   app.use(testRouter);
   app.use('/events', eventRouter);

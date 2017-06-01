@@ -21,8 +21,8 @@ const events = (state = initialState, action) => {
       console.log('adding event to state', state.eventsList);
       return {
         ...state,
-          eventsList: [...state.eventsList, action.eventInfo],
-          visibleEvents: [...state.visibleEvents, action.eventInfo],
+        eventsList: [...state.eventsList, action.eventInfo],
+        visibleEvents: [...state.visibleEvents, action.eventInfo],
         ...state.user,
       };
 

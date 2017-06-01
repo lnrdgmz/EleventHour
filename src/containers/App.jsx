@@ -20,7 +20,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (ownProps) => {
+const mapStateToProps = (state, ownProps) => {
   const user = ownProps.user;
   return {
     user,

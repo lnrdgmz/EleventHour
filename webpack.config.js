@@ -22,7 +22,7 @@ module.exports = {
     loaders: [
       // Images
       {
-        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2|mp4)$/,
         loader: 'url-loader',
         options: {
           limit: 10000000,
