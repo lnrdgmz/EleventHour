@@ -15,18 +15,13 @@ body {
   justify-content: center;
   align-items: center;
 }
-<<<<<<< HEAD
-.page-container-login {
-  width: 100vw;
-  height: 100vh;
-=======
+
 .login-container {
   width: $pageWidth;
   height: $pageHeight;
   display: flex;
   align-items: center;
   justify-content: center;
->>>>>>> scss
 }
 
 .login-video {
