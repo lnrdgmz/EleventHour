@@ -1,14 +1,51 @@
 // CSS for the Profile Container
 
-$fullWidth: 100vw;
-$fullHeight: 100vh;
+// Variables
+$pageWidth: 100vw;
+$pageHeight: 100vh;
+$transparent: rgba(0, 0, 0, 0);
+$fontFamily: 'Viga', sans-serif;
 
 body {
-  width: $fullWidth;
-  height: $fullHeight;
+  width: $pageWidth;
+  height: $pageHeight;
+  font-family: $fontFamily;
 }
 
-.pageContainer {
-  width: $fullWidth;
-  height: $fullHeight;
+.profile-page {
+  width: $pageWidth;
+  height: $pageHeight;
+  background: $transparent;
+}
+.ui.container.page-container {
+  width: $pageWidth;
+  height: $pageHeight;
+  display: flex;
+  align-items: center;
+  border: none;
+  background: blue;
+}
+.ui.fluid.container.profile-container {
+  width: 90%;
+  height: 75%;
+  background: skyblue;
+  border-radius: 10px;
+}
+
+.ui.blue.button.editProfile-button {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.ui.blue.button .hidden.content {
+  position: absolute;
+  top: 50%;
+}
+
+.ui.segment.profile-text {
+  font-family: $fontFamily;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

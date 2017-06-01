@@ -13,10 +13,9 @@ import { fetchEvents, selectEvent } from './actions/eventActions.js';
 // Create the Store
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
 
-  applyMiddleware(thunk,reduxLogger)
-
+const store = createStore(reducers, composeEnhancers(
+  applyMiddleware(thunk),
 ));
 
 

@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 
 // Import Local Dependencies
-import MenuBar from '../presentational/MenuBar';
-import Login from '../presentational/Login';
+import MenuBar from '../components/MenuBar';
+import Login from '../components/Login';
 import { loginUser } from '../actions/actions.js';
 import { connect } from 'react-redux';
 
@@ -20,7 +20,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (ownProps) => {
+const mapStateToProps = (state, ownProps) => {
   const user = ownProps.user;
   return {
     user,

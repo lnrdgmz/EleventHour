@@ -1,8 +1,14 @@
-import '../../public/styles/modal.scss';
+// Import React Dependencies
 import React, { Component } from 'react';
-const OutlineModal = require('boron/OutlineModal');
-import { Header, Menu, Input, Grid, Button, Segment, Divider } from 'semantic-ui-react';
+
+// Import Semantic-UI Dependencies
+import { Header, Grid, Button, Segment, Divider } from 'semantic-ui-react';
+
+// Import Third-Party Dependencies
+import OutlineModal from 'boron/OutlineModal';
 import $ from 'jquery';
+
+//Import Local Dependencies
 import '../../public/styles/loginModal.scss';
 
 class LoginModal extends Component {
@@ -22,7 +28,7 @@ class LoginModal extends Component {
 
   render() {
     return (
-      <div>
+      <div className="modal-page-container">
         <Button onClick={this.showModal} className="splash-button">
           I'm Ready!
         </Button>
