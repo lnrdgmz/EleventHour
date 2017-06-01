@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Button, Container, Header, Icon, Grid, Divider, Modal, Card } from 'semantic-ui-react';
+import { Button, Container, Header, Grid, Divider, Modal, Card } from 'semantic-ui-react';
 import { deleteEvent, updateAttendeeStatus, loginUser } from '../actions/actions';
 import Event from '../components/Event';
+import AttendeeContainer from '../containers/AttendeeContainer';
 
 class UserEvents extends Component {
 
@@ -12,10 +13,13 @@ class UserEvents extends Component {
 
     this.state = {
       creatorVisibile: true,
+      modalFocus: undefined,
+      modalFocusTag: 'Event',
     };
 
     this.filterClick = this.filterClick.bind(this);
     this.deleteClick = this.deleteClick.bind(this);
+    this.changeModalFocusClick = this.changeModalFocusClick.bind(this);
   }
 
   componentWillMount = () => {
@@ -27,12 +31,16 @@ class UserEvents extends Component {
     else this.setState({ creatorVisibile: false });
   }
 
+  changeModalFocusClick = (focusTag) => {
+    this.setState({ modalFocusTag: focusTag });
+  }
+
   deleteClick = event => this.props.deleteEvent(event);
 
   render = () => {
     const { user } = this.props;
     const { creatorVisibile } = this.state;
-    const filteredListLength = user.events.filter(event => creatorVisibile ? event.role === 'Creator' : event.role !== 'Creator').length;
+    const filteredListLength = user.events.filter(event => creatorVisibile ? event.role === 'creator' : event.role !== 'creator').length;
 
     return (
       <Container className="userEvents-container">
@@ -40,6 +48,8 @@ class UserEvents extends Component {
           <Grid.Column >
             <Header as="h1" >
               Your Events
+              {this.state.modalFocusTag}
+              {this.state.modalFocusTag === 'Event'}
             </Header>
           </Grid.Column>
           <Grid.Row centered columns={6} verticalAlign="middle">
@@ -67,7 +77,7 @@ class UserEvents extends Component {
               You are currently not signed up for any events. Add some events to your calendar <a href="/#/events">Here</a>
             </h1>
           ) : (
-            user.events.filter(event => this.state.creatorVisibile ? event.role === 'Creator' : event.role !== 'Creator')
+            user.events.filter(event => this.state.creatorVisibile ? event.role === 'creator' : event.role !== 'creator')
             .map((event) => {
               return (
                 <Card centered key={event.id}>
@@ -82,8 +92,18 @@ class UserEvents extends Component {
                     </Card.Meta>
                   </Card.Content>
                   <Card.Content>
-                    <Modal dimmer="blurring" trigger={<Button >More info</Button>} basic size="small">
-                      <Event event={event} deleteClick={this.deleteClick} />
+                    <Modal
+                      dimmer="blurring"
+                      trigger={<Button >More info</Button>}
+                      onClose={() => this.changeModalFocusClick('Event')}
+                      basic
+                      size="small"
+                    >
+                      {this.state.modalFocusTag === 'Event' ? (
+                        <Event event={event} deleteClick={this.deleteClick} changeModalFocusClick={this.changeModalFocusClick} />
+                      ) : (
+                        <AttendeeContainer eventId={event.id} changeModalFocusClick={this.changeModalFocusClick} />
+                      )}
                     </Modal>
                   </Card.Content>
                 </Card>

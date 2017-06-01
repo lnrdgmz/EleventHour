@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Attendees from '../components/Attendees';
 
@@ -17,10 +18,17 @@ class AttendeesContainer extends React.Component {
       eventId: this.props.eventId,
     };
   }
-  componentDidMount() {
+  componentWillMount() {
     fetch(`/events/${this.state.eventId}`)
-      .then(resp => resp.json())
+      .then(resp => {
+        if (resp) return resp.json();
+        return null;
+      })
       .then((body) => {
+        console.log(body);
+        if (body === null) {
+          return;
+        }
         this.setState({
           users: body.users,
           needs: body.needs,
@@ -28,6 +36,7 @@ class AttendeesContainer extends React.Component {
       })
       .catch(err => console.error(err));
   }
+  
   handleClick(ev, data) {
     const requestObj = {
       id: data.user.attendee_id,
@@ -51,11 +60,13 @@ class AttendeesContainer extends React.Component {
     });
   }
   render() {
+    console.log(this.props);
     return (
       <Attendees
         users={this.state.users}
         needs={this.state.needs}
         handleClick={this.handleClick}
+        changeModalFocusClick={this.props.changeModalFocusClick}
       />
     );
   }
@@ -65,4 +76,14 @@ AttendeesContainer.propTypes = {
   eventId: PropTypes.number.isRequired,
 };
 
-export default AttendeesContainer;
+const mapStateToProps = (state, ownProps) => {
+  const changeModalFocusClick = ownProps.changeModalFocusClick;
+  return {
+    changeModalFocusClick,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {},
+)(AttendeesContainer);

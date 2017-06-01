@@ -29,7 +29,7 @@ const Attendee = (props) => {
     );
   }
   return (
-    <Card>
+    <Card centered>
       <Image src={props.user.img_url} />
       <Card.Content>
         <Card.Header>
