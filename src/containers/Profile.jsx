@@ -1,18 +1,20 @@
-// Import React Components
+// Import React and Redux Dependencies
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-// Import Semantic-UI and CSS Components
+// Import Semantic-UI Dependencies
 import { Grid, Image, Header, Segment, Container, Button, Icon, Menu, Input } from 'semantic-ui-react';
 
+// Import Third-Party Dependencies
+import $ from 'jquery';
+
 // Import Local Components
-import MenuBar from '../components/MenuBar.jsx';
+import MenuBar from '../components/MenuBar';
 import UserEvents from './UserEvents';
 import Survey from './Survey';
 import { loginUser } from '../actions/actions.js';
 import '../../public/styles/profile.scss';
-import $ from 'jquery';
 
 class Profile extends Component {
   static propTypes = {
@@ -50,9 +52,9 @@ class Profile extends Component {
     }
     
     return (
-      <div className="page-container-login">
+      <div className="profile-page">
         <MenuBar />
-        <Container className="profile-page">
+        <Container className="page-container">
           <Container width={16} fluid textAlign="center" className="profile-container">
             <Grid centered stackable>
               <Grid.Column width={4}>
@@ -86,7 +88,7 @@ class Profile extends Component {
                 </Button>
               </Grid.Column>
               <Grid.Column stretched width={12}>
-                <Segment>{this.renderTab()}</Segment>
+                <Segment className="profile-text">{this.renderTab()}</Segment>
               </Grid.Column>
             </Grid>
           </Container>

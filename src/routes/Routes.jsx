@@ -11,7 +11,6 @@ import Survey from '../containers/Survey';
 import UserEvents from '../containers/UserEvents';
 import EventForm from '../components/EventForm';
 
-
 const Routes = () => (
   <HashRouter basename="/" component={App}>
     <Switch>

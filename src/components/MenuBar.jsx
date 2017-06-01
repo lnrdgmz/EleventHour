@@ -16,7 +16,6 @@ class MenuBar extends Component {
         return <EventForm />;
       case 'createEvent':
         return <EventForm />;
-        break;
       default:
         window.location = '/';
     }

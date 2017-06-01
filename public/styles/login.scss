@@ -1,7 +1,9 @@
 // CSS for Login.jsx
 
 // Variables
-
+$pageWidth: 100vw;
+$pageHeight: 100vh;
+$transparent: rgba(0, 0, 0, 0);
 $blue: #004FFF;
 $orange: #FC8000;
 
@@ -13,12 +15,21 @@ body {
   justify-content: center;
   align-items: center;
 }
+<<<<<<< HEAD
 .page-container-login {
   width: 100vw;
   height: 100vh;
+=======
+.login-container {
+  width: $pageWidth;
+  height: $pageHeight;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+>>>>>>> scss
 }
 
-.fullscreen-video {
+.login-video {
  position: fixed;
  top: 50%; left: 50%;
  z-index: -100;
@@ -30,21 +41,11 @@ body {
  padding: 0 !important;
 }
 
-.ui.fluid.container.page {
-  background: rgba(0, 0, 0, 0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.ui.header.login-header .content{
+  vertical-align: baseline;
 }
-// .ui.header .content {
-//   vertical-align: baseline;
-// }
 
-// .ui.header .content {
-//   vertical-align: baseline;
-// }
-
-.ui.grid {
+.ui.grid.login-foreground-grid {
   font-family: 'Viga';
   display: flex;
   align-items: center;
@@ -57,24 +58,9 @@ body {
   text-shadow: 0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 0.5px black;
 }
 
-// .ui.header .sub.header {
-//   font-family: 'Viga';
-//   font-size: 36px;
-//   color: #FEFEFE;
-//   text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
-// }
-
-.ui.middle.aligned.image {
-  width: 201px;
-  height: 46px;
-}
-
-.google-login-button:hover {
-  background: url('../assets/google-focus.png');
-  background-size: 100% 100% !important;
-}
-
-.google-login-button:active {
-  background: url('../assets/google-active.png');
-  background-size: 100% 100% !important;
+.ui.header .sub.header.login-subHeader {
+  font-family: 'Viga';
+  font-size: 24px;
+  color: #FEFEFE;
+  text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
 }

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 //local dependencies
-import MenuBar from '../presentational/MenuBar.jsx';
-import Event from '../presentational/event.jsx';
+import MenuBar from '../components/MenuBar.jsx';
+import Event from '../components/event.jsx';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 import '../../public/styles/events.scss';
 import {fetchEvents, receiveEvents } from '../actions/eventActions.js';
