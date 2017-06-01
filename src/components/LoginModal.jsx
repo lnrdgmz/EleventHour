@@ -1,18 +1,23 @@
-import '../../public/styles/modal.scss';
 import React, { Component } from 'react';
 const OutlineModal = require('boron/OutlineModal');
 import { Header, Menu, Input, Grid, Button, Segment, Divider } from 'semantic-ui-react';
-import $ from 'jquery';
+import Cookies from 'universal-cookie';
+// import $ from 'jquery';
+
 import '../../public/styles/loginModal.scss';
+import '../../public/styles/modal.scss';
 
 class LoginModal extends Component {
   constructor(props) {
     super(props);
     this.showModal = this.showModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
   }
 
   showModal() {
+    const cookies = new Cookies();
+    cookies.set('redirectTo', location.href, { path: '/' });
     this.refs.modal.show();
   }
 

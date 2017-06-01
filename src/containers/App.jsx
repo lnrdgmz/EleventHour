@@ -1,5 +1,8 @@
 // Import React Dependencies
 import React, { Component } from 'react';
+import Cookies from 'universal-cookie';
+import { Redirect } from 'react-router';
+
 
 // Import Local Dependencies
 import MenuBar from '../presentational/MenuBar';
@@ -12,6 +15,15 @@ class App extends Component {
     this.props.loginUser();
   }
   render() {
+    const cookies = new Cookies();
+    const redirectUrl = cookies.get('redirectTo', { path: '/' });
+
+    if (redirectUrl) {
+      cookies.remove('redirectTo', { path: '/' });
+      return (
+        <Redirect push to={redirectUrl.split('#')[1]} />
+      );
+    }
     return (
       <div>
         <Login />
