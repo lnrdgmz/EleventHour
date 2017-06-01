@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 //local dependencies
 import MenuBar from '../components/MenuBar.jsx';
-import Event from '../components/event.jsx';
+import EventPres from '../presentational/event';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 import '../../public/styles/events.scss';
 import {fetchEvents, receiveEvents } from '../actions/eventActions.js';
@@ -37,8 +37,9 @@ class Events extends Component {
           <MenuBar />
           {"Events events events: " + console.log(this.props.events.events)}
           {this.props.events.events === undefined ? null : this.props.events.events.map((event) => {
-            console.log('MAP IS FIRING');
-            return <Event title={event.title} description={event.description} />
+            return (
+              <EventPres title={event.title} description={event.description} />
+            );
           })} 
           <button onClick={this.props.fetchEvents()}> Dispatch an Action</button>
         </div>
