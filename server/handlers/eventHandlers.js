@@ -5,6 +5,7 @@ const Attendee = require('../models/attendee.js');
 const eventUtils = require('../utils/eventUtils');
 const mail = require('../utils/mail');
 
+
 module.exports = {
 
   createEvent: (req, res) => {
@@ -130,4 +131,6 @@ module.exports = {
         res.send(model);
       });
   },
+
+  
 };
