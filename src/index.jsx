@@ -1,7 +1,8 @@
 // Import React and Redux Dependencies
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
+import {persistStore, autoRehydrate} from 'redux-persist'
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reduxLogger from 'redux-logger';
@@ -16,8 +17,10 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(reducers, composeEnhancers(
   applyMiddleware(thunk),
+  autoRehydrate(),
 ));
 
+persistStore(store);
 
 render(
   <Provider store={store}>

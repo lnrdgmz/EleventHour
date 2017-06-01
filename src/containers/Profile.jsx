@@ -1,5 +1,6 @@
 // Import React and Redux Dependencies
 import React, { Component } from 'react';
+import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -13,6 +14,7 @@ import $ from 'jquery';
 import MenuBar from '../components/MenuBar';
 import UserEvents from './UserEvents';
 import Survey from './Survey';
+import EditProfile from './EditProfile';
 import { loginUser } from '../actions/actions.js';
 import '../../public/styles/profile.scss';
 
@@ -21,13 +23,12 @@ class Profile extends Component {
     user: PropTypes.object,
   }
 
-  state = { activeItem: 'bio' };
-
+  state = { activeItem: 'bio', edit: false };
+  
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   editProfile() {
-    $('.profile-username').replaceWith(`<Input type="text" value=${$('.profile-username').text()}/>`);
-    $('.profile-age').replaceWith(`<Input type="text" value=${$('.profile-age').text()}/>`);
+    window.location = "/#/edit";
   }
   renderTab() {
     if (this.state.activeItem === 'events') {
@@ -81,11 +82,18 @@ class Profile extends Component {
                   <Menu.Item name="events" active={activeItem === 'events'} onClick={this.handleItemClick} />
                   <Menu.Item name="edit" active={activeItem === 'edit'} onClick={this.handleItemClick} />
                 </Menu>
-                <Button color="blue" size="large" className="editProfile-button" onClick={this.editProfile}>
-                  <Button.Content visible>
-                    <Icon size="large" name='settings' />
-                  </Button.Content>
-                </Button>
+                <Button.Group fluid>
+                  <Button color="blue" size="large" className="editProfile-button" onClick={this.editProfile}>
+                    <Button.Content visible>
+                      <Icon size="large" name='settings' />
+                    </Button.Content>
+                  </Button>
+                  <Button color="green" size="large" className="editProfile-button" onClick={this.editProfile}>
+                    <Button.Content visible>
+                      <Icon size="large" name='mail outline' />
+                    </Button.Content>
+                  </Button>
+                </Button.Group>
               </Grid.Column>
               <Grid.Column stretched width={12}>
                 <Segment className="profile-text">{this.renderTab()}</Segment>
