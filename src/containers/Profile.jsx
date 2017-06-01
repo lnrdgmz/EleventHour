@@ -53,14 +53,6 @@ class Profile extends Component {
       <div className="page-container-login">
         <MenuBar />
         <Container className="profile-page">
-          <div className="homepage-hero-module">
-            <div className="video-container">
-              <div className="filter" />
-                <video autoPlay loop className="fillWidth">
-                  <source src="https://s1.webmshare.com/g87z3.webm" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
-                </video>
-            </div>
-          </div>
           <Container width={16} fluid textAlign="center" className="profile-container">
             <Grid centered stackable>
               <Grid.Column width={4}>
