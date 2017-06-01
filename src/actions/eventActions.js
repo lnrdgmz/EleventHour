@@ -26,7 +26,7 @@ export function fetchEvents() {
     console.log('arguments is', arguments)
  
 
-    return fetch('/events?page=2')
+    return fetch('/events')
     .then((response) => { return response.json()  } )
     .then((parsedData)=> {
 
