@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Card, Image, Button, Rating, Header, Divider } from 'semantic-ui-react';
 
 function Event(props) {
-  const { event, deleteClick } = props;
+  const { event, deleteClick, changeModalFocusClick } = props;
   const role = event.role;
   const roleStyle = {
     color: 'green',
@@ -39,22 +39,22 @@ function Event(props) {
         </Card.Description>
       </Card.Content>
       <Card.Content extra >
-        {role === 'Creator' ? (
+        {role === 'creator' ? (
           event.full ? (
             <span>
-              <p>This event's roster is curently <strong style={roleStyle}>full</strong>! 
+              <p>This event's roster is curently <strong style={roleStyle}>full</strong>!
               </p>
-              <Button negative onClick={props.deleteClick(event)}>Delete Event</Button>
+              <Button negative onClick={deleteClick(event)}>Delete Event</Button>
             </span>
           ) : (
             <Button.Group widths={2}>
-              <Button >View Roster</Button>
+              <Button onClick={() => changeModalFocusClick('Modal')} >View Roster</Button>
               <Button.Or />
-              <Button negative onClick={props.deleteClick(event)}>Delete Event</Button>
+              <Button negative onClick={() => deleteClick(event)}>Delete Event</Button>
             </Button.Group>
           )
         ) : (
-          <span> Your current status for this event: <strong style={roleStyle}>{role}</strong></span>
+          <span> Your current status for this event: <strong style={roleStyle}>{role.toUpperCase}</strong></span>
         )}
       </Card.Content>
     </Card>

@@ -88,7 +88,12 @@ module.exports = {
         return model.destroy();
       })
       .then((model) => {
-        res.send(model);
+        Attendee.where('event_id', parseInt(req.params.eventId, 10)).fetchAll()
+          .then((attendees) => {
+            if (!attendees) res.status(404).send();
+            return attendees.invokeThen('destroy')
+              .then(arr => res.send({ event: model, arr }));
+          });
       });
   },
 
