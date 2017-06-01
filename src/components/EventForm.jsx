@@ -7,6 +7,8 @@ import $ from 'jquery';
 import { createEvent } from '../actions/actions';
 import moment from 'moment';
 import DatePicker from './DatePicker.jsx';
+import fetch from 'isomorphic-fetch';
+
 let steps = [
   { completed: false, active: true, title: 'Event Name', description: 'Name Your Event' },
   { completed: false, active: false, title: 'Event Time & Date', description: 'Set the Time and Date' },
@@ -61,7 +63,7 @@ class EventForm extends Component {
   }
 
   handleChange(event) {
-    console.log(event.target.name);
+    console.log("EVENT TARGET NAME: "+ event.target.name);
     if(event.target.name === 'needs') {
       if (Number(event.target.value) < 1) { 
         $('button.next').prop('disabled', true);
@@ -75,7 +77,20 @@ class EventForm extends Component {
     const key = event.target.name;
     this.state.eventInfo[key] = event.target.value;
   }
-
+  
+  geoCode(){
+    let data = this.state.eventInfo.location.split(' ').join('+');
+      // console.log(this.state.eventInfo.location.split(' ').join('+'));this.state.eventInfo.location.split(' ').join('+');
+      // const data="323+commack+rd,+shirley,+ny"
+      console.log('GeoCode Pre-Data:', JSON.stringify(data));
+      fetch(`/api/geocode?location=${data}`, {
+        headers: {'Content-Type': 'application/json'},
+        method: 'GET',     
+      })
+      .then(function(response){
+        console.log('Fetch Response:', response);
+      })
+  }
   handleDateChange(m) {
     this.state.m = m;
   }
@@ -110,10 +125,9 @@ class EventForm extends Component {
         }, 250);
       }, 250);
     } else if (this.state.modalInfo.modalNumber === 1) {
-      console.log(this.state.modalInfo);
       const modalThree = {
         headerText: 'Where is Your Event?',
-        placeHolderText: "Duncan's Apartment",
+        placeHolderText: "1337 Duncan's Pl, Duncan, New York",
         previousButtonStatus: true,
         nextButtonStatus: true,
         modalNumber: 2,
@@ -142,6 +156,7 @@ class EventForm extends Component {
         }, 1000);
       }, 250);
     } else if (this.state.modalInfo.modalNumber === 2) {
+      this.geoCode();
       const modalThree = {
         headerText: 'Looking For...',
         placeHolderText: "Example: 2",
