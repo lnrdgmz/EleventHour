@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // Import Semantic-UI Dependencies
 import { Menu, Image, Popup } from 'semantic-ui-react';
-import Modal from '../components/Modal.jsx';
+import EventForm from './EventForm.jsx';
 import '../../public/styles/menuBar.scss';
 
 class MenuBar extends Component {
@@ -13,10 +13,9 @@ class MenuBar extends Component {
   handleItemClick = (e, { name }) => {
     switch (name) {
       case 'profile':
-        return <Modal />;
+        return <EventForm />;
       case 'createEvent':
-        return <Modal />;
-        break;
+        return <EventForm />;
       default:
         window.location = '/';
     }
@@ -35,7 +34,7 @@ class MenuBar extends Component {
           >
             <Image src="http://i.imgur.com/MdYaRqm.png" size="mini" />
           </Menu.Item>
-          <Modal />
+          <EventForm />
           <Menu.Item
             name='profile'
             active={activeItem === 'profile'}

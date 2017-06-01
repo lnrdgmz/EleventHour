@@ -7,21 +7,19 @@ import App from '.././containers/App';
 import Profile from '.././containers/Profile';
 
 import Events from '../containers/Events';
-import EventCreator from '../containers/EventCreator';
 import Survey from '../containers/Survey';
 import UserEvents from '../containers/UserEvents';
-import Modal from '../components/Modal';
+import EventForm from '../components/EventForm';
 
 
 const Routes = () => (
   <HashRouter basename="/" component={App}>
     <Switch>
-      <Route path="/modal" component={Modal} />
+      <Route path="/eventForm" component={EventForm} />
       <Route path="/users" component={Profile} />
       <Route path="/events" component={Events} />
       <Route path="/survey" component={Survey} />
       <Route path="/userEvents" component={UserEvents} />
-      <Route path="/eventCreator" component={EventCreator} />
       <Route path="/" component={App} />
     </Switch>
   </HashRouter>

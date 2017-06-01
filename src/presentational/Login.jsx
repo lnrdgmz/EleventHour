@@ -4,8 +4,8 @@ import React from 'react';
 
 // Import Semantic-UI Components
 import { Grid, Header, Popup } from 'semantic-ui-react';
-import LoginModal from '../components/LoginModal';
-
+import LoginModal from './LoginModal.jsx';
+import Events from '../containers/Events.jsx';
 // Import Local Dependencies
 
 
@@ -19,7 +19,7 @@ class Login extends React.Component {
       showAbout: false,
     };
   }
-
+  
   render() {
     return (
       <div className="page-container">
