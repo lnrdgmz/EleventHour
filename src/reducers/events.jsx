@@ -1,11 +1,10 @@
 import {REQUEST_EVENTS, RECIEVE_EVENTS, SELECT_STATE, INVALIDATE} from '../actions/eventActions.js';
-import {recieveEvents } from '../actions/eventActions.js';
+import {recieveEvents } from '../actions/eventActions';
 
-const selectState = () => {};
+const initialState = { eventsList: [], visibleEvents: [] };
 
-const events = (state = {}, action) => {
+const events = (state = initialState, action) => {
   switch (action.type) {
-
     case 'GET_EVENTS':
       return {
         ...state,
@@ -17,29 +16,25 @@ const events = (state = {}, action) => {
         ...state.eventsList.slice(0, action.payload),
         ...state.eventsList.slice(action.payload + 1),
       ];
-      break;
     case 'ADD_EVENT':
       console.log('adding event to state', state.eventsList);
       return {
         ...state,
-          eventsList: [...state.eventsList, action.eventInfo],
-          visibleEvents: [...state.visibleEvents, action.eventInfo],
+        eventsList: [...state.eventsList, action.eventInfo],
+        visibleEvents: [...state.visibleEvents, action.eventInfo],
         ...state.user,
       };
 
-    case 'RECEIVE_EVENTS': {   
-      return {...state,
-        events: action.payload
-
-
-      }
+    case 'RECEIVE_EVENTS': {
+      return {
+        ...state,
+        events: action.payload,
+      };
+    }
+    default: {
+      return state;
     }
   }
-  return state;
 };
 
 export default events;
-
-        // Object.assign({},state,{
-        //   events : action.payload
-        // })
