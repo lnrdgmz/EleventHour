@@ -95,8 +95,10 @@
     "react-router-scroll": "^0.4.2",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^4.8.0",
     "redux-thunk": "^2.2.0",
     "semantic-ui-css": "^2.2.10",
-    "semantic-ui-react": "^0.68.3"
+    "semantic-ui-react": "^0.68.3",
+    "socket.io": "^2.0.2"
   }
 }
