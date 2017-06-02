@@ -10,9 +10,9 @@ import LoginModal from '../components/LoginModal';
 import '../../public/styles/menuBar.scss';
 
 class MenuBar extends Component {
-  // state = {
-  //   activeItem: '',
-  // }
+  state = {
+    activeItem: '',
+  }
   constructor(props) {
     super(props);
     this.handleLogout = this.handleLogout.bind(this);

@@ -12,6 +12,7 @@ import Events from '../containers/Events';
 import Survey from '../containers/Survey';
 import UserEvents from '../containers/UserEvents';
 import EventForm from '../components/EventForm';
+import EditProfile from '../containers/EditProfile';
 import { loginUser } from '../actions/actions.js';
 
 class Routes extends React.Component {
