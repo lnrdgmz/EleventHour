@@ -20,7 +20,9 @@ const store = createStore(reducers, composeEnhancers(
   autoRehydrate(),
 ));
 
-persistStore(store);
+persistStore(store, {
+  blacklist: ['user'],
+});
 
 render(
   <Provider store={store}>
@@ -29,4 +31,4 @@ render(
   document.getElementById('app'),
 );
 
-store.dispatch(fetchEvents())
+store.dispatch(fetchEvents());
