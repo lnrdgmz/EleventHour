@@ -14,7 +14,9 @@ module.exports = {
       console.log('Incomplete form');
       res.status(400).send();
     } else {
-      // Assumes the category field is an integer value referencing a category ID.
+      const { lat, lng } = eventObj.geoData || { lat: null, lng: null };
+      eventObj.lat = lat;
+      eventObj.lng = lng;
       eventObj.full = false;
       new Event(eventObj).save()
         .then((model) => {
