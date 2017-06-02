@@ -8,7 +8,6 @@ import { Grid, Image, Header, Segment, Container, Menu } from 'semantic-ui-react
 
 // Import Local Components
 import MenuBar from '../presentational/MenuBar.jsx';
-import { loginUser } from '../actions/actions.js';
 import '../../public/styles/profile.scss';
 
 class Profile extends Component {
@@ -17,10 +16,6 @@ class Profile extends Component {
   }
 
   state = { activeItem: 'bio' };
-
-  componentDidMount() {
-    this.props.loginUser();
-  }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   render() {
@@ -80,6 +75,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-  loginUser,
-})(Profile);
+export default connect(mapStateToProps)(Profile);
