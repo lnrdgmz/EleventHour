@@ -59,7 +59,8 @@ const callbackHandler = (req, res) => {
 };
 
 const recordReferer = (req, res, next) => {
-  req.session.redirectTo = req.get('Referer');
+  req.session.redirectTo = req.cookies.redirectTo;
+  res.clearCookie('redirectTo');
   next();
 };
 
@@ -91,9 +92,9 @@ authRouter.get('/auth/logout', (req, res) => {
     res.status(500).send(err);
   });
   console.log(req.cookies);
+  const redirectUrl = req.cookies.redirectTo;
   Object.keys(req.cookies).forEach(cookie => res.clearCookie(cookie));
-  // res.clearCookie('userId', 'displayName', 'events')
-  res.redirect('/');
+  res.redirect(redirectUrl);
 });
 
 module.exports = authRouter;
