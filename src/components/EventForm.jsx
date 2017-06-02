@@ -30,6 +30,7 @@ class EventForm extends Component {
         needs: '',
         description: '',
         dateFlag: false,
+        geoData: {},
       },
       modalInfo: {
         headerText: 'Name Your Event',
@@ -41,6 +42,7 @@ class EventForm extends Component {
       m: moment(),
       modalToRender: '',
       history: [],
+     
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -51,6 +53,8 @@ class EventForm extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleRate = this.handleRate.bind(this);
     this.submitClick = this.submitClick.bind(this);
+    this.geoCode = this.geoCode.bind(this);
+    this.getWeather = this.getWeather.bind(this);
   }
 
   showModal() {
@@ -79,18 +83,42 @@ class EventForm extends Component {
   }
   
   geoCode(){
+    let location;
     let data = this.state.eventInfo.location.split(' ').join('+');
-      // console.log(this.state.eventInfo.location.split(' ').join('+'));this.state.eventInfo.location.split(' ').join('+');
-      // const data="323+commack+rd,+shirley,+ny"
-      console.log('GeoCode Pre-Data:', JSON.stringify(data));
+
       fetch(`/api/geocode?location=${data}`, {
         headers: {'Content-Type': 'application/json'},
         method: 'GET',     
       })
-      .then(function(response){
-        console.log('Fetch Response:', response);
-      })
+      .then((response) => {return response.json()} )
+      .then((data) => {
+        location = data.results[0].geometry.location;
+        this.state.eventInfo.geoData = location;
+       
+      });
+      
+    this.getWeather();
   }
+
+  getWeather(){
+
+    const weatherInfo = moment(this.state.eventInfo.date).format('X');
+    const location = JSON.stringify(this.state.eventInfo.geoData);
+
+    fetch(`/api/weather?info=${weatherInfo}&loc=${location}`,{
+      headers: {'Content-Type': 'application/json'},
+      method: "GET",
+    })
+    .then(function(response){
+      
+      return response.json();
+    })
+    .then(function(data){
+      console.log(data.hourly.summary);
+      console.log(data.hourly.data[0].temperature);
+    })
+  }
+
   handleDateChange(m) {
     this.state.m = m;
   }
@@ -288,6 +316,7 @@ class EventForm extends Component {
         needs: '',
         description: '',
         dateFlag: false,
+        geoData: '',
       },
       modalInfo: {
         headerText: 'Name Your Event',
