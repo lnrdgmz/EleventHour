@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // Import Semantic-UI Dependencies
-import { Header, Grid, Button, Segment, Divider } from 'semantic-ui-react';
+import { Header, Grid, Button, Segment, Divider, Menu } from 'semantic-ui-react';
 
 // Import Third-Party Dependencies
 import OutlineModal from 'boron/OutlineModal';
@@ -34,9 +34,7 @@ class LoginModal extends Component {
   render() {
     return (
       <div className="modal-page-container">
-        <Button onClick={this.showModal} className="splash-button">
-          I'm Ready!
-        </Button>
+        <Button color="blue" onClick={this.showModal}>Login</Button>
         <OutlineModal ref="modal" className="modal-container">
           <Grid className="modal" centered stretched textAlign="center" verticalAlign="top">
             <Grid.Row centered>
