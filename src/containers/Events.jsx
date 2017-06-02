@@ -17,31 +17,30 @@ class Events extends Component {
     this.state = {};
   }
 
-  eventsToShow = (events, filter) => {
-    switch(filter) {
+  // eventsToShow = (events, filter) => {
+  //   switch(filter) {
 
-      case 'SHOW_ALL' : 
-      return componentDidMount()
+  //     case 'SHOW_ALL' : 
+  //     return componentDidMount()
 
-      case "FILTER_BY_TITLE" : 
-      return eventsToShow = this.state.events.filter(ev => ev.title.indexOf(this.state.filterByTitle) > -1);
+  //     case "FILTER_BY_TITLE" : 
+  //     return eventsToShow = this.state.events.filter(ev => ev.title.indexOf(this.state.filterByTitle) > -1);
 
-    }
+  //   }
 
-  }
+  // }
   render() {
 
     // const eventsToShow = this.props.events.events.filter(ev => ev.title.indexOf(this.state.filterByTitle) > -1);
       return (
         <div>
           <MenuBar />
-          {"Events events events: " + console.log(this.props.events.events)}
           {this.props.events.events === undefined ? null : this.props.events.events.map((event) => {
             return (
               <EventPres title={event.title} description={event.description} />
             );
           })} 
-          <button onClick={this.props.fetchEvents()}> Dispatch an Action</button>
+         
         </div>
       )
    }
