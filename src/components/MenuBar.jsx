@@ -4,18 +4,51 @@ import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 
 // Import Semantic-UI Dependencies
-import { Menu, Image, Popup } from 'semantic-ui-react';
+import { Menu, Image, Button, Icon } from 'semantic-ui-react';
 import EventForm from './EventForm.jsx';
 import LoginModal from '../components/LoginModal';
 import '../../public/styles/menuBar.scss';
 
 class MenuBar extends Component {
-  state = {
-    activeItem: '',
-  }
   constructor(props) {
     super(props);
+    this.state = {
+      activeItem: '',
+      menuButton: <Menu.Item name='status'>Loading...</Menu.Item>
+    };
+    this.getUserStatus = this.getUserStatus.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleItemClick = this.handleItemClick.bind(this);
+  }
+  componentWillMount() {
+    return this.getUserStatus();
+  }
+  getUserStatus() {
+    let { activeItem } = this.state.activeItem;
+    const eventForm = <EventForm />;
+    const loginModal = <LoginModal />;
+    const profileButton = <Menu.Item className="menuBarButton" name="profile" position="right" active={activeItem = 'profile'} onClick={this.handleItemClick}>Profile</Menu.Item>;
+    const logOutButton = <Menu.Item className="menuBarButton" name="logout" position="right"><Button negative onClick={this.handleLogout}><Icon name="sign out" /> Logout</Button></Menu.Item>;
+    fetch('/auth/loggedIn', { credentials: 'include' })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        if(data === false) {
+          this.setState({
+            activeItem: '',
+            menuButton: <Menu.Item position="right">{loginModal}</Menu.Item>,
+          });
+        } else {
+          this.setState({
+            activeItem: '',
+            menuButton: [eventForm, <Menu.Menu position="right">{profileButton} {logOutButton}</Menu.Menu>],
+          });
+        }
+      })
+      .catch((err) => {
+        console.error('Error:', err, 'MenuBar.jsx (Line 42)');
+      });
   }
   handleLogout() {
     const cookies = new Cookies();
@@ -23,63 +56,30 @@ class MenuBar extends Component {
     location.href = location.href.split('#')[0] + 'auth/logout';
   }
   handleItemClick (e, { name }) {
-    switch (name) {
-      case 'profile':
-        return <EventForm />;
-      case 'createEvent':
-        return <EventForm />;
-      default:
-        window.location = '/';
-    }
+    console.log("We're Beautiful:", this);
+    this.setState({
+      activeItem: name,
+      menuButton: this.state.menuButton,
+    });
+    console.log(this.state);
   }
 
   render() {
-    const { activeItem } = this.state;
-
-    if (this.props.user.display_name) {
-      return (
-        <div>
-          <Menu stackable>
-            <Menu.Item
-              name="home"
-              active={activeItem === 'home'}
-              onClick={this.handleItemClick}
-            >
-              <Image src="http://i.imgur.com/MdYaRqm.png" size="mini" />
-            </Menu.Item>
-            <EventForm />
-            <Menu.Item
-              name="profile"
-              active={activeItem === 'profile'}
-              onClick={this.handleItemClick}
-            >
-              Profile
-            </Menu.Item>
-            <Menu.Item
-              name="logout"
-              onClick={this.handleLogout}
-            >
-              Log Out
-            </Menu.Item>
-          </Menu>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <Menu stackable>
-            <Menu.Item
-              name="home"
-              active={activeItem === 'home'}
-              onClick={this.handleItemClick}
-            >
-              <Image src="http://i.imgur.com/MdYaRqm.png" size="mini" />
-            </Menu.Item>
-            <Popup trigger={<LoginModal />} />
-          </Menu>
-        </div>
-      )
-    }
+    const { activeItem } = this.state.activeItem;
+    return (
+      <div>
+        <Menu stackable>
+          <Menu.Item
+            name="home"
+            active={activeItem === 'home'}
+            onClick={this.handleItemClick}
+          >
+            <Image src="http://i.imgur.com/MdYaRqm.png" size="mini" />
+          </Menu.Item>
+          {this.state.menuButton}
+        </Menu>
+      </div>
+    );
   }
 }
 
