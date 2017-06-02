@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 //local dependencies
 import MenuBar from '../components/MenuBar.jsx';
 import EventPres from '../presentational/event';
-import { Button, Header, Icon, Modal } from 'semantic-ui-react';
+import { Container, Button, Header, Icon, Modal } from 'semantic-ui-react';
 import '../../public/styles/events.scss';
 import {fetchEvents, receiveEvents } from '../actions/eventActions.js';
 import {store } from '../index.jsx'
@@ -33,15 +33,17 @@ class Events extends Component {
 
     // const eventsToShow = this.props.events.events.filter(ev => ev.title.indexOf(this.state.filterByTitle) > -1);
       return (
-        <div>
+        <div className="events-page">
           <MenuBar />
-          {"Events events events: " + console.log(this.props.events.events)}
-          {this.props.events.events === undefined ? null : this.props.events.events.map((event) => {
-            return (
-              <EventPres title={event.title} description={event.description} />
-            );
-          })} 
-          <button onClick={this.props.fetchEvents()}> Dispatch an Action</button>
+          <Container fluid textAlign="center">
+            {"Events events events: " + console.log(this.props.events.events)}
+            {this.props.events.events === undefined ? null : this.props.events.events.map((event) => {
+              return (
+                <EventPres title={event.title} description={event.description} />
+              );
+            })} 
+            <button onClick={this.props.fetchEvents()}> Dispatch an Action</button>
+          </Container>
         </div>
       )
    }

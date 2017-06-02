@@ -3,12 +3,15 @@
 *:after {
   box-sizing: border-box !important;
 }
+$pageWidth: 100vw;
+$pageHeight: 100vh;
+$transparent: rgba(0, 0, 0, 0);
+$fontFamily: 'Viga', sans-serif;
 
-article {
-  -moz-column-width: 13em;
-  -webkit-column-width: 13em;
-  -moz-column-gap: 1em;
-  -webkit-column-gap: 1em;
+.events-page {
+  width: $pageWidth;
+  height: $pageHeight;
+  font-family: $fontFamily;
 }
 
 section {
@@ -19,10 +22,6 @@ section {
   background: #efefef;
 }
 
-p {
-  margin: 1rem 0;
-  color: black;
-}
 
 .btn {
   background: transparent;
@@ -31,35 +30,7 @@ p {
 }
 /*  styles for background color, etc; not necessary for this thing to work  */
 
-body {
-  padding: 1em;
-  font-family: "Garamond", serif;
-}
-
 h1 {
   font-size: 3rem;
   font-weight: 800;
-}
-
-body {
-  line-height: 1.25;
-}
-
-p {
-  text-align: left;
-}
-
-.text {
-  display: inline-block;
-  width: 40%;
-}
-
-#requests{
-
-  display: inline-block;
-  width: 40%;
-}
-
-h3 {
-  text-align: center;
 }
