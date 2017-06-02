@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
 // Import Semantic-UI Dependencies
 import { Grid, Image, Header, Segment, Container, Button, Icon, Menu, Input } from 'semantic-ui-react';
@@ -15,7 +16,6 @@ import MenuBar from '../components/MenuBar';
 import UserEvents from './UserEvents';
 import Survey from './Survey';
 import EditProfile from './EditProfile';
-import { loginUser } from '../actions/actions.js';
 import '../../public/styles/profile.scss';
 
 class Profile extends Component {
@@ -40,6 +40,9 @@ class Profile extends Component {
   }
 
   render() {
+    if (!this.props.user.display_name) {
+      return <Redirect to="/" />;
+    }
     const { activeItem } = this.state;
     const { user } = this.props;
     let username = user.display_name;
@@ -113,6 +116,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-  loginUser,
-})(Profile);
+export default connect(mapStateToProps)(Profile);
