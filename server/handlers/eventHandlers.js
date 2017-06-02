@@ -1,10 +1,21 @@
 const moment = require('moment');
+const GeoPoint = require('geopoint');
 const db = require('../config/config');
 const Event = require('../models/event');
 const Attendee = require('../models/attendee.js');
 const eventUtils = require('../utils/eventUtils');
 const mail = require('../utils/mail');
 
+const boundingBox = (lat, lng, dist) => {
+  const point = new GeoPoint(lat, lng);
+  const bounds = point.boundingCoordinates(dist);
+  return {
+    lowerLat: Math.min(bounds[0].latitude(), bounds[1].latitude()),
+    upperLat: Math.max(bounds[0].latitude(), bounds[1].latitude()),
+    lowerLng: Math.min(bounds[0].longitude(), bounds[1].longitude()),
+    upperLng: Math.max(bounds[0].longitude(), bounds[1].longitude()),
+  };
+};
 
 module.exports = {
 
@@ -35,15 +46,30 @@ module.exports = {
   },
 
   getEventList: (req, res) => {
-    /*
-    * takes a query param: page. Return 5 events at a time.
-    * Increase to 50 once things are working.
-    *
-    * Add a query param for category or tags? Return 50 events
-    * satisfying that search.
-    */
+    /**
+     * takes the following query params:
+     * page: returns the next page of results
+     * lat,
+     * lng,
+     * dist: Latitude, longitude, and distance, for limiting by proximity
+     *
+     * Add a query param for category or tags? Return 50 events
+     * satisfying that search.
+     */
+
+    // Calculates boundries based on geo-data, if available.
+    const { lat, lng, dist } = req.query;
+    const bounds = lat && lng && dist ? boundingBox(lat, lng, dist) : undefined;
+
+    const timeQueryArray = ['where', 'date_time', '>', moment.utc().format()];
+    const distQueryArray = bounds ?
+    [
+      'lat', '<', bounds.upperLat, 'and', 'lat', '>', bounds.lowerLat, 'and',
+      'lng', '<', bounds.upperLng, 'and', 'lng', '>', bounds.lowerLng,
+    ] : [];
+
     new Event().where({ full: 0 })
-      .query('where', 'date_time', '>', moment.utc().format())
+      .query(...timeQueryArray, ...distQueryArray)
       .orderBy('date_time', 'ASC')
       .fetchPage({
       pageSize: 15,
