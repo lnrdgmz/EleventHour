@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
 // Import Semantic-UI and CSS Components
 import { Grid, Image, Header, Segment, Container, Menu } from 'semantic-ui-react';
@@ -19,6 +20,9 @@ class Profile extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   render() {
+    if (!this.props.user.display_name) {
+      return <Redirect to="/" />;
+    }
     const { activeItem } = this.state;
     const { user } = this.props;
     let username = user.display_name;
