@@ -2,7 +2,6 @@ import React from 'react';
 
 import Message from './Message';
 
-  let userInfo;
 class MessageList extends React.Component {
 
   componentDidUpdate() {
@@ -28,7 +27,6 @@ class MessageList extends React.Component {
       let flag = false;
       let stepOne = msg.split(":");
       let messageData = stepOne.toString().split('","');
-      console.log(stepTwo);
         return (
           <Message
             username={this.props.userInfo}
