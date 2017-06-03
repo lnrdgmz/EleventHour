@@ -1,36 +1,30 @@
-*,
-*:before,
-*:after {
-  box-sizing: border-box !important;
-}
+// Variables
 $pageWidth: 100vw;
 $pageHeight: 100vh;
 $transparent: rgba(0, 0, 0, 0);
 $fontFamily: 'Viga', sans-serif;
 
-.events-page {
+body {
   width: $pageWidth;
   height: $pageHeight;
   font-family: $fontFamily;
 }
 
-section {
-  display: inline-block;
-  margin: 0.25rem;
-  padding: 1rem;
-  width: 100%;
-  background: #efefef;
+.events-page {
+  width: $pageWidth;
+  height: $pageHeight;
+  background: $transparent;
 }
 
-
-.btn {
-  background: transparent;
-  border: none;
-  width: 100%;
+.event-title, .event-description {
+  color: black !important;
 }
-/*  styles for background color, etc; not necessary for this thing to work  */
 
-h1 {
-  font-size: 3rem;
-  font-weight: 800;
+.event-item-meta {
+  color: rgb(155, 177, 201);
+}
+
+.icon {
+  margin-right: 10px;
+  margin-left: 30px;
 }
