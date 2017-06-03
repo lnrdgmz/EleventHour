@@ -29,7 +29,6 @@ class UserEvents extends Component {
 
     this.handleLeaveClick = this.handleLeaveClick.bind(this);
     this.toggleConfirm = this.toggleConfirm.bind(this);
-
     this.getWeather = this.getWeather.bind(this);
 
   }
@@ -57,14 +56,16 @@ class UserEvents extends Component {
 
   deleteClick = event => this.props.deleteEvent(event);
 
+
   handleLeaveClick(user, event) {
     this.props.leaveEvent(user, event);
     this.setState({ showConfirmButtons: false });
+
 }
 
   getWeather(){
     const { user } = this.props;
-<<<<<<< HEAD
+
     console.log(user.events);
     let geoData =  user.events[0].lat + ',' + user.events[0].lng;
     // const weatherInfo = moment(user.events.date).format('X');
@@ -101,7 +102,7 @@ class UserEvents extends Component {
     //   console.log(data.hourly.data[0].temperature);
 
     // })
-=======
+
     // console.log(user.events);
     const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
     const time = moment(user.events.date_time).format('X');
@@ -123,7 +124,6 @@ class UserEvents extends Component {
       console.log(user.events.weather)
 
     })
->>>>>>> feat(component): dynamic weather rendering
 
   }
 
