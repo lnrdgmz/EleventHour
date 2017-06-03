@@ -17,12 +17,12 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(reducers, composeEnhancers(
   applyMiddleware(thunk),
-  autoRehydrate(),
+  // autoRehydrate(),
 ));
 
-persistStore(store, {
-  blacklist: ['user'],
-});
+// persistStore(store, {
+//   blacklist: ['user'],
+// });
 
 render(
   <Provider store={store}>
