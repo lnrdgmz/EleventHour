@@ -165,5 +165,15 @@ module.exports = {
       });
   },
 
-  
+  deleteAttendee: (req, res) => {
+    const model = req.body;
+    new Attendee(model).fetch()
+      .then((model) => {
+        if (!model) {
+          res.status(404).send();
+        }
+        return model.destroy();
+      })
+      .then(model => res.send(model));
+  },
 };

@@ -14,7 +14,8 @@ eventRouter.route('/join/:eventId')
   .post(eventHandlers.joinEvent);
 
 eventRouter.route('/attendees')
-  .put(eventHandlers.editAttendees);
+  .put(eventHandlers.editAttendees)
+  .delete(eventHandlers.deleteAttendee);
 
 eventRouter.route('/:eventId')
   .get(eventHandlers.getEvent)
