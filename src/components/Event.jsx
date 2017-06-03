@@ -81,6 +81,7 @@ function Event(props) {
             bottomPart
           )}
       </Card.Content>
+      }
     </Card>
   );
 }
