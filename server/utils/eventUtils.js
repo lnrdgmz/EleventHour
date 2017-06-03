@@ -1,3 +1,4 @@
+const GeoPoint = require('geopoint');
 const Event = require('../models/event');
 
 // Put all utility/helper functions for events here
@@ -35,6 +36,18 @@ const updateEventFull = (eventId) => {
     });
 };
 
+const boundingBox = (lat, lng, dist) => {
+  const point = new GeoPoint(lat, lng);
+  const bounds = point.boundingCoordinates(dist);
+  return {
+    lowerLat: Math.min(bounds[0].latitude(), bounds[1].latitude()),
+    upperLat: Math.max(bounds[0].latitude(), bounds[1].latitude()),
+    lowerLng: Math.min(bounds[0].longitude(), bounds[1].longitude()),
+    upperLng: Math.max(bounds[0].longitude(), bounds[1].longitude()),
+  };
+};
+
 module.exports = {
   updateEventFull,
+  boundingBox,
 };

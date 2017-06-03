@@ -15,11 +15,14 @@ class UserEvents extends Component {
       creatorVisibile: true,
       modalFocus: undefined,
       modalFocusTag: 'Event',
+      showConfirmButtons: false,
     };
 
     this.filterClick = this.filterClick.bind(this);
     this.deleteClick = this.deleteClick.bind(this);
     this.changeModalFocusClick = this.changeModalFocusClick.bind(this);
+    this.handleLeaveClick = this.handleLeaveClick.bind(this);
+    this.toggleConfirm = this.toggleConfirm.bind(this);
   }
 
   componentWillMount = () => {
@@ -31,12 +34,34 @@ class UserEvents extends Component {
     else this.setState({ creatorVisibile: false });
   }
 
+  toggleConfirm() {
+    this.setState((prevState) => {
+      return {
+        showConfirmButtons: !prevState.showConfirmButtons,
+      };
+    });
+  }
+
   changeModalFocusClick = (focusTag) => {
     this.setState({ modalFocusTag: focusTag });
   }
 
   deleteClick = event => this.props.deleteEvent(event);
 
+  handleLeaveClick(user, event) {
+    const reqObj = {
+      user_id: user.id,
+      event_id: event.id,
+    };
+    fetch('/events/attendees', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reqObj),
+    })
+    .then(() => {
+      this.props.loginUser();
+    });
+  }
   render = () => {
     const { user } = this.props;
     const { creatorVisibile } = this.state;
@@ -100,7 +125,16 @@ class UserEvents extends Component {
                       size="small"
                     >
                       {this.state.modalFocusTag === 'Event' ? (
-                        <Event event={event} parent="User" deleteClick={this.deleteClick} changeModalFocusClick={this.changeModalFocusClick} />
+                        <Event
+                          parent="User"
+                          event={event}
+                          user={this.props.user}
+                          deleteClick={this.deleteClick}
+                          handleLeaveClick={this.handleLeaveClick}
+                          changeModalFocusClick={this.changeModalFocusClick}
+                          showConfirmButtons={this.state.showConfirmButtons}
+                          toggleConfirm={this.toggleConfirm}
+                        />
                       ) : (
                         <AttendeeContainer eventId={event.id} changeModalFocusClick={this.changeModalFocusClick} />
                       )}
