@@ -28,7 +28,7 @@ getInitialEvents()
       },
       composeEnhancers(
         applyMiddleware(thunk),
-        autoRehydrate(),
+        // autoRehydrate(),
       ),
     );
 
