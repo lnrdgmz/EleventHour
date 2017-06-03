@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Card, Image, Button, Rating, Header, Divider } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 function Event(props) {
   const { event, deleteClick, changeModalFocusClick } = props;
@@ -13,6 +14,24 @@ function Event(props) {
     roleStyle.color = 'red';
   } else if (role === 'pending') {
     roleStyle.color = 'orange';
+  }
+
+  let bottomPart;
+  if (props.showConfirmButtons) {
+    bottomPart = (
+      <div>
+        <span>Are you sure you want to leave this event?</span>
+        <Button onClick={props.toggleConfirm}>No</Button>
+        <Button negative onClick={props.handleLeaveClick.bind(null, props.user, props.event)} >Yes</Button>
+      </div>
+    );
+  } else {
+    bottomPart = (
+      <div>
+        <span>Your current status for this event: <strong style={roleStyle}>{role.toUpperCase()}</strong></span>
+        <Button negative onClick={props.toggleConfirm}>Leave Event</Button>
+      </div>
+    );
   }
 
   return (
@@ -54,11 +73,20 @@ function Event(props) {
             </Button.Group>
           )
         ) : (
-          <span> Your current status for this event: <strong style={roleStyle}>{role.toUpperCase}</strong></span>
+          bottomPart
         )}
       </Card.Content>
     </Card>
   );
 }
+
+Event.propTypes = {
+  showConfirmButtons: PropTypes.bool.isRequired,
+  event: PropTypes.object.isRequired,
+  deleteClick: PropTypes.func.isRequired,
+  handleLeaveClick: PropTypes.func.isRequired,
+  toggleConfirm: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+};
 
 export default Event;
