@@ -1,65 +1,32 @@
-*,
-*:before,
-*:after {
-  box-sizing: border-box !important;
-}
 
-article {
-  -moz-column-width: 13em;
-  -webkit-column-width: 13em;
-  -moz-column-gap: 1em;
-  -webkit-column-gap: 1em;
-}
 
-section {
-  display: inline-block;
-  margin: 0.25rem;
-  padding: 1rem;
-  width: 100%;
-  background: #efefef;
-}
-
-p {
-  margin: 1rem 0;
-  color: black;
-}
-
-.btn {
-  background: transparent;
-  border: none;
-  width: 100%;
-}
-/*  styles for background color, etc; not necessary for this thing to work  */
+// Variables
+$pageWidth: 100vw;
+$pageHeight: 100vh;
+$transparent: rgba(0, 0, 0, 0);
+$fontFamily: 'Viga', sans-serif;
 
 body {
-  padding: 1em;
-  font-family: "Garamond", serif;
+  width: $pageWidth;
+  height: $pageHeight;
+  font-family: $fontFamily;
 }
 
-h1 {
-  font-size: 3rem;
-  font-weight: 800;
+.events-page {
+  width: $pageWidth;
+  height: $pageHeight;
+  background: $transparent;
 }
 
-body {
-  line-height: 1.25;
+.event-title, .event-description {
+  color: black !important;
 }
 
-p {
-  text-align: left;
+.event-item-meta {
+  color: rgb(155, 177, 201);
 }
 
-.text {
-  display: inline-block;
-  width: 40%;
-}
-
-#requests{
-
-  display: inline-block;
-  width: 40%;
-}
-
-h3 {
-  text-align: center;
+.icon {
+  margin-right: 10px;
+  margin-left: 30px;
 }

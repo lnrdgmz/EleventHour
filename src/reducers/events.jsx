@@ -1,5 +1,4 @@
 import {REQUEST_EVENTS, RECIEVE_EVENTS, SELECT_STATE, INVALIDATE} from '../actions/eventActions.js';
-import {recieveEvents } from '../actions/eventActions';
 
 const initialState = { eventsList: [], visibleEvents: [] };
 
@@ -12,10 +11,13 @@ const events = (state = initialState, action) => {
         visibleEvents: action.payLoad.slice(0, 51),
       };
     case 'REMOVE_EVENT':
-      return [
-        ...state.eventsList.slice(0, action.payload),
-        ...state.eventsList.slice(action.payload + 1),
-      ];
+      return {
+        ...state,
+        eventsList: {
+          ...state.eventsList.slice(0, action.payload),
+          ...state.eventsList.slice(action.payload + 1),
+        },
+      };
     case 'ADD_EVENT':
       console.log('adding event to state', state.eventsList);
       return {
@@ -28,7 +30,7 @@ const events = (state = initialState, action) => {
     case 'RECEIVE_EVENTS': {
       return {
         ...state,
-        events: action.payload,
+        eventsList: state.eventsList.concat(action.payload),
       };
     }
     default: {

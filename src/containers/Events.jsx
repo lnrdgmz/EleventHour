@@ -1,62 +1,89 @@
 // Import React and Redux Dependencies
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import Waypoint from 'react-waypoint';
+import { filter } from 'lodash/collection';
+import { escapeRegExp } from 'lodash/string';
 
-//local dependencies
-import MenuBar from '../components/MenuBar.jsx';
-import EventPres from '../presentational/event';
-import { Button, Header, Icon, Modal } from 'semantic-ui-react';
+// local dependencies
+import { Container, Search, Grid, Divider } from 'semantic-ui-react';
+import MenuBar from '../components/MenuBar';
+import GridEvent from '../components/GridEvent';
+import { fetchEvents } from '../actions/eventActions';
 import '../../public/styles/events.scss';
-import {fetchEvents, receiveEvents } from '../actions/eventActions.js';
-import {store } from '../index.jsx'
 
 class Events extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      page: 1,
+    };
   }
 
-  eventsToShow = (events, filter) => {
-    switch(filter) {
-
-      case 'SHOW_ALL' : 
-      return componentDidMount()
-
-      case "FILTER_BY_TITLE" : 
-      return eventsToShow = this.state.events.filter(ev => ev.title.indexOf(this.state.filterByTitle) > -1);
-
-    }
-
+  getMoreEvents = () => {
+    this.setState({ page: this.state.page += 1 });
+    this.props.fetchEvents(this.state.page);
+    console.log(this.state.page);
   }
-  render() {
 
-    // const eventsToShow = this.props.events.events.filter(ev => ev.title.indexOf(this.state.filterByTitle) > -1);
-      return (
-        <div>
-          <MenuBar />
-          {"Events events events: " + console.log(this.props.events.events)}
-          {this.props.events.events === undefined ? null : this.props.events.events.map((event) => {
+  componentWillMount() {
+    this.resetComponent();
+  }
+
+  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' });
+
+  handleResultSelect = (e, result) => this.setState({ value: result.description })
+
+  handleSearchChange = (e, value) => {
+    this.setState({ isLoading: true, value });
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) return this.resetComponent();
+
+      const re = new RegExp(escapeRegExp(this.state.value), 'i');
+      const isMatch = result => re.test(result.description);
+
+      this.setState({
+        isLoading: false,
+        results: filter(this.props.eventsList, isMatch),
+      });
+    }, 500);
+  }
+
+  render = () => {
+    const { eventsList } = this.props;
+    const { isLoading, value, results } = this.state;
+
+    return (
+      <Container className="events-page" >
+        <MenuBar />
+        <Search
+          loading={isLoading}
+          onSearchChange={this.handleSearchChange}
+          results={results}
+          value={value}
+          {...this.props}
+        />
+        <Divider />
+        <Grid centered columns={3} stackable relaxed >
+          {eventsList === undefined ? null : eventsList.map((event) => {
             return (
-              <EventPres title={event.title} description={event.description} />
+              <GridEvent key={event.id} event={event} />
             );
-          })} 
-          <button onClick={this.props.fetchEvents()}> Dispatch an Action</button>
-        </div>
-      )
-   }
-  }
-
-
-const mapStatetoProps = function(state){
-  return { events : state.events}
-};
-
-const mapDispatchtoProps = function(dispatch){
-  return {
-    fetchEvents
+          })}
+        </Grid>
+        <Waypoint
+          onEnter={() => this.getMoreEvents()}
+        />
+      </Container>
+    );
   }
 }
 
+const mapStatetoProps = ({ events }) => ({ eventsList: events.eventsList });
 
-export default connect(mapStatetoProps, mapDispatchtoProps)(Events);
+export default connect(
+  mapStatetoProps,
+  {
+    fetchEvents,
+  })(Events);
