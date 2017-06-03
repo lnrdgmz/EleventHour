@@ -126,6 +126,7 @@ class UserEvents extends Component {
                     >
                       {this.state.modalFocusTag === 'Event' ? (
                         <Event
+                          parent="User"
                           event={event}
                           user={this.props.user}
                           deleteClick={this.deleteClick}

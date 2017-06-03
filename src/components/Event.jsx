@@ -4,7 +4,7 @@ import { Card, Image, Button, Rating, Header, Divider } from 'semantic-ui-react'
 import PropTypes from 'prop-types';
 
 function Event(props) {
-  const { event, deleteClick, changeModalFocusClick } = props;
+  const { event, deleteClick, changeModalFocusClick, parent } = props;
   const role = event.role;
   const roleStyle = {
     color: 'green',
@@ -15,6 +15,10 @@ function Event(props) {
   } else if (role === 'pending') {
     roleStyle.color = 'orange';
   }
+
+  const imgStyle = {
+    height: '220px',
+  };
 
   let bottomPart;
   if (props.showConfirmButtons) {
@@ -36,8 +40,8 @@ function Event(props) {
 
   return (
 
-    <Card centered >
-      <Image src={event.img_url} />
+    <Card centered fluid>
+      <Image src={event.img_url} style={imgStyle} />
       <Card.Content>
         <Card.Header>
           {event.title}
@@ -57,24 +61,25 @@ function Event(props) {
           <Rating defaultRating={event.skill_level} maxRating={5} disabled />
         </Card.Description>
       </Card.Content>
-      <Card.Content extra >
-        {role === 'creator' ? (
-          event.full ? (
-            <span>
-              <p>This event's roster is curently <strong style={roleStyle}>full</strong>!
-              </p>
-              <Button negative onClick={deleteClick(event)}>Delete Event</Button>
-            </span>
+      { parent === 'User' &&
+        <Card.Content extra >
+          {role === 'creator' ? (
+            event.full ? (
+              <span>
+                <p>This event's roster is curently <strong style={roleStyle}>full</strong>!
+                </p>
+                <Button negative onClick={() => deleteClick(event)}>Delete Event</Button>
+              </span>
+            ) : (
+              <Button.Group widths={2}>
+                <Button onClick={() => changeModalFocusClick('Modal')} >View Roster</Button>
+                <Button.Or />
+                <Button negative onClick={() => deleteClick(event)}>Delete Event</Button>
+              </Button.Group>
+            )
           ) : (
-            <Button.Group widths={2}>
-              <Button onClick={() => changeModalFocusClick('Modal')} >View Roster</Button>
-              <Button.Or />
-              <Button negative onClick={() => deleteClick(event)}>Delete Event</Button>
-            </Button.Group>
-          )
-        ) : (
-          bottomPart
-        )}
+            bottomPart
+          )}
       </Card.Content>
     </Card>
   );

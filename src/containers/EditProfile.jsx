@@ -101,13 +101,17 @@ class EditProfile extends Component {
                 </Menu>
                 <Button color="green" size="large" className="editProfile-button" onClick={this.handleSubmit}>
                   <Button.Content visible>
-                    <Icon size="large" name='save' />
+                    <Icon size="large" name="save" />
                   </Button.Content>
                 </Button>
               </Grid.Column>
               <Grid.Column stretched width={12}>
                 <Segment className="profile-text">
-                  <textarea label='Bio' labelPosition='left corner' type="text" name="bio" defaultValue={this.props.bio} onChange={this.handleInputChange} className="editBio" />
+                  <textarea label="Bio" labelPosition="left corner" type="text" name="bio" defaultValue={this.props.bio} onChange={this.handleInputChange} className="editBio" />
+                  <textarea label="Bio" labelPosition="left corner" type="text" name="bio" defaultValue={this.props.bio} onChange={this.handleInputChange} className="editBio" />
+                  <textarea label="Bio" labelPosition="left corner" type="text" name="bio" defaultValue={this.props.bio} onChange={this.handleInputChange} className="editBio" />
+                  <textarea label="Bio" labelPosition="left corner" type="text" name="bio" defaultValue={this.props.bio} onChange={this.handleInputChange} className="editBio" />
+                  <textarea label="Bio" labelPosition="left corner" type="text" name="bio" defaultValue={this.props.bio} onChange={this.handleInputChange} className="editBio" />
                 </Segment>
               </Grid.Column>
             </Grid>
