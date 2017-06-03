@@ -21,16 +21,10 @@ export const receiveEvents = (json) => {
 
 /* Async Action Creators*/
 
-export function fetchEvents() {
+export function fetchEvents(page) {
   return function (dispatch) {
-    console.log('arguments is', arguments)
- 
-
-    return fetch('/events')
-    .then((response) => { return response.json()  } )
-    .then((parsedData)=> {
-      console.log(parsedData);
-      dispatch({ type: RECEIVE_EVENTS, payload: parsedData });
-    });
+    fetch(`/events?page=${page}` || '/events')
+    .then(response => response.json())
+    .then(parsedData => dispatch({ type: RECEIVE_EVENTS, payload: parsedData }));
   };
 }

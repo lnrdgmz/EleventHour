@@ -58,6 +58,8 @@ db.knex.schema.hasTable('event').then( exists => {
           event.string('category').references('category.id');
           event.string('img_url', 250);
           event.string('location');
+          event.decimal('lat', 10, 8);
+          event.decimal('lng', 11, 8);
           event.integer('skill_level');
           event.string('habitat', 60);
           event.timestamps();
