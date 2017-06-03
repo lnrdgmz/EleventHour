@@ -63,7 +63,7 @@ class Events extends Component {
   }
 
   render = () => {
-    const { eventsList } = this.props;
+    const { eventsList, user } = this.props;
     const { isLoading, value, results } = this.state;
 
     return (
@@ -91,7 +91,7 @@ class Events extends Component {
           size="small"
           open={Boolean(this.state.modalFocus)}
         >
-          <Event parent="Grid" event={this.state.modalFocus} deleteClick="" changeModalFocusClick="" />
+          <Event parent="Grid" user={user} event={this.state.modalFocus} deleteClick="" changeModalFocusClick="" />
         </Modal>
         <Waypoint
           onEnter={() => this.getMoreEvents()}
@@ -101,7 +101,10 @@ class Events extends Component {
   }
 }
 
-const mapStatetoProps = ({ events }) => ({ eventsList: events.eventsList });
+const mapStatetoProps = ({ events, user }) => ({ 
+  eventsList: events.eventsList,
+  user,
+});
 
 export default connect(
   mapStatetoProps,

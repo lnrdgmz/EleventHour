@@ -5,37 +5,49 @@ import PropTypes from 'prop-types';
 
 function Event(props) {
   const { event, deleteClick, changeModalFocusClick, parent } = props;
-  const role = event.role;
-  const roleStyle = {
-    color: 'green',
-  };
-
-  if (role === 'declined') {
-    roleStyle.color = 'red';
-  } else if (role === 'pending') {
-    roleStyle.color = 'orange';
-  }
-
+  
+  let bottomPart;
   const imgStyle = {
     height: '220px',
   };
 
-  let bottomPart;
-  if (props.showConfirmButtons) {
-    bottomPart = (
-      <div>
-        <span>Are you sure you want to leave this event?</span>
-        <Button onClick={props.toggleConfirm}>No</Button>
-        <Button negative onClick={props.handleLeaveClick.bind(null, props.user, props.event)} >Yes</Button>
-      </div>
-    );
-  } else {
-    bottomPart = (
-      <div>
-        <span>Your current status for this event: <strong style={roleStyle}>{role.toUpperCase()}</strong></span>
-        <Button negative onClick={props.toggleConfirm}>Leave Event</Button>
-      </div>
-    );
+
+  if (parent === 'User') {
+    const role = event.role;
+    const roleStyle = {
+      color: 'green',
+    };
+
+    if (role === 'declined') {
+      roleStyle.color = 'red';
+    } else if (role === 'pending') {
+      roleStyle.color = 'orange';
+    }
+
+    if (props.showConfirmButtons) {
+      bottomPart = (
+        <div>
+          <span>Are you sure you want to leave this event?</span>
+          <Button onClick={props.toggleConfirm}>No</Button>
+          <Button
+            negative
+            onClick={props.handleLeaveClick.bind(null, props.user, props.event)}
+          >
+            Yes
+          </Button>
+        </div>
+      );
+    } else {
+      bottomPart = (
+        <div>
+          <span>
+            Your current status for this event:
+              <strong style={roleStyle}> {role.toUpperCase()} </strong>
+          </span>
+          <Button negative onClick={props.toggleConfirm}>Leave Event</Button>
+        </div>
+      );
+    }
   }
 
   return (
@@ -80,7 +92,7 @@ function Event(props) {
           ) : (
             bottomPart
           )}
-      </Card.Content>
+        </Card.Content>
       }
     </Card>
   );
