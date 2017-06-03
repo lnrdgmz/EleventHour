@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Card, Image, Button, Rating, Header, Divider } from 'semantic-ui-react';
 
 function Event(props) {
-  const { event, deleteClick, changeModalFocusClick } = props;
+  const { event, deleteClick, changeModalFocusClick, parent } = props;
   const role = event.role;
   const roleStyle = {
     color: 'green',
@@ -15,10 +15,14 @@ function Event(props) {
     roleStyle.color = 'orange';
   }
 
+  const imgStyle = {
+    height: '220px',
+  };
+
   return (
 
-    <Card centered >
-      <Image src={event.img_url} />
+    <Card centered fluid>
+      <Image src={event.img_url} style={imgStyle} />
       <Card.Content>
         <Card.Header>
           {event.title}
@@ -38,25 +42,27 @@ function Event(props) {
           <Rating defaultRating={event.skill_level} maxRating={5} disabled />
         </Card.Description>
       </Card.Content>
-      <Card.Content extra >
-        {role === 'creator' ? (
-          event.full ? (
-            <span>
-              <p>This event's roster is curently <strong style={roleStyle}>full</strong>!
-              </p>
-              <Button negative onClick={deleteClick(event)}>Delete Event</Button>
-            </span>
+      { parent === 'User' &&
+        <Card.Content extra >
+          {role === 'creator' ? (
+            event.full ? (
+              <span>
+                <p>This event's roster is curently <strong style={roleStyle}>full</strong>!
+                </p>
+                <Button negative onClick={() => deleteClick(event)}>Delete Event</Button>
+              </span>
+            ) : (
+              <Button.Group widths={2}>
+                <Button onClick={() => changeModalFocusClick('Modal')} >View Roster</Button>
+                <Button.Or />
+                <Button negative onClick={() => deleteClick(event)}>Delete Event</Button>
+              </Button.Group>
+            )
           ) : (
-            <Button.Group widths={2}>
-              <Button onClick={() => changeModalFocusClick('Modal')} >View Roster</Button>
-              <Button.Or />
-              <Button negative onClick={() => deleteClick(event)}>Delete Event</Button>
-            </Button.Group>
-          )
-        ) : (
-          <span> Your current status for this event: <strong style={roleStyle}>{role.toUpperCase}</strong></span>
-        )}
-      </Card.Content>
+            <span> Your current status for this event: <strong style={roleStyle}>{role.toUpperCase}</strong></span>
+          )}
+        </Card.Content>
+      }
     </Card>
   );
 }

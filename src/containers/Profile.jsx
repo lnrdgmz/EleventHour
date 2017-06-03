@@ -92,12 +92,12 @@ class Profile extends Component {
                 <Button.Group fluid>
                   <Button color="blue" size="large" className="editProfile-button" onClick={this.editProfile}>
                     <Button.Content visible>
-                      <Icon size="large" name='settings' />
+                      <Icon size="large" name="settings" />
                     </Button.Content>
                   </Button>
                   <Button color="green" size="large" className="editProfile-button" onClick={this.editProfile}>
                     <Button.Content visible>
-                      <Icon size="large" name='mail outline' />
+                      <Icon size="large" name="mail outline" />
                     </Button.Content>
                   </Button>
                 </Button.Group>

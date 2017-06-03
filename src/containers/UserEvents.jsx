@@ -100,7 +100,7 @@ class UserEvents extends Component {
                       size="small"
                     >
                       {this.state.modalFocusTag === 'Event' ? (
-                        <Event event={event} deleteClick={this.deleteClick} changeModalFocusClick={this.changeModalFocusClick} />
+                        <Event event={event} parent="User" deleteClick={this.deleteClick} changeModalFocusClick={this.changeModalFocusClick} />
                       ) : (
                         <AttendeeContainer eventId={event.id} changeModalFocusClick={this.changeModalFocusClick} />
                       )}
