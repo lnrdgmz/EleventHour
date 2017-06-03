@@ -1,21 +1,20 @@
 const moment = require('moment');
-const GeoPoint = require('geopoint');
 const db = require('../config/config');
 const Event = require('../models/event');
 const Attendee = require('../models/attendee.js');
 const eventUtils = require('../utils/eventUtils');
 const mail = require('../utils/mail');
 
-const boundingBox = (lat, lng, dist) => {
-  const point = new GeoPoint(lat, lng);
-  const bounds = point.boundingCoordinates(dist);
-  return {
-    lowerLat: Math.min(bounds[0].latitude(), bounds[1].latitude()),
-    upperLat: Math.max(bounds[0].latitude(), bounds[1].latitude()),
-    lowerLng: Math.min(bounds[0].longitude(), bounds[1].longitude()),
-    upperLng: Math.max(bounds[0].longitude(), bounds[1].longitude()),
-  };
-};
+const knex = require('knex')({
+    client: 'mysql',
+    connection: {
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        charset: 'utf8',
+    }
+});
 
 module.exports = {
 
@@ -59,20 +58,25 @@ module.exports = {
 
     // Calculates boundries based on geo-data, if available.
     const { lat, lng, dist } = req.query;
-    const bounds = lat && lng && dist ? boundingBox(lat, lng, dist) : undefined;
-
-    const timeQueryArray = ['where', 'date_time', '>', moment.utc().format()];
-    const distQueryArray = bounds ?
-    [
-      'lat', '<', bounds.upperLat, 'and', 'lat', '>', bounds.lowerLat, 'and',
-      'lng', '<', bounds.upperLng, 'and', 'lng', '>', bounds.lowerLng,
-    ] : [];
+    const bounds = lat && lng && dist
+    ? eventUtils.boundingBox(parseFloat(lat), parseFloat(lng), parseFloat(dist))
+    : undefined;
 
     new Event().where({ full: 0 })
-      .query(...timeQueryArray, ...distQueryArray)
+      .query(((qb) => {
+        if (bounds) {
+          qb.where('lat', '<', bounds.upperLat)
+            .andWhere('lat', '>', bounds.lowerLat)
+            .andWhere('lng', '<', bounds.upperLng)
+            .andWhere('lng', '>', bounds.lowerLng)
+            .andWhere('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
+        } else {
+          qb.where('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
+        }
+      }))
       .orderBy('date_time', 'ASC')
       .fetchPage({
-        pageSize: 3,
+        pageSize: 10,
         page: req.query.page || 1,
       })
       .then((models) => {
