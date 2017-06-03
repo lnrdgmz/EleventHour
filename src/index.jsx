@@ -32,7 +32,7 @@ getInitialEvents()
       ),
     );
 
-    persistStore(store);
+   // persistStore(store);
 
     render(
       <Provider store={store}>
