@@ -30,7 +30,7 @@ class Events extends Component {
   }
 
   getMoreEvents = () => {
-    this.setState({ page: this.state.page += 1 });
+    this.setState({ page: this.state.page});
     this.props.fetchEvents(this.state.page);
     console.log(this.state.page);
   }
