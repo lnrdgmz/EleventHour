@@ -70,6 +70,7 @@
     "express": "^4.15.3",
     "express-session": "^1.15.2",
     "flexboxgrid": "^6.3.1",
+    "geopoint": "^1.0.1",
     "history": "^4.6.1",
     "input-moment": "^0.3.2",
     "isomorphic-fetch": "^2.2.1",
