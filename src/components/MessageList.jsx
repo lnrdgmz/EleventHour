@@ -2,7 +2,6 @@ import React from 'react';
 
 import Message from './Message';
 
-  let userInfo;
 class MessageList extends React.Component {
 
   componentDidUpdate() {
@@ -23,12 +22,8 @@ class MessageList extends React.Component {
       console.log(myArray);
     });
     const displayMessages = myArray.map((msg) => {
-      let newMessage = JSON.stringify(msg);
-      let str = '';
-      let flag = false;
-      let stepOne = msg.split(":");
-      let messageData = stepOne.toString().split('","');
-      console.log(stepTwo);
+      const stepOne = msg.split(":");
+      const messageData = stepOne.toString().split('","');
         return (
           <Message
             username={this.props.userInfo}
