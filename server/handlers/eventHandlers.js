@@ -44,10 +44,11 @@ module.exports = {
       .query('where', 'date_time', '>', moment.utc().format())
       .orderBy('date_time', 'ASC')
       .fetchPage({
-      pageSize: 15,
-      page: req.query.page || 1,
-    })
+        pageSize: 3,
+        page: req.query.page || 1,
+      })
       .then((models) => {
+        console.log(req.query.page);
         res.send(models);
       });
   },
