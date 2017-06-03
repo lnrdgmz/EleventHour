@@ -59,7 +59,6 @@ userRouter.route('/:userId')
         if (model.attributes.messages === '') {
           model.set('messages', [message]);
         } else {
-          
            console.log(JSON.stringify(model.attributes.messages));
            model.set('messages', model.attributes.messages + ', ' + JSON.stringify(message));
         }
