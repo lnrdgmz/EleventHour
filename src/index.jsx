@@ -16,6 +16,7 @@ import { getInitialEvents } from './utils/utils';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+
 getInitialEvents()
   .then(response => response.json())
   .then((events) => {
