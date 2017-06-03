@@ -54,7 +54,7 @@ class EventForm extends Component {
     this.handleRate = this.handleRate.bind(this);
     this.submitClick = this.submitClick.bind(this);
     this.geoCode = this.geoCode.bind(this);
-    this.getWeather = this.getWeather.bind(this);
+    // this.getWeather = this.getWeather.bind(this);
   }
 
   showModal() {
@@ -96,28 +96,10 @@ class EventForm extends Component {
         this.state.eventInfo.geoData = location;
        
       });
-      
-    this.getWeather();
+  
   }
 
-  getWeather(){
-
-    const weatherInfo = moment(this.state.eventInfo.date).format('X');
-    const location = JSON.stringify(this.state.eventInfo.geoData);
-
-    fetch(`/api/weather?info=${weatherInfo}&loc=${location}`,{
-      headers: {'Content-Type': 'application/json'},
-      method: "GET",
-    })
-    .then(function(response){
-      
-      return response.json();
-    })
-    .then(function(data){
-      console.log(data.hourly.summary);
-      console.log(data.hourly.data[0].temperature);
-    })
-  }
+  
 
   handleDateChange(m) {
     this.state.m = m;
