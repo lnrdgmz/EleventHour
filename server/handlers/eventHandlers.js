@@ -11,6 +11,7 @@ module.exports = {
     const eventObj = req.body;
     if (!['title', 'description', 'date_time'].every(k => k in eventObj)) {
       console.log('Incomplete form');
+      console.log(eventObj);
       res.status(400).send();
     } else {
       const { lat, lng } = eventObj.geoData || { lat: null, lng: null };
@@ -29,7 +30,8 @@ module.exports = {
         })
         .then((model) => {
           res.send(model);
-        });
+        })
+        .catch(err => console.error(err));
     }
   },
 
@@ -121,16 +123,19 @@ module.exports = {
   },
 
   joinEvent: (req, res) => {
+    console.log('Event_id', req.params.eventId);
+    console.log('User_id', req.body.id);
     new Attendee({
-      event_id: req.params.eventId,
-      user_id: req.session.user_id,
+      event_id: parseInt(req.params.eventId, 10),
+      user_id: parseInt(req.body.id, 10),
       flag: 'pending',
     })
     .save()
     .then((model) => {
-      mail.emailCreator(req.params.eventId, req.session.user_id);
+      mail.emailCreator(req.params.eventId, req.body.userId);
       res.send(model);
-    });
+    })
+    .catch(err => console.error(err));
   },
 
   editAttendees: (req, res) => {

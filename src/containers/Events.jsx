@@ -11,6 +11,7 @@ import MenuBar from '../components/MenuBar';
 import GridEvent from '../components/GridEvent';
 import Event from '../components/Event';
 import { fetchEvents } from '../actions/eventActions';
+import { joinEvent } from '../actions/actions';
 import '../../public/styles/events.scss';
 
 class Events extends Component {
@@ -37,10 +38,10 @@ class Events extends Component {
   clearModalFocus = () => this.setState({ modalFocus: false })
 
   handleElementClick = (event) => {
-    console.log('Element Clicked', event);
     this.setState({ modalFocus: event });
-    console.log(this.state);
   }
+
+  handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
 
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' });
 
@@ -91,7 +92,14 @@ class Events extends Component {
           size="small"
           open={Boolean(this.state.modalFocus)}
         >
-          <Event parent="Grid" user={user} event={this.state.modalFocus} deleteClick="" changeModalFocusClick="" />
+          <Event
+            parent="Grid"
+            user={user}
+            event={this.state.modalFocus}
+            deleteClick=""
+            changeModalFocusClick=""
+            joinEvent={this.handleJoinEvent}
+          />
         </Modal>
         <Waypoint
           onEnter={() => this.getMoreEvents()}
@@ -110,4 +118,5 @@ export default connect(
   mapStatetoProps,
   {
     fetchEvents,
+    joinEvent,
   })(Events);
