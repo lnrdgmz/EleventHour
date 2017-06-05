@@ -56,6 +56,7 @@ class UserEvents extends Component {
   deleteClick = event => this.props.deleteEvent(event);
 
 
+
   handleLeaveClick(user, event) {
     this.props.leaveEvent(user, event);
     this.setState({ showConfirmButtons: false });
@@ -65,47 +66,9 @@ class UserEvents extends Component {
   getWeather(){
     const { user } = this.props;
 
-    console.log(user.events);
-    let geoData =  user.events[0].lat + ',' + user.events[0].lng;
-    // const weatherInfo = moment(user.events.date).format('X');
-    
-
-    // fetch('/events',{
-    //   headers: {'Content-Type':'application/json'},
-    //   method: "GET"
-    // })
-    // .then((response) => {return response.json(); })
-    // .then((data) => { 
-    //   let obj = {};
-    //   console.log(data);
-    //   obj.lat = data[0].lat;
-    //   obj.lng = data[0].lng
-    //   this.setState({ geoData : data.obj}) 
-    //   console.log(this.state)
-    //   });
-
-    // fetch(`/api/weather?info=${weatherInfo}&loc=${location}`,{
-    //   headers: {'Content-Type': 'application/json'},
-    //   method: "GET",
-    // })
-    // .then(function(response){
-      
-    //   return response.json();
-    // })
-    // .then(function(data){
-    //   const arr = [];
-    //   arr.push(data.hourly.summary);
-    //   arr.push(data.hourly.data[0].temperature);
-    //   this.setState({weather : arr});
-    //   console.log(data.hourly.summary);
-    //   console.log(data.hourly.data[0].temperature);
-
-    // })
-
-    // console.log(user.events);
     const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
     const time = moment(user.events.date_time).format('X');
-    // console.log(geoLoc);
+ 
     fetch(`/api/weather?info=${time}&loc=${geoLoc}`,{
       headers: {'Content-Type': 'application/json'},
       method: "GET",
@@ -118,10 +81,7 @@ class UserEvents extends Component {
       arr.push(data.hourly.summary);
       arr.push(data.hourly.data[0].temperature);
       this.setState({weather : arr});
-      // console.log(this.state.weather);
       user.events.weather = this.state.weather
-      console.log(user.events.weather)
-
     })
 
   }
