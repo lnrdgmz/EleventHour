@@ -1,8 +1,7 @@
-
-
+@import '_variables.scss';
 
 .box {
-  padding: 0px !important;
+  padding: 1.5px !important;
   height: 250px;
   cursor: pointer;
 }
@@ -18,4 +17,17 @@
   bottom: 30px;
   margin-left: 30px;
   transition-duration: 1s;
+}
+
+.event-title {
+  color: $offwhite !important;
+}
+
+.event-item-meta {
+  color: $grey;
+}
+
+.icon {
+  margin-right: 10px;
+  margin-left: 30px;
 }
