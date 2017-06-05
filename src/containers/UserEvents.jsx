@@ -24,7 +24,6 @@ class UserEvents extends Component {
     this.filterClick = this.filterClick.bind(this);
     this.deleteClick = this.deleteClick.bind(this);
     this.changeModalFocusClick = this.changeModalFocusClick.bind(this);
-
     this.handleLeaveClick = this.handleLeaveClick.bind(this);
     this.toggleConfirm = this.toggleConfirm.bind(this);
 
@@ -153,7 +152,7 @@ class UserEvents extends Component {
                       size="small"
                     >
                       {this.state.modalFocusTag === 'Event' ? (
-
+                      
                         <Event
                           parent="User"
                           event={event}
@@ -163,9 +162,8 @@ class UserEvents extends Component {
                           changeModalFocusClick={this.changeModalFocusClick}
                           showConfirmButtons={this.state.showConfirmButtons}
                           toggleConfirm={this.toggleConfirm}
+                          weather={this.state.weather}
                         />
-
-                        <Event event={event} weather={this.state.weather} deleteClick={this.deleteClick} changeModalFocusClick={this.changeModalFocusClick} />
 
                       ) : (
                         <AttendeeContainer eventId={event.id} changeModalFocusClick={this.changeModalFocusClick} />
