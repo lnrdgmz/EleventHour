@@ -43,13 +43,14 @@ class UserEvents extends Component {
   }
 
   changeModalFocusClick = (focusTag) => {
-    this.setState({ modalFocusTag: focusTag });
+    this.setState({ modalFocusTag: focusTag, showConfirmButtons: false });
   }
 
   deleteClick = event => this.props.deleteEvent(event);
 
   handleLeaveClick(user, event) {
-    this.props.leaveEvent(user, event)
+    this.props.leaveEvent(user, event);
+    this.setState({ showConfirmButtons: false });
   }
 
   render = () => {
