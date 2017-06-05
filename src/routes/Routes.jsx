@@ -29,7 +29,7 @@ class Routes extends React.Component {
           <Route path="/eventForm" component={EventForm} />
           <Route path="/profile" component={Profile} />
           <Route path="/edit" component={EditProfile} />
-          <Route path="/events" component={Events} />
+          <Route path="/events/:zipCode" component={Events} />
           <Route path="/editForm" component={EditForm} />
           <Route path="/userEvents" component={UserEvents} />
           <Route path="/inbox" component={Inbox} />

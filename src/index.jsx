@@ -22,7 +22,7 @@ getInitialEvents()
       reducers,
       {
         events: {
-          eventsList: events,
+          eventsList: [],
           visibleEvents: [],
         },
       },

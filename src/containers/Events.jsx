@@ -19,7 +19,8 @@ class Events extends Component {
     super(props);
     this.state = {
       modalFocus: false,
-      page: 1,
+      page: 0,
+      zipCode: props.match.params.zipCode,
     };
 
     this.handleElementClick = this.handleElementClick.bind(this);
@@ -31,7 +32,7 @@ class Events extends Component {
 
   getMoreEvents = () => {
     this.setState({ page: this.state.page += 1 });
-    this.props.fetchEvents(this.state.page);
+    this.props.fetchEvents(this.state.zipCode, this.state.page);
     console.log(this.state.page);
   }
 
