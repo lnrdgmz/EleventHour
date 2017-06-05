@@ -30,7 +30,7 @@ class Events extends Component {
 
 // Related to store/state
   getMoreEvents = () => {
-    const newPage = this.state.page + 1;
+    const newPage = this.state.page + 1
     this.setState({ page: newPage });
     this.props.fetchEvents(this.state.zipCode, newPage);
   }
