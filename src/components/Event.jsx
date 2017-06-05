@@ -73,7 +73,7 @@ function Event(props) {
       bottomPart = (
         <Card.Content extra>
           <Button onClick={() => joinEvent(user, event)} > Join Event </Button>
-          <Label position="bottom right" as='a' icon="mail outline" color='green' image>
+          <Label position="bottom right" as='a' color='blue' image>
             <Icon name="mail outline" />
               Message
             <Label.Detail>Veronika - Creator</Label.Detail>
@@ -111,8 +111,8 @@ function Event(props) {
           <Header sub className="eventInfoHeader"> Weather: </Header>
 
 
-          <p>{props.weather[1]}</p>
-          <p>{props.weather[0]}</p>
+          {/*<p>{props.weather[1]}</p>*/}
+          {/*<p>{props.weather[0]}</p>*/}
 
 
           <Header sub>Required Skill: </Header>
