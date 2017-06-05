@@ -3,58 +3,87 @@ import io from 'socket.io-client';
 import MessageList from '../components/MessageList';
 import ChatInput from '../components/ChatInput';
 import { connect } from 'react-redux';
-import { sendToUser, sendMessage } from '../actions/actions';
+import { sendMessage } from '../actions/actions';
+import { sendToUser, getUserMessages } from '../utils/utils';
+
 class Inbox extends Component {
+  socket = {};
   constructor(props) {
     super(props);
-    this.state = { messages: [], targetUser: 161 };
+    this.state = { messages: [] };
     this.sendHandler = this.sendHandler.bind(this);
+    this.newMessage = this.newMessage.bind(this);
     
     // Connect to the server
-    this.socket = io("http://localhost:3000", { query: `username=${props.username}` }).connect();
-
-    // Listen for messages from the server
+    this.socket = io('localhost:3000', { query: `username=${this.props.display_name}` }).connect();
     this.socket.on('server:message', message => {
-      this.addMessage(message);
+      this.newMessage(message);
     });
+    // Listen for messages from the server
   }
-
-  socket = {};
   componentWillMount() {
-    console.log(this.props);
-    const messages = this.props.messages.split(" ");
-    this.state.messages.push(messages);
+    let newProps;
+    let messages = [];
+    fetch(`/messages/${this.props.id}`, { credentials: 'include' })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({ messages: data });
+      });
+    // if(this.props.messages.length > 15) {
+    //   newProps = this.props.messages.slice(15);
+    //   newProps = newProps.split("}");
+    //   newProps.forEach((message) => {
+    //     if(message.length > 0) {
+    //       message += '}';
+    //       messages.push(JSON.parse(message));
+    //     }
+    //   });
+    // }
+  }
+  newMessage(message) {
+    console.log('SOCKET.IO TRIGGERED')
+    const messages = this.state.messages;
+    messages.push(message);
+    this.setState({ messages });
   }
   sendHandler(message) {
-    this.state.message_id += 1;
     const messageObject = {
-      username: this.props.display_name,
       message,
-      targetUser: this.state.targetUser,
+      sender_id: this.props.id,
+      userName: this.props.display_name,
     };
-    this.props.sendMsg(messageObject);
-    this.props.toTarget(messageObject);
-    // Emit the message to the server
-    this.socket.emit('client:message', messageObject);
-  
-    messageObject.fromMe = true;
+
+  // Emit the message to the server
+    messageObject.recipient_id = 161;
     this.addMessage(messageObject);
   }
 
   addMessage(message) {
     // Append the message to the component state
     const messages = this.state.messages;
-    const targetUser = this.state.targetUser;
-    console.log('You added a message:', message);
     messages.push(message);
-    this.setState({ messages, targetUser });
+    this.setState({ messages });
+    fetch(`users/${message.sender_id}`, { credentials: 'include' })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        message.userName = data.display_name;
+        this.props.sendMsg(message);
+        this.props.toTarget(message);
+        return message;
+      })
+      console.log(message);
+      this.socket.emit('send:message', message);
   }
 
   render() {
     return (
       <div className="container">
         <h3>Leo's Socket.io</h3>
-        <MessageList messages={this.state.messages} userInfo={this.props.display_name} />
+        <MessageList messages={this.state.messages} userName={this.props.display_name} userId={this.props.id} />
         <ChatInput onSend={this.sendHandler} />
       </div>
     );
@@ -72,6 +101,9 @@ const mapDispatchToProps = (dispatch) => {
     toTarget: (message) => {
       dispatch(sendToUser(message));
     },
+    getMessages: (userId) => {
+      dispatch(getUserMessages(userId));
+    }
   };
 };
 

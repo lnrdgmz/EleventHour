@@ -56,12 +56,13 @@ class MenuBar extends Component {
     location.href = location.href.split('#')[0] + 'auth/logout';
   }
   handleItemClick (e, { name }) {
-    console.log("We're Beautiful:", this);
     this.setState({
       activeItem: name,
       menuButton: this.state.menuButton,
     });
-    console.log(this.state);
+    if (name === 'profile') {
+      window.location = "/#/profile";
+    }
   }
 
   render() {

@@ -147,4 +147,17 @@ db.knex.schema.hasTable('category').then( exists => {
     }
 });
 
+db.knex.schema.hasTable('messages').then( exists => {
+    if (!exists) {
+        db.knex.schema.createTable('messages', messages => {
+            messages.increments('id').primary();
+            messages.integer('sender_id').references('user.id');
+            messages.integer('recipient_id').references('user.id');
+            messages.string('message');
+        }).then( table => {
+            console.log('Created new "category" table', table);
+        });
+    }
+});
+
 module.exports = db; 

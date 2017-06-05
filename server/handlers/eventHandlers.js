@@ -8,6 +8,7 @@ const mail = require('../utils/mail');
 module.exports = {
 
   createEvent: (req, res) => {
+    console.log('Create Event:', req.body);
     const eventObj = req.body;
     if (!['title', 'description', 'date_time'].every(k => k in eventObj)) {
       console.log('Incomplete form');
@@ -18,7 +19,10 @@ module.exports = {
       eventObj.lat = lat;
       eventObj.lng = lng;
       eventObj.full = false;
-      new Event(eventObj).save()
+      eventObj.img_url = "http://i.dailymail.co.uk/i/pix/2016/06/20/05/3578969600000578-3649871-image-m-59_1466395548625.jpg";
+      eventObj.habitat = "outdoors";
+      console.log(eventObj);
+      return new Event(eventObj).save()
         .then((model) => {
           console.log('New event', model.attributes);
           new Attendee({
@@ -31,7 +35,9 @@ module.exports = {
         .then((model) => {
           res.send(model);
         })
-        .catch(err => console.error(err));
+        .catch((err) => {
+          console.error('Event Creation Failed:', err);
+        });
     }
   },
 
