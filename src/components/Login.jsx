@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 // Import Semantic-UI Components
-import { Grid, Header, Button } from 'semantic-ui-react';
+import { Grid, Header, Button, Form } from 'semantic-ui-react';
 
 // Import Local Dependencies
 import LoginModal from './LoginModal.jsx';
@@ -15,12 +15,22 @@ class Login extends Component {
     super(props);
     this.state = {
       showAbout: false,
+      zipCode: undefined,
     };
     this.showEvents = this.showEvents.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  showEvents() {
-    window.location = '/#/events';
+  handleInputChange(event) {
+    const value = event.target.value.split('').filter(char => !isNaN(parseInt(char, 10))).slice(0, 5).join('');
+    this.setState({
+      zipCode: value,
+    });
+  }
+
+  showEvents(event) {
+    event.preventDefault();
+    window.location = `/#/events/${this.state.zipCode}`;
   }
 
   render() {
@@ -44,9 +54,22 @@ class Login extends Component {
                 </Header.Subheader>
               </Header>
               <Grid.Row>
-                <Button onClick={this.showEvents} className="splash-button">
-                  Let's Go!
-                </Button>
+                <Form>
+                  <Form.Field>
+                    <input
+                      value={this.state.zipCode}
+                      placeholder="Enter a zip code to get started"
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Field>
+                  <Button
+                    disabled={this.state.zipCode ? this.state.zipCode.length < 5 : true}
+                    onClick={this.showEvents}
+                    className="splash-button"
+                  >
+                    Let's Go!
+                  </Button>
+                </Form>
               </Grid.Row>
             </Grid.Column>
           </Grid>
