@@ -2,29 +2,44 @@
 
 .box {
   padding: 1.5px !important;
-  height: 250px;
+  height: 300px;
   cursor: pointer;
+  transition-duration: 1s;
+}
+
+.ui.container>.ui.stackable.grid>.column, .ui.container>.ui.stackable.grid>.row>.column {
+  padding: 1.5px !important;
 }
 
 .buffer {
   position: absolute;
+  width: 95%;
   bottom: 10px;
   margin-left: 10px;
   transition-duration: 1s;
 }
 
+.box:hover .event-item {
+  background-size: 115% !important;
+  transition-duration: 1s;
+}
+
 .box:hover .buffer {
+  width: 90%;
   bottom: 30px;
   margin-left: 30px;
   transition-duration: 1s;
 }
 
 .event-title {
+  font-family: $graduate;
   color: $offwhite !important;
 }
 
 .event-item-meta {
-  color: $grey;
+  color: $offwhite;
+  font-family: $lato;
+  font-weight: $light;
 }
 
 .icon {

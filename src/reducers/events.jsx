@@ -27,12 +27,13 @@ const events = (state = initialState, action) => {
         ...state.user,
       };
 
-    // case 'RECEIVE_EVENTS': {
-    //   return {
-    //     ...state,
-    //     eventsList: [...state.eventsList, action.payload),
-    //   };
-    // }
+    case 'RECEIVE_EVENTS': {
+      return {
+        ...state,
+        eventsList: state.eventsList.concat(action.payload),
+      };
+    }
+
     default: {
       return state;
     }

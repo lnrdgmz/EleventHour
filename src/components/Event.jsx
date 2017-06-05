@@ -3,11 +3,10 @@ import moment from 'moment';
 import { Card, Image, Button, Rating, Header, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import LoginModal from '../components/LoginModal';
-import utils from '../utils/utils';
 
 function Event(props) {
   const { event, deleteClick, changeModalFocusClick, parent, user, joinEvent } = props;
-  
+
   let bottomPart;
   const roleStyles = { creator: 'green', approved: 'green', pending: 'orange', declined: 'red' };
   const imgStyle = {
@@ -114,11 +113,44 @@ function Event(props) {
 
 Event.propTypes = {
   showConfirmButtons: PropTypes.bool.isRequired,
-  event: PropTypes.object.isRequired,
+  parent: PropTypes.string.isRequired,
+  changeModalFocusClick: PropTypes.func.isRequired,
   deleteClick: PropTypes.func.isRequired,
   handleLeaveClick: PropTypes.func.isRequired,
   toggleConfirm: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  joinEvent: PropTypes.func.isRequired,
+  event: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    date_time: PropTypes.string,
+    full: PropTypes.number,
+    needs: PropTypes.number,
+    category: PropTypes.string,
+    img_url: PropTypes.string,
+    location: PropTypes.string,
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+    skill_level: PropTypes.number,
+    habitat: PropTypes.string,
+    created_at: PropTypes.string,
+    updated_at: PropTypes.string,
+  }).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    oauth_provider: PropTypes.string,
+    provider_id: PropTypes.string,
+    display_name: PropTypes.string,
+    img_url: PropTypes.string,
+    contact_number: PropTypes.string,
+    email: PropTypes.string,
+    bio: PropTypes.string,
+    age: PropTypes.number,
+    created_at: PropTypes.string,
+    updated_at: PropTypes.string,
+    messages: PropTypes.any,
+    events: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
 };
 
 export default Event;

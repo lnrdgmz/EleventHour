@@ -70,8 +70,8 @@ class Events extends Component {
 
     return (
       <div className="wrapper">
+        <MenuBar />
         <Container className="events-page" >
-          <MenuBar />
           <Search
             loading={isLoading}
             onSearchChange={this.handleSearchChange}
@@ -80,16 +80,14 @@ class Events extends Component {
             {...this.props}
           />
           <Divider />
-          <Grid centered columns={2} stackable stretched >
-            {eventsList === undefined ? null : eventsList.map(function (event) {
-              return (
-                <GridEvent
-                  key={event.id}
-                  event={event}
-                  handleElementClick={this.handleElementClick}
-                />
-              );
-            })}
+          <Grid centered columns={3} stackable stretched >
+            {eventsList === undefined ? null : eventsList.map(event => (
+              <GridEvent
+                key={event.id}
+                event={event}
+                handleElementClick={this.handleElementClick}
+              />
+            ))}
           </Grid>
           <Modal
             dimmer="blurring"

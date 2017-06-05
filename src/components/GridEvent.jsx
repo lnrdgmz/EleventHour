@@ -8,8 +8,9 @@ function GridEvent(props) {
   const { event, handleElementClick } = props;
 
   const segmentStyle = {
-    background: `url(${event.img_url}) no-repeat`,
+    background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .7)), url(${event.img_url}) no-repeat`,
     backgroundSize: '100%',
+    transitionDuration: '1s',
   };
 
 
