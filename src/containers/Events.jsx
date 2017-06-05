@@ -2,8 +2,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
+<<<<<<< HEAD
 import { filter } from 'lodash/collection';
 import { escapeRegExp } from 'lodash/string';
+=======
+>>>>>>> feat($searchBar): Added a searchbar to events grid
 import SearchInput, { createFilter } from 'react-search-input';
 import PropTypes from 'prop-types';
 
@@ -31,9 +34,9 @@ class Events extends Component {
 
 // Related to store/state
   getMoreEvents = () => {
-    const nextPage = this.state.page + 1;
-    this.setState({ page: nextPage });
-    this.props.fetchEvents(nextPage);
+    const newPage = this.state.page + 1
+    this.setState({ page: newPage });
+    this.props.fetchEvents(this.state.zipCode, newPage);
   }
 
 // Related to views
