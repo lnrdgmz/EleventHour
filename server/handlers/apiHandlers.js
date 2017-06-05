@@ -17,20 +17,16 @@ module.exports = {
   },
 
   getWeather: (req,res) => {
-    // const geoLocationData = req.url.split('=')[1];
-    // const lat_lng = JSON.parse(geoLocationData);
-    // const lat = lat_lng.lat;
-    // const lng = lat_lng.lng;
-    // console.log(req.url);
-    let copy = req.url.split('').slice(0)
-    let test = copy.splice(14,10).join('');
-    
-   console.log("test",test);
-  
-   const data = req.url.split('').slice();
+    // const time= req.url.split('=')[1];
    
+    let arr = req.url.split('=');
+    console.log('arr',arr);
+    const time = arr[1].slice(0,9);
+    let geoData = arr[2];
+    console.log('t',time);
+    console.log('gd', geoData);
     const options = {
-      url: `https://api.darksky.net/forecast/8f37d60066cc485c1ed202b331586416/42.3601,-71.0589,${test}?exclude=currently,flags`,
+      url: `https://api.darksky.net/forecast/8f37d60066cc485c1ed202b331586416/${geoData},${time}?exclude=currently,flags`,
       method: 'GET'
     }
     request(options,function(error,response,body) {
