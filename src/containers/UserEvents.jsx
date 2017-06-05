@@ -53,18 +53,16 @@ class UserEvents extends Component {
 
   deleteClick = event => this.props.deleteEvent(event);
 
-
-
   handleLeaveClick(user, event) {
     this.props.leaveEvent(user, event);
     this.setState({ showConfirmButtons: false });
   }
+
   getWeather(){
     const { user } = this.props;
-    // console.log(user.events);
     const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
     const time = moment(user.events.date_time).format('X');
-    // console.log(geoLoc);
+ 
     fetch(`/api/weather?info=${time}&loc=${geoLoc}`,{
       headers: {'Content-Type': 'application/json'},
       method: "GET",
@@ -77,13 +75,8 @@ class UserEvents extends Component {
       arr.push(data.hourly.summary);
       arr.push(data.hourly.data[0].temperature);
       this.setState({weather : arr});
-      // console.log(this.state.weather);
       user.events.weather = this.state.weather
-      console.log(user.events.weather)
-
     })
-
-
   }
 
   render = () => {
