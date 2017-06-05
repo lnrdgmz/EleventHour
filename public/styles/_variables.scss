@@ -4,6 +4,13 @@ $salmon: #F9575F;
 $grey: #605F5E;
 $lightblue: #247BA0;
 $offwhite: #E2E2E2;
-$headerFont: 'Viga', sans-serif;
-$bodyFontBold: normal 400 12px 'Lato';
-$bodyFontLight: normal 300 12px 'Lato';
+
+$graduate: 'Viga';
+$lato: 'Lato';
+$bold: 400;
+$light: 300;
+
+$pageWidth: 100vw;
+$pageHeight: 100vh;
+$transparent: rgba(0, 0, 0, 0);
+$darkTransparent: rgba(0, 0, 0, .7);
