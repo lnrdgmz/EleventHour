@@ -21,9 +21,9 @@ export const receiveEvents = (json) => {
 
 /* Async Action Creators */
 
-export function fetchEvents(page) {
+export function fetchEvents(zipCode, page) {
   return function (dispatch) {
-    fetch( `/events?page=${page}` || '/events')
+    fetch(`/events?page=${page}&zipCode=${zipCode}` || '/events')
     .then(response => response.json())
     .then(parsedData => dispatch({ type: RECEIVE_EVENTS, payload: parsedData }));
   };

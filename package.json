@@ -102,6 +102,7 @@
     "redux-persist": "^4.8.0",
     "redux-thunk": "^2.2.0",
     "request": "^2.81.0",
+    "request-promise": "^4.2.1",
     "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.68.3",
     "socket.io": "^2.0.2",
