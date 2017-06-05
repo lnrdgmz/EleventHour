@@ -60,11 +60,6 @@ export function sendMessage(message) {
     payload: message,
   });
 }
-export function sendToUser(message) {
-  $.post(`/users/${message.targetUser}`, { message }, (data) => {
-    console.log(data);
-  });
-}
 
 // Event Actions
 

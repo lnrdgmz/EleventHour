@@ -32,7 +32,7 @@ class Routes extends React.Component {
           <Route path="/events" component={Events} />
           <Route path="/editForm" component={EditForm} />
           <Route path="/userEvents" component={UserEvents} />
-          <Route path="/inbox" component={Inbox} />
+          <Route path="/chat" component={Inbox} />
           <Route path="/" component={App} />
         </Switch>
       </HashRouter>

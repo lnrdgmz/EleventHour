@@ -1,6 +1,6 @@
 // create collection from userRating table 
 const db = require('../config/config');
-const Message = require('../models/messages');
+const Message = require('../models/message');
 
 const Messages = new db.Collection();
 
