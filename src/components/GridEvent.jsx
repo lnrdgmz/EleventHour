@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Grid, Icon, List, Header, Divider } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import '../../public/styles/gridEvent.scss';
 
 function GridEvent(props) {
@@ -40,15 +41,31 @@ function GridEvent(props) {
               </List.Item>
             }
           </List>
-          {/*<Divider fitted />
-          <p className="event-description">
-            {event.description}
-          </p>
-          <Divider />*/}
         </div>
       </div>
     </Grid.Column>
   );
 }
+
+GridEvent.PropTypes = {
+  event: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    date_time: PropTypes.string,
+    full: PropTypes.number,
+    needs: PropTypes.number,
+    category: PropTypes.string,
+    img_url: PropTypes.string,
+    location: PropTypes.string,
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+    skill_level: PropTypes.number,
+    habitat: PropTypes.string,
+    created_at: PropTypes.string,
+    updated_at: PropTypes.string,
+  }).isRequired,
+  handleElementClick: PropTypes.func.isRequired,
+};
 
 export default GridEvent;

@@ -117,8 +117,8 @@ class Events extends Component {
 }
 
 Events.propTypes = {
-  joinEvent: PropTypes.function.isRequired,
-  fetchEvents: PropTypes.function.isRequired,
+  joinEvent: PropTypes.func.isRequired,
+  fetchEvents: PropTypes.func.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number,
     oauth_provider: PropTypes.string,
