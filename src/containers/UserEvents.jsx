@@ -15,23 +15,23 @@ class UserEvents extends Component {
       creatorVisibile: true,
       modalFocus: undefined,
       modalFocusTag: 'Event',
-<<<<<<< HEAD
+
       showConfirmButtons: false,
-=======
+
       events: this.props.events,
       weather : []
->>>>>>> hope this works
+
     };
 
     this.filterClick = this.filterClick.bind(this);
     this.deleteClick = this.deleteClick.bind(this);
     this.changeModalFocusClick = this.changeModalFocusClick.bind(this);
-<<<<<<< HEAD
+
     this.handleLeaveClick = this.handleLeaveClick.bind(this);
     this.toggleConfirm = this.toggleConfirm.bind(this);
-=======
+
     this.getWeather = this.getWeather.bind(this);
->>>>>>> hope this works
+
   }
 
   componentWillMount = () => {
@@ -64,6 +64,7 @@ class UserEvents extends Component {
 
   getWeather(){
     const { user } = this.props;
+<<<<<<< HEAD
     console.log(user.events);
     let geoData =  user.events[0].lat + ',' + user.events[0].lng;
     // const weatherInfo = moment(user.events.date).format('X');
@@ -100,6 +101,29 @@ class UserEvents extends Component {
     //   console.log(data.hourly.data[0].temperature);
 
     // })
+=======
+    // console.log(user.events);
+    const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
+    const time = moment(user.events.date_time).format('X');
+    // console.log(geoLoc);
+    fetch(`/api/weather?info=${time}&loc=${geoLoc}`,{
+      headers: {'Content-Type': 'application/json'},
+      method: "GET",
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      let arr = [];
+      arr.push(data.hourly.summary);
+      arr.push(data.hourly.data[0].temperature);
+      this.setState({weather : arr});
+      // console.log(this.state.weather);
+      user.events.weather = this.state.weather
+      console.log(user.events.weather)
+
+    })
+>>>>>>> feat(component): dynamic weather rendering
 
   }
 
@@ -169,6 +193,7 @@ class UserEvents extends Component {
                       size="small"
                     >
                       {this.state.modalFocusTag === 'Event' ? (
+
                         <Event
                           parent="User"
                           event={event}
@@ -179,6 +204,7 @@ class UserEvents extends Component {
                           showConfirmButtons={this.state.showConfirmButtons}
                           toggleConfirm={this.toggleConfirm}
                         />
+
                       ) : (
                         <AttendeeContainer eventId={event.id} changeModalFocusClick={this.changeModalFocusClick} />
                       )}

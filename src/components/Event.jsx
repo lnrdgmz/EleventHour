@@ -84,7 +84,7 @@ function Event(props) {
       )
     );
   }
-
+  
   return (
     <Card centered fluid>
       <Image src={event.img_url} style={imgStyle} />
@@ -104,7 +104,8 @@ function Event(props) {
           <Header sub className="eventInfoHeader"> Location: </Header>
           {event.location}
           <Header sub className="eventInfoHeader"> Weather: </Header>
-          {}
+          <p>{props.weather[1]}</p>
+          <p>{props.weather[0]}</p>
           <Header sub>Required Skill: </Header>
           <Rating defaultRating={event.skill_level} maxRating={5} disabled />
         </Card.Description>
