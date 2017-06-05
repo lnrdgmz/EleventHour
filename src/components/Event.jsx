@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Card, Image, Button, Rating, Header, Divider } from 'semantic-ui-react';
+import { Card, Image, Button, Rating, Header, Divider, Label, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import LoginModal from '../components/LoginModal';
 import utils from '../utils/utils';
@@ -73,6 +73,11 @@ function Event(props) {
       bottomPart = (
         <Card.Content extra>
           <Button onClick={() => joinEvent(user, event)} > Join Event </Button>
+          <Label position="bottom right" as='a' icon="mail outline" color='green' image>
+            <Icon name="mail outline" />
+              Message
+            <Label.Detail>Veronika - Creator</Label.Detail>
+          </Label>
         </Card.Content>
       )
     ) : (
@@ -86,7 +91,7 @@ function Event(props) {
   }
   
   return (
-    <Card centered fluid>
+    <Card centered fluid raised>
       <Image src={event.img_url} style={imgStyle} />
       <Card.Content>
         <Card.Header>
