@@ -1,9 +1,55 @@
 const moment = require('moment');
+const rp = require('request-promise');
 const db = require('../config/config');
 const Event = require('../models/event');
 const Attendee = require('../models/attendee.js');
 const eventUtils = require('../utils/eventUtils');
 const mail = require('../utils/mail');
+
+const handleZipCodeSearch = (req, res) => {
+  const { zipCode } = req.query;
+  const reqOptions = {
+    uri: `https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${zipCode}&key=${process.env.GOOGLE_GEOLOCATION_API_KEY}`, 
+    json: true,
+  };
+  rp(reqOptions)
+    .then((resp) => {
+      console.log('This is the Google response when looking up zip code', zipCode)
+      console.log(resp)
+      if (resp.results.length === 0) Promise.reject('Zip code could not be found.')
+      return resp.results[0].geometry.location;
+    })
+    .then((coords) => {
+      latLngSearch(coords, req, res);
+    });
+};
+
+const latLngSearch = ({ lat, lng }, req, res) => {
+  const dist = req.query.dist || 1000;
+  console.log('dist is', dist)
+  const bounds = eventUtils.boundingBox(lat, lng, parseFloat(dist));
+  new Event().where({ full: 0 })
+    .query(((qb) => {
+      // if (bounds) {
+        qb.where('lat', '<', bounds.upperLat)
+          .andWhere('lat', '>', bounds.lowerLat)
+          .andWhere('lng', '<', bounds.upperLng)
+          .andWhere('lng', '>', bounds.lowerLng)
+          .andWhere('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
+      // } else {
+      //   qb.where('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
+      // }
+    }))
+    .orderBy('date_time', 'ASC')
+    .fetchPage({
+      pageSize: 10,
+      page: req.query.page || 1,
+    })
+    .then((models) => {
+      console.log(req.query.page);
+      res.send(models);
+    });
+};
 
 module.exports = {
 
@@ -48,32 +94,36 @@ module.exports = {
      */
 
     // Calculates boundries based on geo-data, if available.
-    const { lat, lng, dist } = req.query;
+    const { lat, lng, dist, zipCode } = req.query;
     const bounds = lat && lng && dist
     ? eventUtils.boundingBox(parseFloat(lat), parseFloat(lng), parseFloat(dist))
     : undefined;
 
-    new Event().where({ full: 0 })
-      .query(((qb) => {
-        if (bounds) {
-          qb.where('lat', '<', bounds.upperLat)
-            .andWhere('lat', '>', bounds.lowerLat)
-            .andWhere('lng', '<', bounds.upperLng)
-            .andWhere('lng', '>', bounds.lowerLng)
-            .andWhere('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
-        } else {
-          qb.where('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
-        }
-      }))
-      .orderBy('date_time', 'ASC')
-      .fetchPage({
-        pageSize: 10,
-        page: req.query.page || 1,
-      })
-      .then((models) => {
-        console.log(req.query.page);
-        res.send(models);
-      });
+    if (zipCode) {
+      handleZipCodeSearch(req, res);
+    } else {
+      new Event().where({ full: 0 })
+        .query(((qb) => {
+          if (bounds) {
+            qb.where('lat', '<', bounds.upperLat)
+              .andWhere('lat', '>', bounds.lowerLat)
+              .andWhere('lng', '<', bounds.upperLng)
+              .andWhere('lng', '>', bounds.lowerLng)
+              .andWhere('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
+          } else {
+            qb.where('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
+          }
+        }))
+        .orderBy('date_time', 'ASC')
+        .fetchPage({
+          pageSize: 10,
+          page: req.query.page || 1,
+        })
+        .then((models) => {
+          console.log(req.query.page);
+          res.send(models);
+        });
+    }
   },
 
 /**
