@@ -28,6 +28,7 @@ class Events extends Component {
     this.handleElementClick = this.handleElementClick.bind(this);
     this.getEventCreator = this.getEventCreator.bind(this);
   }
+
   componentDidUpdate() {
     this.props.eventsList.forEach((event) => {
       fetch(`/events/${event.id}`, { credentials: 'include' })
@@ -44,17 +45,16 @@ class Events extends Component {
     });
     console.log(this.props.eventsList); 
   }
+
   getMoreEvents = () => {
     const newPage = this.state.page + 1;
     this.setState({ page: newPage });
     this.props.fetchEvents(this.state.zipCode, newPage);
   }
+
 // Related to views
-  clearModalFocus = () => this.setState({ modalFocus: false, eventCreator: {} })
-  getEventCreator = (event) => {
-    
-      console.log('eventCreator', this.state.eventCreator);
-  }
+  clearModalFocus = () => this.setState({ modalFocus: false })
+
   handleElementClick = (event) => {
     this.setState({ modalFocus: event });
     fetch(`/events/${event.id}`, { credentials: 'include' })
@@ -74,12 +74,10 @@ class Events extends Component {
         console.log(err);
       });
   }
-  handleJoinEvent = (user, event) => {
-    this.props.joinEvent(user, event);
-  };
 
   toggleJoin = () => this.setState(prevState => ({ joinConfirm: !prevState.joinConfirm }))
 
+  handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
 
 // Related to search
 
@@ -87,9 +85,8 @@ class Events extends Component {
 
   render = () => {
     const { eventsList, user } = this.props;
-    const KEYS_TO_FILTER = ['title', 'description', 'tags', 'catagories'];
-    const { isLoading, value, results, eventCreator } = this.state;
 
+    const KEYS_TO_FILTER = ['title', 'description', 'tags', 'catagories'];
     return (
       <div className="wrapper">
         <MenuBar />
