@@ -16,12 +16,8 @@ export const changeUser = (user) => {
 export const loginUser = () => {
   return function (dispatch) {
     fetch('/auth/loggedIn', { credentials: 'include' })
-      .then((res) => {
-        console.log('Response Received');
-        return res.json();
-      })
+      .then(res => res.json())
       .then((data) => {
-        console.log('JSON Data Received');
         if (data !== false) {
           dispatch(changeUser(data));
         }
@@ -48,7 +44,6 @@ export function removeEvent(event) {
 
 export function deleteEvent(event) {
   return function (dispatch) {
-    console.log('DISPATCHED');
     fetch(`/events/${event.id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
@@ -66,7 +61,6 @@ export function sendMessage(message) {
   });
 }
 export function sendToUser(message) {
-  console.log(message, typeof message);
   $.post(`/users/${message.targetUser}`, { message }, (data) => {
     console.log(data);
   });
@@ -83,7 +77,6 @@ export const getEvents = ({ data }) => {
 };
 
 export function addEvent(eventInfo) {
-  console.log('ADD EVENT CALLED', eventInfo);
   return ({
     type: 'ADD_EVENT',
     eventInfo,
@@ -91,17 +84,16 @@ export function addEvent(eventInfo) {
 }
 
 export const createEvent = (event) => {
-  console.log('CREATE EVENT ACTION CREATOR CALLED', event);
   event.date_time = moment(event.date);
   delete event.date;
   delete event.time;
   delete event.dateFlag;
+  console.log(event);
   return function (dispatch) {
-    console.log('DISPATCHED');
     fetch('/events', {
       method: 'POST',
       credentials: 'include',
-      dataType: 'json',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(event),
     })
     .then(resp => resp.json())
@@ -109,3 +101,45 @@ export const createEvent = (event) => {
     .catch(err => console.error(err));
   };
 };
+
+export function userLeaveEvent(event) {
+  return ({
+    type: 'LEAVE_EVENT',
+    id: event.id,
+  });
+}
+
+export const leaveEvent = (user, event) => {
+  const reqObj = {
+    user_id: user.id,
+    event_id: event.id,
+  };
+  return function (dispatch) {
+    fetch('/events/attendees', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reqObj),
+    })
+    .then(() => dispatch(userLeaveEvent(event)))
+    .catch(err => console.error(err));
+  };
+};
+
+export function userJoinEvent(event) {
+  return ({
+    type: 'JOIN_EVENT',
+    payload: event,
+  });
+}
+
+export function joinEvent(user, event) {
+  return function (dispatch) {
+    fetch(`events/join/${event.id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    })
+    .then(() => dispatch(userJoinEvent(event)))
+    .catch(err => console.error(err));
+  };
+}

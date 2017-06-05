@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Button, Container, Header, Grid, Divider, Modal, Card } from 'semantic-ui-react';
-import { deleteEvent, updateAttendeeStatus, loginUser } from '../actions/actions';
+import { deleteEvent, updateAttendeeStatus, loginUser, leaveEvent } from '../actions/actions';
 import Event from '../components/Event';
 import AttendeeContainer from '../containers/AttendeeContainer';
 
@@ -49,19 +49,9 @@ class UserEvents extends Component {
   deleteClick = event => this.props.deleteEvent(event);
 
   handleLeaveClick(user, event) {
-    const reqObj = {
-      user_id: user.id,
-      event_id: event.id,
-    };
-    fetch('/events/attendees', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(reqObj),
-    })
-    .then(() => {
-      this.props.loginUser();
-    });
+    this.props.leaveEvent(user, event)
   }
+
   render = () => {
     const { user } = this.props;
     const { creatorVisibile } = this.state;
@@ -157,5 +147,6 @@ export default connect(
     deleteEvent,
     updateAttendeeStatus,
     loginUser,
+    leaveEvent,
   },
 )(UserEvents);

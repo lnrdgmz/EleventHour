@@ -18,6 +18,7 @@ import { loginUser } from '../actions/actions.js';
 
 class Routes extends React.Component {
   componentDidMount() {
+    console.log('routes called loginUser()')
     this.props.loginUser();
   }
 
