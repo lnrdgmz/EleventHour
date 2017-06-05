@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
 import { filter } from 'lodash/collection';
 import { escapeRegExp } from 'lodash/string';
+import PropTypes from 'prop-types';
 
 // local dependencies
 import { Container, Search, Grid, Divider, Modal } from 'semantic-ui-react';
@@ -68,48 +69,77 @@ class Events extends Component {
     const { isLoading, value, results } = this.state;
 
     return (
-      <Container className="events-page" >
+      <div className="wrapper">
         <MenuBar />
-        <Search
-          loading={isLoading}
-          onSearchChange={this.handleSearchChange}
-          results={results}
-          value={value}
-          {...this.props}
-        />
-        <Divider />
-        <Grid centered columns={2} stackable stretched >
-          {eventsList === undefined ? null : eventsList.map((event) => {
-            return (
-              <GridEvent key={event.id} event={event} handleElementClick={this.handleElementClick} />
-            );
-          })}
-        </Grid>
-        <Modal
-          dimmer="blurring"
-          basic
-          onClose={() => this.clearModalFocus()}
-          size="small"
-          open={Boolean(this.state.modalFocus)}
-        >
-          <Event
-            parent="Grid"
-            user={user}
-            event={this.state.modalFocus}
-            deleteClick=""
-            changeModalFocusClick=""
-            joinEvent={this.handleJoinEvent}
+        <Container className="events-page" >
+          <Search
+            loading={isLoading}
+            onSearchChange={this.handleSearchChange}
+            results={results}
+            value={value}
+            {...this.props}
           />
-        </Modal>
-        <Waypoint
-          onEnter={() => this.getMoreEvents()}
-        />
-      </Container>
+          <Divider />
+          <Grid centered columns={3} stackable stretched >
+            {eventsList === undefined ? null : eventsList.map(event => (
+              <GridEvent
+                key={event.id}
+                event={event}
+                handleElementClick={this.handleElementClick}
+              />
+            ))}
+          </Grid>
+          <Modal
+            dimmer="blurring"
+            basic
+            onClose={() => this.clearModalFocus()}
+            size="small"
+            open={Boolean(this.state.modalFocus)}
+          >
+            <Event
+              parent="Grid"
+              user={user}
+              event={this.state.modalFocus}
+              deleteClick=""
+              changeModalFocusClick=""
+              joinEvent={this.handleJoinEvent}
+            />
+          </Modal>
+          <Waypoint
+            onEnter={() => this.getMoreEvents()}
+          />
+        </Container>
+      </div>
     );
   }
 }
 
-const mapStatetoProps = ({ events, user }) => ({ 
+Events.propTypes = {
+  joinEvent: PropTypes.func.isRequired,
+  fetchEvents: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    oauth_provider: PropTypes.string,
+    provider_id: PropTypes.string,
+    display_name: PropTypes.string,
+    img_url: PropTypes.string,
+    contact_number: PropTypes.string,
+    email: PropTypes.string,
+    bio: PropTypes.string,
+    age: PropTypes.number,
+    created_at: PropTypes.string,
+    updated_at: PropTypes.string,
+    messages: PropTypes.any,
+    events: PropTypes.arrayOf(PropTypes.object),
+  }),
+  eventsList: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+Events.defaultProps = {
+  user: PropTypes.shape({}),
+};
+
+const mapStatetoProps = ({ events, user }) => ({
   eventsList: events.eventsList,
   user,
 });
