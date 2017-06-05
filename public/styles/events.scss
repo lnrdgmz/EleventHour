@@ -1,13 +1,12 @@
-// Variables
+@import '_variables.scss';
+
 $pageWidth: 100vw;
 $pageHeight: 100vh;
 $transparent: rgba(0, 0, 0, 0);
-$fontFamily: 'Viga', sans-serif;
 
 body {
   width: $pageWidth;
   height: $pageHeight;
-  font-family: $fontFamily;
 }
 
 .events-page {
