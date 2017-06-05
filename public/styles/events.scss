@@ -1,13 +1,8 @@
-// Variables
-$pageWidth: 100vw;
-$pageHeight: 100vh;
-$transparent: rgba(0, 0, 0, 0);
-$fontFamily: 'Viga', sans-serif;
+@import '_variables.scss';
 
 body {
   width: $pageWidth;
   height: $pageHeight;
-  font-family: $fontFamily;
 }
 
 .events-page {
@@ -16,15 +11,7 @@ body {
   background: $transparent;
 }
 
-.event-title, .event-description {
-  color: black !important;
-}
-
-.event-item-meta {
-  color: rgb(155, 177, 201);
-}
-
-.icon {
-  margin-right: 10px;
-  margin-left: 30px;
+.wrapper {
+  width: $pageWidth;
+  height: $pageHeight;
 }
