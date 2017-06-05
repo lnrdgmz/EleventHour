@@ -65,12 +65,6 @@ export function sendMessage(message) {
     payload: message,
   });
 }
-export function sendToUser(message) {
-  console.log(message, typeof message);
-  $.post(`/users/${message.targetUser}`, { message }, (data) => {
-    console.log(data);
-  });
-}
 
 // Event Actions
 
@@ -91,21 +85,39 @@ export function addEvent(eventInfo) {
 }
 
 export const createEvent = (event) => {
+  for(var key in event) {
+    console.log('Key:', key, 'Event:', event[key]);
+    console.log('JSON:', JSON.stringify(event[key]));
+  }
   console.log('CREATE EVENT ACTION CREATOR CALLED', event);
   event.date_time = moment(event.date);
   delete event.date;
   delete event.time;
   delete event.dateFlag;
   return function (dispatch) {
-    console.log('DISPATCHED');
-    fetch('/events', {
+    console.log('DISPATCHED', event);
+    console.log('JSON Derulo:', JSON.stringify(event));
+    $.ajax({
+      url: '/events',
       method: 'POST',
-      credentials: 'include',
-      dataType: 'json',
-      body: JSON.stringify(event),
-    })
-    .then(resp => resp.json())
-    .then(body => dispatch(addEvent(body)))
-    .catch(err => console.error(err));
+      contentType: 'application/json',
+      data: JSON.stringify(event),
+      success: (data) => {
+        console.log('Sending', data);
+        dispatch(addEvent(data));
+      },
+      failure: () => {
+        console.log('This shit failed');
+      },
+    });
+    // fetch('/events', {
+    //   method: 'POST',
+    //   credentials: 'include',
+    //   dataType: 'json',
+    //   body: JSON.stringify(event),
+    // })
+    // .then(resp => resp.json())
+    // .then(body => dispatch(addEvent(body)))
+    // .catch(err => console.error(err));
   };
 };

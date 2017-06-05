@@ -1,24 +1,34 @@
 // MODULES ==================================================
 require('dotenv').config();
 const express = require('express');
-
+const socketEvents = require('./utils/chatUtils');
 const app = express();
+const io = require('socket.io');
 
 // CONFIGURATION =============================================
 // configure our server with all the middlware and routing
 require('./config/auth')(app);
 require('./config/middleware.js')(app, express);
 
-
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
+
+const socketIo = io(server);
 
 
+socketIo.on('connection', socket => {
+  const username = socket.handshake.query.username;
+  console.log(`${username} connected`);
 
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
+  socket.on('send:message', data => {
     console.log(data);
+    console.log(`${data.userName}: ${data.message}`);
+
+    // message received from client, now broadcast it to everyone else
+    socket.broadcast.emit('server:message', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`${username} disconnected`);
   });
 });
 

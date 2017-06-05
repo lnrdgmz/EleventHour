@@ -29,7 +29,7 @@ function Event(props) {
         <Button negative onClick={props.handleLeaveClick.bind(null, props.user, props.event)} >Yes</Button>
       </div>
     );
-  } else {
+  } else if(role) {
     bottomPart = (
       <div>
         <span>Your current status for this event: <strong style={roleStyle}>{role.toUpperCase()}</strong></span>

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class ChatInput extends React.Component {
+class ChatInput extends Component {
   constructor(props) {
     super(props);
     this.state = { chatInput: '' };
