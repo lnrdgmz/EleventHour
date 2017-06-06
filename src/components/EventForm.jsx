@@ -86,7 +86,7 @@ class Demo extends React.Component {
   render() {
     const cssClasses = {
       root: 'form-group',
-      input: 'Demo__search-input',
+      input: 'Demo__search-input ui input huge focus modalInput',
       autocompleteContainer: 'Demo__autocomplete-container',
     }
 
