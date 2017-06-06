@@ -1,0 +1,11 @@
+@import '_variables.scss';
+
+.message-button {
+  font-family: $lato;
+  font-weight: $bold;
+  background-color: $lightblue !important;
+}
+
+.ui.label {
+  color: $offwhite;
+}

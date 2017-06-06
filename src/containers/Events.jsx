@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
-import { filter } from 'lodash/collection';
-import { escapeRegExp } from 'lodash/string';
 import SearchInput, { createFilter } from 'react-search-input';
 import PropTypes from 'prop-types';
 
@@ -21,8 +19,9 @@ class Events extends Component {
     super(props);
     this.state = {
       modalFocus: false,
-      page: 0,
+      joinConfirm: false,
       zipCode: props.match.params.zipCode,
+      page: 0,
       searchTerm: '',
     };
 
@@ -43,7 +42,11 @@ class Events extends Component {
     this.setState({ modalFocus: event });
   }
 
-  handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
+  handleJoinEvent = (user, event) => {
+    this.props.joinEvent(user, event);
+  };
+
+  toggleJoin = () => this.setState(prevState => ({ joinConfirm: !prevState.joinConfirm }))
 
 // Related to search
 
@@ -61,6 +64,7 @@ class Events extends Component {
           <SearchInput
             className="search-input"
             onChange={this.searchUpdated}
+            throttle={350}
           />
           <Divider />
           <Grid centered columns={3} stackable stretched >
@@ -86,8 +90,10 @@ class Events extends Component {
               user={user}
               event={this.state.modalFocus}
               deleteClick=""
-              changeModalFocusClick=""
+              changeModalFocusClick={this.clearModalFocus}
               joinEvent={this.handleJoinEvent}
+              toggleJoin={this.toggleJoin}
+              joinConfirm={this.state.joinConfirm}
             />
           </Modal>
           <Waypoint
