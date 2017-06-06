@@ -44,7 +44,6 @@ class Events extends Component {
     });
     console.log(this.props.eventsList); 
   }
-
   getMoreEvents = () => {
     const newPage = this.state.page + 1;
     this.setState({ page: newPage });
