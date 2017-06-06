@@ -29,6 +29,11 @@ class Events extends Component {
     this.getEventCreator = this.getEventCreator.bind(this);
   }
   componentWillMount() {
+    
+    // this.resetComponent();
+    console.log(this.props.eventsList); 
+  }
+  componentDidUpdate() {
     this.props.eventsList.forEach((event) => {
       fetch(`/events/${event.id}`, { credentials: 'include' })
         .then((res) => {
@@ -42,10 +47,7 @@ class Events extends Component {
           });
         });
     });
-    this.resetComponent();
-    console.log(this.props.eventsList); 
   }
-
   getMoreEvents = () => {
     const newPage = this.state.page + 1;
     this.setState({ page: newPage });
