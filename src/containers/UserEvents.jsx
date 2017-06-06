@@ -128,6 +128,7 @@ class UserEvents extends Component {
                 </Card.Content>
                 <Card.Content>
                   <Modal
+                    className="normal-modal"
                     dimmer="blurring"
                     trigger={<Button onClick={this.getWeather}>More info</Button>}
                     onClose={() => this.changeModalFocusClick('Event')}

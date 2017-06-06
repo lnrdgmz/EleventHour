@@ -12,6 +12,27 @@
   top: 0 !important;
 }
 
+.normal-modal {
+  width: auto;
+  height: auto;
+  top: 50% !important;
+}
+
+.modal-page.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ui.centered.grid.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
 .item {
   height: 100%;
 }

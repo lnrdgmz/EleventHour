@@ -1,11 +1,7 @@
 // CSS for Login.jsx
 
 // Variables
-$pageWidth: 100vw;
-$pageHeight: 100vh;
-$transparent: rgba(0, 0, 0, 0);
-$blue: #004FFF;
-$orange: #FC8000;
+@import '_variables.scss';
 
 body {
   width: 100vw;
@@ -21,6 +17,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(0, 0, 0, .4);
 }
 
 .login-video {
@@ -40,21 +37,21 @@ body {
 }
 
 .ui.grid.login-foreground-grid {
-  font-family: 'Viga';
+  font-family: $graduate;
   display: flex;
   align-items: center;
 }
 
 .login-header {
   font-size: 120px;
-  font-family: 'Viga';  
-  color: $blue;
+  font-family: $graduate;  
+  color: $lightblue;
   text-shadow: 0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 0.5px black;
 }
 
 .ui.header .sub.header.login-subHeader {
-  font-family: 'Viga';
+  font-family: $lato;
   font-size: 24px;
-  color: #FEFEFE;
+  color: $offwhite;
   text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
 }

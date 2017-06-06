@@ -82,6 +82,7 @@ class Events extends Component {
           </Grid>
           <Modal
             dimmer="blurring"
+            className="normal-modal"
             basic
             onClose={() => this.clearModalFocus()}
             size="small"
