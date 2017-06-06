@@ -3,9 +3,10 @@ import moment from 'moment';
 import { Card, Image, Button, Rating, Header, Divider, Label, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import LoginModal from '../components/LoginModal';
+import '../../public/styles/event.scss';
 
 function Event(props) {
-  const { event, deleteClick, changeModalFocusClick, parent, user, joinEvent } = props;
+  const { event, deleteClick, changeModalFocusClick, parent, user, joinEvent, toggleConfirm, toggleJoin, joinConfirm } = props;
 
   let bottomPart;
   const roleStyles = { creator: 'green', approved: 'green', pending: 'orange', declined: 'red' };
@@ -23,7 +24,9 @@ function Event(props) {
       // event is full
         bottomPart = (
           <Card.Content extra >
-            <p>This event's roster is curently <strong style={roleStyle}>full</strong>!</p>
+            <Card.Header>
+              This event's roster is curently <strong style={roleStyle}>full</strong>!
+            </Card.Header>
             <Button negative onClick={() => deleteClick(event)}>Delete Event</Button>
           </Card.Content>
         )
@@ -45,48 +48,76 @@ function Event(props) {
       // if show confirm buttons
         bottomPart = (
           <Card.Content extra>
-            <span>Are you sure you want to leave this event?</span>
+            <Card.Header>Are you sure you want to leave this event?</Card.Header>
             <Button.Group widths={2}>
-              <Button onClick={props.handleLeaveClick.bind(null, props.user, props.event)}> Yes </Button>
+              <Button
+                onClick={props.handleLeaveClick.bind(null, props.user, props.event)}
+                value="Yes, Leave event."
+              />
               <Button.Or />
-              <Button negative onClick={props.toggleConfirm}> No </Button>
+              <Button
+                negative
+                onClick={toggleConfirm}
+                value="No, I don't want to leave the event"
+              />
             </Button.Group>
           </Card.Content>
         )
       ) : (
         bottomPart = (
           <Card.Content extra>
-            <span>
+            <Card.Header>
               Your current status for this event:
                 <strong style={roleStyle}> {role.toUpperCase()} </strong>
-            </span>
-            <Button negative onClick={props.toggleConfirm}>Leave Event</Button>
+            </Card.Header>
+            <Button negative onClick={toggleConfirm}>Leave Event</Button>
           </Card.Content>
         )
       );
     }
   } else if (parent === 'Grid') {
   // parent === Grid
-    user.display_name ? (
+    if (user.display_name) {
+      !joinConfirm ? (
+        bottomPart = (
+          <Card.Content extra>
+            <Button
+              onClick={() => {
+                joinEvent(user, event);
+                toggleJoin();
+              }}
+            >
+              Join Event
+            </Button>
+            <Label className="message-button" position="bottom right">
+              <Icon name="mail outline" />
+                Message
+              <Label.Detail>Veronika - Creator</Label.Detail>
+            </Label>
+          </Card.Content>
+        )
+      ) : (
+        bottomPart = (
+          <Card.Content extra>
+            <Card.Header
+              content="Success!"
+            />
+            <Button
+              content="Close"
+              onClick={changeModalFocusClick}
+            />
+          </Card.Content>
+        )
+      );
+    } else {
     // user exists
-      bottomPart = (
-        <Card.Content extra>
-          <Button onClick={() => joinEvent(user, event)} > Join Event </Button>
-          <Label position="bottom right" as='a' color='blue' image>
-            <Icon name="mail outline" />
-              Message
-            <Label.Detail>Veronika - Creator</Label.Detail>
-          </Label>
-        </Card.Content>
-      )
-    ) : (
       bottomPart = (
         <Card.Content extra>
           <Card.Header>Log in to join events!</Card.Header>
           <LoginModal />
         </Card.Content>
       )
-    );
+    }
   }
   
   return (
@@ -98,7 +129,7 @@ function Event(props) {
         </Card.Header>
         <Card.Meta>
           <span className="date">
-            Takes place {moment(event.date_time).calendar()}
+            Takes place {moment(event.date_time).format('ll')}
           </span>
         </Card.Meta>
         <Divider />
@@ -125,6 +156,7 @@ function Event(props) {
 
 Event.propTypes = {
   showConfirmButtons: PropTypes.bool.isRequired,
+  joinConfirm: PropTypes.bool.isRequired,
   parent: PropTypes.string.isRequired,
   changeModalFocusClick: PropTypes.func.isRequired,
   deleteClick: PropTypes.func.isRequired,
