@@ -17,7 +17,7 @@ class UserEvents extends Component {
       modalFocusTag: 'Event',
       showConfirmButtons: false,
       events: this.props.events,
-      weather : []
+      weather: [],
 
     };
 
@@ -33,17 +33,28 @@ class UserEvents extends Component {
     this.props.loginUser();
   }
 
-  filterClick = (flag) => {
-    if (flag) this.setState({ creatorVisibile: true });
-    else this.setState({ creatorVisibile: false });
+  getWeather = () => {
+    const { user } = this.props;
+
+    const geoLoc = user.events[0].lat + ',' + user.events[0].lng;
+    const time = moment(user.events.date_time).format('X');
+ 
+    fetch(`/api/weather?info=${time}&loc=${geoLoc}`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((data) => {
+      const arr = [];
+      arr.push(data.hourly.summary);
+      arr.push(data.hourly.data[0].temperature);
+      this.setState({ weather: arr });
+      user.events.weather = this.state.weather;
+    });
   }
 
-  toggleConfirm() {
-    this.setState((prevState) => {
-      return {
-        showConfirmButtons: !prevState.showConfirmButtons,
-      };
-    });
+  toggleConfirm = () => {
+    this.setState(prevState => ({ showConfirmButtons: !prevState.showConfirmButtons }));
   }
 
   changeModalFocusClick = (focusTag) => {
@@ -52,56 +63,14 @@ class UserEvents extends Component {
 
   deleteClick = event => this.props.deleteEvent(event);
 
-
-
-  handleLeaveClick(user, event) {
+  handleLeaveClick = (user, event) => {
     this.props.leaveEvent(user, event);
     this.setState({ showConfirmButtons: false });
+  };
 
-}
-
-  getWeather(){
-    const { user } = this.props;
-
-    const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
-    const time = moment(user.events.date_time).format('X');
- 
-    fetch(`/api/weather?info=${time}&loc=${geoLoc}`,{
-      headers: {'Content-Type': 'application/json'},
-      method: "GET",
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      let arr = [];
-      arr.push(data.hourly.summary);
-      arr.push(data.hourly.data[0].temperature);
-      this.setState({weather : arr});
-      user.events.weather = this.state.weather
-    })
-
-  }
-
-  getWeather(){
-    const { user } = this.props;
-    const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
-    const time = moment(user.events.date_time).format('X');
- 
-    fetch(`/api/weather?info=${time}&loc=${geoLoc}`,{
-      headers: {'Content-Type': 'application/json'},
-      method: "GET",
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      let arr = [];
-      arr.push(data.hourly.summary);
-      arr.push(data.hourly.data[0].temperature);
-      this.setState({weather : arr});
-      user.events.weather = this.state.weather
-    })
+  filterClick = (flag) => {
+    if (flag) this.setState({ creatorVisibile: true });
+    else this.setState({ creatorVisibile: false });
   }
 
   render = () => {
@@ -140,57 +109,55 @@ class UserEvents extends Component {
         <Divider section />
         <Card.Group itemsPerRow={3} stackable className="grid-item">
           {filteredListLength === 0 ? (
-         
             <h1>
-              You are currently not signed up for any events. Add some events to your calendar <a href="/#/events">Here</a>
-             
+              You are currently not signed up for any events. Add some events to your calendar <a href="/#/events">Here</a>            
             </h1>
-           
           ) : (
             user.events.filter(event => this.state.creatorVisibile ? event.role === 'creator' : event.role !== 'creator')
-            .map((event) => {
-              return (
-                <Card centered key={event.id}>
-                  <Card.Content>
-                    <Card.Header>
-                      {event.title}
-                    </Card.Header>
-                    <Card.Meta>
-                      <span className="date">
-                        Takes place {moment(event.date_time).calendar()}
-                      </span>
-                    </Card.Meta>
-                  </Card.Content>
-                  <Card.Content>
-                    <Modal
-                      dimmer="blurring"
-                      trigger={<Button  onClick={this.getWeather}>More info</Button>}
-                      onClose={() => this.changeModalFocusClick('Event')}
-                      basic
-                      size="small"
-                    >
-                      {this.state.modalFocusTag === 'Event' ? (
-                      
-                        <Event
-                          parent="User"
-                          event={event}
-                          user={this.props.user}
-                          deleteClick={this.deleteClick}
-                          handleLeaveClick={this.handleLeaveClick}
-                          changeModalFocusClick={this.changeModalFocusClick}
-                          showConfirmButtons={this.state.showConfirmButtons}
-                          toggleConfirm={this.toggleConfirm}
-                          weather={this.state.weather}
-                        />
+            .map(event => (
+              <Card centered key={event.id}>
+                <Card.Content>
+                  <Card.Header>
+                    {event.title}
+                  </Card.Header>
+                  <Card.Meta>
+                    <span className="date">
+                      Takes place {moment(event.date_time).calendar()}
+                    </span>
+                  </Card.Meta>
+                </Card.Content>
+                <Card.Content>
+                  <Modal
+                    dimmer="blurring"
+                    trigger={<Button onClick={this.getWeather}>More info</Button>}
+                    onClose={() => this.changeModalFocusClick('Event')}
+                    basic
+                    size="small"
+                  >
+                    {this.state.modalFocusTag === 'Event' ? (
+                    
+                      <Event
+                        parent="User"
+                        event={event}
+                        user={this.props.user}
+                        deleteClick={this.deleteClick}
+                        handleLeaveClick={this.handleLeaveClick}
+                        changeModalFocusClick={this.changeModalFocusClick}
+                        showConfirmButtons={this.state.showConfirmButtons}
+                        toggleConfirm={this.toggleConfirm}
+                        weather={this.state.weather}
+                      />
 
-                      ) : (
-                        <AttendeeContainer eventId={event.id} changeModalFocusClick={this.changeModalFocusClick} />
-                      )}
-                    </Modal>
-                  </Card.Content>
-                </Card>
-              );
-            }))}
+                    ) : (
+                      <AttendeeContainer
+                        eventId={event.id}
+                        changeModalFocusClick={this.changeModalFocusClick}
+                      />
+                    )}
+                  </Modal>
+                </Card.Content>
+              </Card>
+            )))}
         </Card.Group>
       </Container>
     );
