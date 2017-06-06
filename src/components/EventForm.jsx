@@ -18,10 +18,122 @@ let steps = [
   { completed: false, active: false, title: 'Event Details', description: 'Additional Details' },
 ];
 
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+
+class Demo extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      address: '',
+      geocodeResults: null,
+      loading: false
+    }
+    this.handleSelect = this.handleSelect.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    // this.renderGeocodeFailure = this.renderGeocodeFailure.bind(this)
+    // this.renderGeocodeSuccess = this.renderGeocodeSuccess.bind(this)
+  }
+
+  handleSelect(address) {
+    this.setState({
+      address,
+      loading: true
+    });
+    this.props.handleAddressSelect(address);
+
+    // geocodeByAddress(address)
+    //   .then((results) => getLatLng(results[0]))
+    //   .then(({ lat, lng }) => {
+    //     console.log('Success Yay', { lat, lng });
+    //     this.setState({
+    //       geocodeResults: this.renderGeocodeSuccess(lat, lng),
+    //       loading: false
+    //     })
+    //   })
+    //   .catch((error) => {
+    //     console.log('Oh no!', error);
+    //     this.setState({
+    //       geocodeResults: this.renderGeocodeFailure(error),
+    //       loading: false
+    //     });
+    //   });
+  }
+
+  handleChange(address) {
+    this.setState({
+      address,
+      geocodeResults: null
+    });
+    this.props.handleAddressChange(address);
+  }
+
+  /*renderGeocodeFailure(err) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        <strong>Error!</strong> {err}
+      </div>
+    )
+  }
+
+  renderGeocodeSuccess(lat, lng) {
+    return (
+      <div className="alert alert-success" role="alert">
+        <strong>Success!</strong> Geocoder found latitude and longitude: <strong>{lat}, {lng}</strong>
+      </div>
+    )
+  }*/
+
+  render() {
+    const cssClasses = {
+      root: 'form-group',
+      input: 'Demo__search-input',
+      autocompleteContainer: 'Demo__autocomplete-container',
+    }
+
+    const AutocompleteItem = ({ formattedSuggestion }) => (
+      <div className="Demo__suggestion-item">
+        <i className='fa fa-map-marker Demo__suggestion-icon'/>
+        <strong>{formattedSuggestion.mainText}</strong>{' '}
+        <small className="text-muted">{formattedSuggestion.secondaryText}</small>
+      </div>)
+
+    const inputProps = {
+      type: "text",
+      value: this.state.address,
+      onChange: this.handleChange,
+      onBlur: () => { console.log('Blur event!'); },
+      onFocus: () => { console.log('Focused!'); },
+      autoFocus: true,
+      placeholder: "Search Places",
+      name: 'Demo__input',
+      id: "my-input-id",
+    }
+
+    return (
+      <div className='page-wrapper'>
+        <div className='container'>
+          <PlacesAutocomplete
+            onSelect={this.handleSelect}
+            autocompleteItem={AutocompleteItem}
+            onEnterKeyDown={this.handleSelect}
+            classNames={cssClasses}
+            inputProps={inputProps}
+          />
+          {/*{this.state.loading ? <div><i className="fa fa-spinner fa-pulse fa-3x fa-fw Demo__spinner" /></div> : null}
+          {!this.state.loading && this.state.geocodeResults ?
+            <div className='geocoding-results'>{this.state.geocodeResults}</div> :
+          null}*/}
+        </div>
+      </div>
+    )
+  }
+}
+
 class EventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      autocompleteAddress: undefined,
       eventInfo: {
         date: '',
         title: '',
@@ -45,6 +157,8 @@ class EventForm extends Component {
      
     };
 
+    this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.handleAddressSelect = this.handleAddressSelect.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.showModal = this.showModal.bind(this);
     this.nextButtonClick = this.nextButtonClick.bind(this);
@@ -55,6 +169,36 @@ class EventForm extends Component {
     this.submitClick = this.submitClick.bind(this);
     this.geoCode = this.geoCode.bind(this);
     // this.getWeather = this.getWeather.bind(this);
+  }
+  componentDidMount() {
+    const dateOrForm = () => {
+      if (this.state.modalInfo.modalNumber === 2) {
+        this.setState({
+          ...this.state,
+          modalToRender: <DatePicker className="datePicker" />,
+        });
+      } else {
+        this.setState({
+          ...this.state,
+          modalToRender: <Input focus name="title" type="text" placeholder={this.state.modalInfo.placeHolderText} size="huge" required defaultValue={this.state.eventInfo.title} onChange={this.handleChange} className="modalInput" />,
+        });
+      }
+    };
+    return dateOrForm();
+  }
+
+  handleAddressSelect(address) {
+    this.handleAddressChange(address);
+    $('button.next').prop('disabled', false);
+  }
+
+  handleAddressChange(address) {
+    this.setState((prevState) => {
+      const newEventInfo = Object.assign({}, prevState.eventInfo, { location: address });
+      return {
+        eventInfo: newEventInfo,
+      };
+    });
   }
 
   showModal() {
@@ -157,7 +301,14 @@ class EventForm extends Component {
           m: this.state.m,
         });
         this.setState({
-          modalToRender: <Input focus name="location" type="text" placeholder={this.state.modalInfo.placeHolderText} size="huge" required onChange={this.handleChange} defaultValue={this.state.eventInfo.location} className="modalInput" />,
+          modalToRender: (
+            <div>
+              <Demo
+                handleAddressChange={this.handleAddressChange}
+                handleAddressSelect={this.handleAddressSelect}
+              />
+            </div>
+          ),
         });
         setTimeout(() => {
           this.state.history.push(this.state);
@@ -319,22 +470,6 @@ class EventForm extends Component {
       { completed: false, active: false, title: 'Skill Rating', description: 'Specify a Skill Rating (If Applicable)' },
       { completed: false, active: false, title: 'Event Details', description: 'Additional Details' },
     ];
-  }
-  componentDidMount() {
-    const dateOrForm = () => {
-      if (this.state.modalInfo.modalNumber === 2) {
-        this.setState({
-          ...this.state,
-          modalToRender: <DatePicker className="datePicker" />,
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          modalToRender: <Input focus name="title" type="text" placeholder={this.state.modalInfo.placeHolderText} size="huge" required defaultValue={this.state.eventInfo.title} onChange={this.handleChange} className="modalInput" />,
-        });
-      }
-    };
-    return dateOrForm();
   }
   render() {
     return (
