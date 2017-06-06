@@ -2,12 +2,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
-<<<<<<< HEAD
 import { filter } from 'lodash/collection';
 import { escapeRegExp } from 'lodash/string';
-=======
 import SearchInput, { createFilter } from 'react-search-input';
->>>>>>> v1.0/fix/searchBar
 import PropTypes from 'prop-types';
 
 // local dependencies
@@ -24,13 +21,9 @@ class Events extends Component {
     super(props);
     this.state = {
       modalFocus: false,
-<<<<<<< HEAD
       page: 0,
       zipCode: props.match.params.zipCode,
-=======
-      page: 1,
       searchTerm: '',
->>>>>>> v1.0/fix/searchBar
     };
 
     this.handleElementClick = this.handleElementClick.bind(this);
