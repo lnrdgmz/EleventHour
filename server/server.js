@@ -14,6 +14,7 @@ const server = require('http').Server(app);
 
 const socketIo = io(server);
 
+let rooms = [];
 
 socketIo.on('connection', socket => {
   const username = socket.handshake.query.username;

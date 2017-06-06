@@ -31,6 +31,7 @@ class UserEvents extends Component {
 
   componentWillMount = () => {
     this.props.loginUser();
+    console.log(this.state.events);
   }
 
   filterClick = (flag) => {
@@ -108,7 +109,7 @@ class UserEvents extends Component {
     const { user } = this.props;
     const { creatorVisibile } = this.state;
     const filteredListLength = user.events.filter(event => creatorVisibile ? event.role === 'creator' : event.role !== 'creator').length;
-
+    
     return (
       <Container className="userEvents-container">
         <Grid centered columns={4} textAlign="center">
