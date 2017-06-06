@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { Container, Grid, Divider, Modal } from 'semantic-ui-react';
 import MenuBar from '../components/MenuBar';
 import GridEvent from '../components/GridEvent';
-import Event from '../components/Event';
+import EventContainer from '../containers/EventContainer';
 import { fetchEvents } from '../actions/eventActions';
 import { joinEvent } from '../actions/actions';
 import '../../public/styles/events.scss';
@@ -31,9 +31,9 @@ class Events extends Component {
 
 // Related to store/state
   getMoreEvents = () => {
-    const nextPage = this.state.page + 1;
-    this.setState({ page: nextPage });
-    this.props.fetchEvents(nextPage);
+    const newPage = this.state.page + 1;
+    this.setState({ page: newPage });
+    this.props.fetchEvents(this.state.zipCode, newPage);
   }
 
 // Related to views
@@ -81,7 +81,7 @@ class Events extends Component {
             size="small"
             open={Boolean(this.state.modalFocus)}
           >
-            <Event
+            <EventContainer
               parent="Grid"
               user={user}
               event={this.state.modalFocus}
