@@ -11,7 +11,7 @@ messageRouter.route('/:userId')
   })
   .get((req, res) => {
     const userId = req.params.userId;
-    new Message({ recipient_id: userId }).fetchAll()
+    new Message({ recipient_id: userId }, { sender_id: userId }).fetchAll()
       .then(model => {
         if (model) {
           res.send(model);

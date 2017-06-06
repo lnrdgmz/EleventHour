@@ -5,19 +5,17 @@ import '../../public/styles/gridEvent.scss';
 
 function GridEvent(props) {
   const { event, handleElementClick } = props;
-
   const segmentStyle = {
     background: `url(${event.img_url}) no-repeat`,
     backgroundSize: '100%',
   };
-
 
   return (
     <Grid.Column textAlign="left" className="box" onClick={() => handleElementClick(event)}>
       <div className="event-item" style={segmentStyle}>
         <div className="buffer">
           <Header className="event-title">
-            {event.title.slice(0, 20)}...
+            {}...
           </Header>
           <Divider fitted />
           <List divided horizontal size="tiny" relaxed="very">

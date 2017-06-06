@@ -18,7 +18,6 @@ class LoginModal extends Component {
     super(props);
     this.showModal = this.showModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-
   }
 
   showModal() {

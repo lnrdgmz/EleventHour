@@ -23,10 +23,25 @@ class Events extends Component {
     };
 
     this.handleElementClick = this.handleElementClick.bind(this);
+    this.getEventCreator = this.getEventCreator.bind(this);
   }
 
   componentWillMount() {
+    this.props.eventsList.forEach((event) => {
+      fetch(`/events/${event.id}`, { credentials: 'include' })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          data.users.forEach((user) => {
+            if (user.role === 'creator') {
+              event.creator = user;
+            }
+          });
+        });
+    });
     this.resetComponent();
+    console.log(this.props.eventsList); 
   }
 
   getMoreEvents = () => {
@@ -35,12 +50,30 @@ class Events extends Component {
     console.log(this.state.page);
   }
 
-  clearModalFocus = () => this.setState({ modalFocus: false })
-
+  clearModalFocus = () => this.setState({ modalFocus: false, eventCreator: {} })
+  getEventCreator = (event) => {
+    
+      console.log('eventCreator', this.state.eventCreator);
+  }
   handleElementClick = (event) => {
     this.setState({ modalFocus: event });
+    fetch(`/events/${event.id}`, { credentials: 'include' })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        data.users.forEach((user) => {
+          if (user.role === 'creator') {
+            this.setState({
+              eventCreator: user,
+            });
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-
   handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
 
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' });
@@ -65,8 +98,8 @@ class Events extends Component {
 
   render = () => {
     const { eventsList, user } = this.props;
-    const { isLoading, value, results } = this.state;
-
+    const { isLoading, value, results, eventCreator } = this.state;
+    console.log('eventCreator', eventCreator);
     return (
       <Container className="events-page" >
         <MenuBar />
@@ -81,7 +114,7 @@ class Events extends Component {
         <Grid centered columns={2} stackable stretched >
           {eventsList === undefined ? null : eventsList.map((event) => {
             return (
-              <GridEvent key={event.id} event={event} handleElementClick={this.handleElementClick} />
+              <GridEvent key={event.id} event={event} eventCreator={eventCreator} handleElementClick={this.handleElementClick} />
             );
           })}
         </Grid>
