@@ -18,7 +18,7 @@ class UserEvents extends Component {
       modalFocusTag: 'Event',
       showConfirmButtons: false,
       events: this.props.events,
-
+      weather: [],
     };
 
     this.filterClick = this.filterClick.bind(this);
@@ -32,17 +32,28 @@ class UserEvents extends Component {
     this.props.loginUser();
   }
 
-  filterClick = (flag) => {
-    if (flag) this.setState({ creatorVisibile: true });
-    else this.setState({ creatorVisibile: false });
+  getWeather = () => {
+    const { user } = this.props;
+
+    const geoLoc = user.events[0].lat + ',' + user.events[0].lng;
+    const time = moment(user.events.date_time).format('X');
+ 
+    fetch(`/api/weather?info=${time}&loc=${geoLoc}`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((data) => {
+      const arr = [];
+      arr.push(data.hourly.summary);
+      arr.push(data.hourly.data[0].temperature);
+      this.setState({ weather: arr });
+      user.events.weather = this.state.weather;
+    });
   }
 
-  toggleConfirm() {
-    this.setState((prevState) => {
-      return {
-        showConfirmButtons: !prevState.showConfirmButtons,
-      };
-    });
+  toggleConfirm = () => {
+    this.setState(prevState => ({ showConfirmButtons: !prevState.showConfirmButtons }));
   }
 
   changeModalFocusClick = (focusTag) => {
@@ -51,13 +62,15 @@ class UserEvents extends Component {
 
   deleteClick = event => this.props.deleteEvent(event);
 
-
-
-  handleLeaveClick(user, event) {
+  handleLeaveClick = (user, event) => {
     this.props.leaveEvent(user, event);
     this.setState({ showConfirmButtons: false });
-  }
+  };
 
+  filterClick = (flag) => {
+    if (flag) this.setState({ creatorVisibile: true });
+    else this.setState({ creatorVisibile: false });
+  }
 
   render = () => {
     const { user } = this.props;
@@ -95,12 +108,9 @@ class UserEvents extends Component {
         <Divider section />
         <Card.Group itemsPerRow={3} stackable className="grid-item">
           {filteredListLength === 0 ? (
-         
             <h1>
-              You are currently not signed up for any events. Add some events to your calendar <a href="/#/events">Here</a>
-             
+              You are currently not signed up for any events. Add some events to your calendar <a href="/#/events">Here</a>            
             </h1>
-           
           ) : (
             user.events.filter(event => this.state.creatorVisibile ? event.role === 'creator' : event.role !== 'creator')
             .map((event) => {
