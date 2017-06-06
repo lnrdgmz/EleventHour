@@ -109,9 +109,16 @@ function Event(props) {
           {event.location}
           <Header sub className="eventInfoHeader"> Weather: </Header>
 
-
-          {/*<p>{props.weather[1]}</p>*/}
-          {/*<p>{props.weather[0]}</p>*/}
+          {
+            props.weather ? (
+              <div>
+                <p>{props.weather[1]}</p>
+                <p>{props.weather[0]}</p>
+              </div>
+            ) : (
+              null
+            )
+          }
 
 
           <Header sub>Required Skill: </Header>
