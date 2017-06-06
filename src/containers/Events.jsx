@@ -26,20 +26,55 @@ class Events extends Component {
     };
 
     this.handleElementClick = this.handleElementClick.bind(this);
+    this.getEventCreator = this.getEventCreator.bind(this);
+  }
+  componentWillMount() {
+    this.props.eventsList.forEach((event) => {
+      fetch(`/events/${event.id}`, { credentials: 'include' })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          data.users.forEach((user) => {
+            if (user.role === 'creator') {
+              event.creator = user;
+            }
+          });
+        });
+    });
+    this.resetComponent();
+    console.log(this.props.eventsList); 
   }
 
-// Related to store/state
   getMoreEvents = () => {
     const newPage = this.state.page + 1;
     this.setState({ page: newPage });
     this.props.fetchEvents(this.state.zipCode, newPage);
   }
 
-// Related to views
-  clearModalFocus = () => this.setState({ modalFocus: false })
-
+  clearModalFocus = () => this.setState({ modalFocus: false, eventCreator: {} })
+  getEventCreator = (event) => {
+    
+      console.log('eventCreator', this.state.eventCreator);
+  }
   handleElementClick = (event) => {
     this.setState({ modalFocus: event });
+    fetch(`/events/${event.id}`, { credentials: 'include' })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        data.users.forEach((user) => {
+          if (user.role === 'creator') {
+            this.setState({
+              eventCreator: user,
+            });
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   handleJoinEvent = (user, event) => {
@@ -54,8 +89,9 @@ class Events extends Component {
 
   render = () => {
     const { eventsList, user } = this.props;
-
     const KEYS_TO_FILTER = ['title', 'description', 'tags', 'catagories'];
+    const { isLoading, value, results, eventCreator } = this.state;
+
     return (
       <div className="wrapper">
         <MenuBar />
