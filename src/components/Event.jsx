@@ -44,6 +44,7 @@ class Event extends Component {
               <Card.Header>
                 This event's roster is curently <strong style={roleStyle}>full</strong>!
               </Card.Header>
+<<<<<<< HEAD
               <Button negative onClick={this.props.deleteClick(this.props.event)}>Delete Event</Button>
             </Card.Content>
         ) : (
@@ -75,6 +76,7 @@ class Event extends Component {
                 />
               </Button.Group>
             </Card.Content>
+<<<<<<< HEAD
         ) : (
             <Card.Content extra>
               <Card.Header>
