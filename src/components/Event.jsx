@@ -52,13 +52,13 @@ function Event(props) {
             <Button.Group widths={2}>
               <Button
                 onClick={props.handleLeaveClick.bind(null, props.user, props.event)}
-                value="Yes, Leave event."
+                content="Yes, Leave event."
               />
               <Button.Or />
               <Button
                 negative
                 onClick={toggleConfirm}
-                value="No, I don't want to leave the event"
+                content="No, I don't want to leave the event"
               />
             </Button.Group>
           </Card.Content>
@@ -104,7 +104,10 @@ function Event(props) {
             />
             <Button
               content="Close"
-              onClick={changeModalFocusClick}
+              onClick={() => {
+                changeModalFocusClick();
+                toggleJoin();
+              }}
             />
           </Card.Content>
         )
