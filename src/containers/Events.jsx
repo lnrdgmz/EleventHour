@@ -75,9 +75,11 @@ class Events extends Component {
       });
   }
 
+  handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
+
   toggleJoin = () => this.setState(prevState => ({ joinConfirm: !prevState.joinConfirm }))
 
-  handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
+  handleConfirm = () => this.setState({ joinConfirm: false })
 
 // Related to search
 

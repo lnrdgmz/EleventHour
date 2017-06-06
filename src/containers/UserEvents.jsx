@@ -114,48 +114,50 @@ class UserEvents extends Component {
             </h1>
           ) : (
             user.events.filter(event => this.state.creatorVisibile ? event.role === 'creator' : event.role !== 'creator')
-            .map((event) => {
-              return (
-                <Card centered key={event.id}>
-                  <Card.Content>
-                    <Card.Header>
-                      {event.title}
-                    </Card.Header>
-                    <Card.Meta>
-                      <span className="date">
-                        Takes place {moment(event.date_time).calendar()}
-                      </span>
-                    </Card.Meta>
-                  </Card.Content>
-                  <Card.Content>
-                    <Modal
-                      dimmer="blurring"
-                      trigger={<Button  onClick={this.getWeather}>More info</Button>}
-                      onClose={() => this.changeModalFocusClick('Event')}
-                      basic
-                      size="small"
-                    >
-                      {this.state.modalFocusTag === 'Event' ? (
-                      
-                        <EventContainer
-                          parent="User"
-                          event={event}
-                          user={this.props.user}
-                          deleteClick={this.deleteClick}
-                          handleLeaveClick={this.handleLeaveClick}
-                          changeModalFocusClick={this.changeModalFocusClick}
-                          showConfirmButtons={this.state.showConfirmButtons}
-                          toggleConfirm={this.toggleConfirm}
-                        />
+            .map(event => (
+              <Card centered key={event.id}>
+                <Card.Content>
+                  <Card.Header>
+                    {event.title}
+                  </Card.Header>
+                  <Card.Meta>
+                    <span className="date">
+                      Takes place {moment(event.date_time).calendar()}
+                    </span>
+                  </Card.Meta>
+                </Card.Content>
+                <Card.Content>
+                  <Modal
+                    dimmer="blurring"
+                    trigger={<Button onClick={this.getWeather}>More info</Button>}
+                    onClose={() => this.changeModalFocusClick('Event')}
+                    basic
+                    size="small"
+                  >
+                    {this.state.modalFocusTag === 'Event' ? (
+                    
+                      <Event
+                        parent="User"
+                        event={event}
+                        user={this.props.user}
+                        deleteClick={this.deleteClick}
+                        handleLeaveClick={this.handleLeaveClick}
+                        changeModalFocusClick={this.changeModalFocusClick}
+                        showConfirmButtons={this.state.showConfirmButtons}
+                        toggleConfirm={this.toggleConfirm}
+                        weather={this.state.weather}
+                      />
 
-                      ) : (
-                        <AttendeeContainer eventId={event.id} changeModalFocusClick={this.changeModalFocusClick} />
-                      )}
-                    </Modal>
-                  </Card.Content>
-                </Card>
-              );
-            }))}
+                    ) : (
+                      <AttendeeContainer
+                        eventId={event.id}
+                        changeModalFocusClick={this.changeModalFocusClick}
+                      />
+                    )}
+                  </Modal>
+                </Card.Content>
+              </Card>
+            )))}
         </Card.Group>
       </Container>
     );

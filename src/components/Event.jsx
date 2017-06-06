@@ -122,68 +122,93 @@ class Event extends Component {
       // user exists
         return (
           <Card.Content extra>
-            <Card.Header>Log in to join events!</Card.Header>
-            <LoginModal />
+            <Card.Header>
+              Your current status for this event:
+                <strong style={roleStyle}> {role.toUpperCase()} </strong>
+            </Card.Header>
+            <Button negative onClick={toggleConfirm}>Leave Event</Button>
           </Card.Content>
         );
       }
+  } else if (parent === 'Grid') {
+  // parent === Grid
+    if (user.display_name) {
+      !joinConfirm ? (
+        bottomPart = (
+          <Card.Content extra>
+            <Button
+              onClick={() => {
+                joinEvent(user, event);
+                toggleJoin();
+              }}
+            >
+              Join Event
+            </Button>
+            <Label className="message-button" position="bottom right">
+              <Icon name="mail outline" />
+                Message
+              <Label.Detail>Veronika - Creator</Label.Detail>
+            </Label>
+          </Card.Content>
+        )
+      ) : (
+        bottomPart = (
+          <Card.Content extra>
+            <Card.Header
+              content="Success!"
+            />
+            <Button
+              content="Close"
+              onClick={changeModalFocusClick}
+            />
+          </Card.Content>
+        )
+      );
+    } else {
+    // user exists
+      bottomPart = (
+        <Card.Content extra>
+          <Card.Header>Log in to join events!</Card.Header>
+          <LoginModal />
+        </Card.Content>
+      )
     }
   }
-  render() {
-    const imgStyle = {
-      height: '220px',
-    };
-    return (
-      <div>
-        <Card centered fluid raised>
-          <Image src={this.props.event.img_url} style={imgStyle} />
-          <Card.Content>
-            <Card.Header>
-              {this.props.event.title}
-            </Card.Header>
-            <Card.Meta>
-              <span className="date">
-                Takes place {moment(this.props.event.date_time).format('ll')}
-              </span>
-            </Card.Meta>
-            <Divider />
-            <Card.Description>
-              <Header sub className="eventInfoHeader"> Description: </Header>
-              {this.props.event.description}
-              <Header sub className="eventInfoHeader"> Location: </Header>
-              {this.props.event.location}
-              <Header sub className="eventInfoHeader"> Weather: </Header>
-              {
-                this.props.weather ? (
-                  <div>
-                    <p>{this.props.weather[1]}</p>
-                    <p>{this.props.weather[0]}</p>
-                  </div>
-                ) : (
-                  null
-                )
-              }
-              <Header sub>Required Skill: </Header>
-              <Rating defaultRating={this.props.event.skill_level} maxRating={5} disabled />
-            </Card.Description>
-          </Card.Content>
-          {this.bottomPart()}
-        </Card>
-        <Modal
-          dimmer="blurring"
-          basic
-          onClose={() => this.props.clearModalFocus()}
-          size="small"
-          open={Boolean(this.state.modalFocus)}
-        >
-        <Card centered fluid>
-          <ChatWindow userId={this.props.user.id} recipient={this.state.recipient} eventCreator={this.props.event.creator} />
-        </Card>
-      </Modal>
-    </div>
-    );
-  }
+  
+  return (
+    <Card centered fluid raised>
+      <Image src={event.img_url} style={imgStyle} />
+      <Card.Content>
+        <Card.Header>
+          {event.title}
+        </Card.Header>
+        <Card.Meta>
+          <span className="date">
+            Takes place {moment(event.date_time).format('ll')}
+          </span>
+        </Card.Meta>
+        <Divider />
+        <Card.Description>
+          <Header sub className="eventInfoHeader"> Description: </Header>
+          {event.description}
+          <Header sub className="eventInfoHeader"> Location: </Header>
+          {event.location}
+          <Header sub className="eventInfoHeader"> Weather: </Header>
+
+
+          {/*<p>{props.weather[1]}</p>*/}
+          {/*<p>{props.weather[0]}</p>*/}
+
+
+          <Header sub>Required Skill: </Header>
+          <Rating defaultRating={event.skill_level} maxRating={5} disabled />
+        </Card.Description>
+      </Card.Content>
+      {bottomPart}
+    </Card>
+  );
 }
+
 Event.propTypes = {
   showConfirmButtons: PropTypes.bool.isRequired,
   joinConfirm: PropTypes.bool.isRequired,
