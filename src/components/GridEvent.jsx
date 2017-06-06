@@ -17,7 +17,7 @@ function GridEvent(props) {
       <div className="event-item" style={segmentStyle}>
         <div className="buffer">
           <Header className="event-title">
-            {}...
+            { event.title.slice(0, 20) }...
           </Header>
           <Divider fitted />
           <List divided horizontal size="tiny" relaxed="very">

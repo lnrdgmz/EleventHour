@@ -4,12 +4,17 @@ import { Card, Image, Button, Rating, Header, Divider, Label, Icon } from 'seman
 import PropTypes from 'prop-types';
 import LoginModal from '../components/LoginModal';
 import '../../public/styles/event.scss';
+import Inbox from '../containers/Inbox';
+import utils from '../utils/utils';
+import NewChat from './NewChat';
+import $ from 'jquery';
 
 class Event extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalFocus: false,
+      recipient: 0,
     };
     this.bottomPart = this.bottomPart.bind(this);
     this.getEventCreator = this.getEventCreator.bind(this);
@@ -31,8 +36,9 @@ class Event extends Component {
       });
   }
 
-  changeModalState() {
-    this.setState({ modalFocus: true });
+  changeModalState(e) {
+
+    this.setState({ modalFocus: true, recipient: $(e.target).text() });
   }
 
   clearModalFocus(){
@@ -105,7 +111,6 @@ class Event extends Component {
     // parent === Grid
       if (user.display_name) {
         !joinConfirm ? (
-          bottomPart = (
             <Card.Content extra>
               <Button
                 onClick={() => {
@@ -121,9 +126,7 @@ class Event extends Component {
                 <Label.Detail>Veronika - Creator</Label.Detail>
               </Label>
             </Card.Content>
-          )
         ) : (
-          bottomPart = (
             <Card.Content extra>
               <Card.Header
                 content="Success!"
@@ -136,16 +139,15 @@ class Event extends Component {
                 }}
               />
             </Card.Content>
-          )
-        );
+        )
       } else {
       // user exists
-        bottomPart = (
+        return (
           <Card.Content extra>
             <Card.Header>Log in to join events!</Card.Header>
             <LoginModal />
           </Card.Content>
-        )
+        );
       }
     }
   }
@@ -198,7 +200,7 @@ class Event extends Component {
           open={Boolean(this.state.modalFocus)}
         >
         <Card centered fluid>
-          <Inbox />
+          <NewChat recipient={this.state.recipient} />
         </Card>
       </Modal>
     </div>
