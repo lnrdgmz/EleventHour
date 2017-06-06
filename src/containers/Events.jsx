@@ -19,9 +19,9 @@ class Events extends Component {
     super(props);
     this.state = {
       modalFocus: false,
-      page: 0,
+      joinConfirm: false,
       zipCode: props.match.params.zipCode,
-      page: 1,
+      page: 0,
       searchTerm: '',
     };
 
@@ -30,7 +30,7 @@ class Events extends Component {
 
 // Related to store/state
   getMoreEvents = () => {
-    const newPage = this.state.page + 1
+    const newPage = this.state.page + 1;
     this.setState({ page: newPage });
     this.props.fetchEvents(this.state.zipCode, newPage);
   }
@@ -42,7 +42,13 @@ class Events extends Component {
     this.setState({ modalFocus: event });
   }
 
-  handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
+  handleJoinEvent = (user, event) => {
+    this.props.joinEvent(user, event);
+  };
+
+  toggleJoin = () => this.setState(prevState => ({ joinConfirm: !prevState.joinConfirm }))
+
+  handleConfirm = () => this.setState({ joinConfirm: false })
 
 // Related to search
 
@@ -60,6 +66,7 @@ class Events extends Component {
           <SearchInput
             className="search-input"
             onChange={this.searchUpdated}
+            throttle={350}
           />
           <Divider />
           <Grid centered columns={3} stackable stretched >
@@ -85,8 +92,10 @@ class Events extends Component {
               user={user}
               event={this.state.modalFocus}
               deleteClick=""
-              changeModalFocusClick=""
+              changeModalFocusClick={this.clearModalFocus}
               joinEvent={this.handleJoinEvent}
+              toggleJoin={this.toggleJoin}
+              joinConfirm={this.state.joinConfirm}
             />
           </Modal>
           <Waypoint
