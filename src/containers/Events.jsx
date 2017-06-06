@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
 import { filter } from 'lodash/collection';
 import { escapeRegExp } from 'lodash/string';
+import SearchInput, { createFilter } from 'react-search-input';
 import PropTypes from 'prop-types';
 
 // local dependencies
-import { Container, Search, Grid, Divider, Modal } from 'semantic-ui-react';
+import { Container, Grid, Divider, Modal } from 'semantic-ui-react';
 import MenuBar from '../components/MenuBar';
 import GridEvent from '../components/GridEvent';
 import Event from '../components/Event';
@@ -22,22 +23,20 @@ class Events extends Component {
       modalFocus: false,
       page: 0,
       zipCode: props.match.params.zipCode,
+      searchTerm: '',
     };
 
     this.handleElementClick = this.handleElementClick.bind(this);
   }
 
-  componentWillMount() {
-    this.resetComponent();
-  }
-
+// Related to store/state
   getMoreEvents = () => {
-    const newPage = this.state.page + 1
-    this.setState({ page: newPage });
-    this.props.fetchEvents(this.state.zipCode, newPage);
-    console.log(this.state.page);
+    const nextPage = this.state.page + 1;
+    this.setState({ page: nextPage });
+    this.props.fetchEvents(nextPage);
   }
 
+// Related to views
   clearModalFocus = () => this.setState({ modalFocus: false })
 
   handleElementClick = (event) => {
@@ -46,44 +45,28 @@ class Events extends Component {
 
   handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
 
-  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' });
+// Related to search
 
-  handleResultSelect = (e, result) => this.setState({ value: result.description })
-
-  handleSearchChange = (e, value) => {
-    this.setState({ isLoading: true, value });
-
-    setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent();
-
-      const re = new RegExp(escapeRegExp(this.state.value), 'i');
-      const isMatch = result => re.test(result.description);
-
-      this.setState({
-        isLoading: false,
-        results: filter(this.props.eventsList, isMatch),
-      });
-    }, 500);
-  }
+  searchUpdated = term => this.setState({ searchTerm: term });
 
   render = () => {
     const { eventsList, user } = this.props;
-    const { isLoading, value, results } = this.state;
 
+    const KEYS_TO_FILTER = ['title', 'description', 'tags', 'catagories'];
     return (
       <div className="wrapper">
         <MenuBar />
         <Container className="events-page" >
-          <Search
-            loading={isLoading}
-            onSearchChange={this.handleSearchChange}
-            results={results}
-            value={value}
-            {...this.props}
+          <Divider />
+          <SearchInput
+            className="search-input"
+            onChange={this.searchUpdated}
           />
           <Divider />
           <Grid centered columns={3} stackable stretched >
-            {eventsList === undefined ? null : eventsList.map(event => (
+            {eventsList === undefined ? null : eventsList
+            .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTER))
+            .map(event => (
               <GridEvent
                 key={event.id}
                 event={event}
