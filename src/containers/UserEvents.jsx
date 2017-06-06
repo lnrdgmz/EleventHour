@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Button, Container, Header, Grid, Divider, Modal, Card } from 'semantic-ui-react';
 import { deleteEvent, updateAttendeeStatus, loginUser, leaveEvent } from '../actions/actions';
 import Event from '../components/Event';
+import EventContainer from '../containers/EventContainer';
 import AttendeeContainer from '../containers/AttendeeContainer';
 
 class UserEvents extends Component {
@@ -17,7 +18,6 @@ class UserEvents extends Component {
       modalFocusTag: 'Event',
       showConfirmButtons: false,
       events: this.props.events,
-      weather : []
 
     };
 
@@ -26,7 +26,6 @@ class UserEvents extends Component {
     this.changeModalFocusClick = this.changeModalFocusClick.bind(this);
     this.handleLeaveClick = this.handleLeaveClick.bind(this);
     this.toggleConfirm = this.toggleConfirm.bind(this);
-    this.getWeather = this.getWeather.bind(this);
   }
 
   componentWillMount = () => {
@@ -57,52 +56,8 @@ class UserEvents extends Component {
   handleLeaveClick(user, event) {
     this.props.leaveEvent(user, event);
     this.setState({ showConfirmButtons: false });
-
-}
-
-  getWeather(){
-    const { user } = this.props;
-
-    const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
-    const time = moment(user.events.date_time).format('X');
- 
-    fetch(`/api/weather?info=${time}&loc=${geoLoc}`,{
-      headers: {'Content-Type': 'application/json'},
-      method: "GET",
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      let arr = [];
-      arr.push(data.hourly.summary);
-      arr.push(data.hourly.data[0].temperature);
-      this.setState({weather : arr});
-      user.events.weather = this.state.weather
-    })
-
   }
 
-  getWeather(){
-    const { user } = this.props;
-    const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
-    const time = moment(user.events.date_time).format('X');
- 
-    fetch(`/api/weather?info=${time}&loc=${geoLoc}`,{
-      headers: {'Content-Type': 'application/json'},
-      method: "GET",
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      let arr = [];
-      arr.push(data.hourly.summary);
-      arr.push(data.hourly.data[0].temperature);
-      this.setState({weather : arr});
-      user.events.weather = this.state.weather
-    })
-  }
 
   render = () => {
     const { user } = this.props;
@@ -171,7 +126,7 @@ class UserEvents extends Component {
                     >
                       {this.state.modalFocusTag === 'Event' ? (
                       
-                        <Event
+                        <EventContainer
                           parent="User"
                           event={event}
                           user={this.props.user}
@@ -180,7 +135,6 @@ class UserEvents extends Component {
                           changeModalFocusClick={this.changeModalFocusClick}
                           showConfirmButtons={this.state.showConfirmButtons}
                           toggleConfirm={this.toggleConfirm}
-                          weather={this.state.weather}
                         />
 
                       ) : (
