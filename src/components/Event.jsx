@@ -183,7 +183,7 @@ class Event extends Component {
     </div>
     );
   }
-
+}
 Event.propTypes = {
   showConfirmButtons: PropTypes.bool.isRequired,
   joinConfirm: PropTypes.bool.isRequired,
