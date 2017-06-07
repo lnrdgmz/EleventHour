@@ -191,6 +191,50 @@ class Event extends Component {
       </Card>
     );
   }
+
+  
+  return (
+    <Card centered fluid raised>
+      <Image src={event.img_url} style={imgStyle} />
+      <Card.Content>
+        <Card.Header>
+          {event.title}
+        </Card.Header>
+        <Card.Meta>
+          <span className="date">
+            Takes place {moment(event.date_time).format('ll')}
+          </span>
+        </Card.Meta>
+        <Divider />
+        <Card.Description>
+          <Header sub className="eventInfoHeader"> Description: </Header>
+          {event.description}
+          <Header sub className="eventInfoHeader"> Location: </Header>
+          {event.location}
+          <Header sub className="eventInfoHeader"> Weather: </Header>
+
+
+          {
+            props.weather ? (
+              <div>
+                <p>{props.weather[1]}</p>
+                <p>{props.weather[0]}</p>
+              </div>
+            ) : (
+              null
+            )
+          }
+
+
+
+          <Header sub>Required Skill: </Header>
+          <Rating defaultRating={event.skill_level} maxRating={5} disabled />
+        </Card.Description>
+      </Card.Content>
+      {bottomPart}
+    </Card>
+  );
+
 }
 
 Event.PropTypes = {
