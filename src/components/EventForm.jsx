@@ -404,7 +404,7 @@ class EventForm extends Component {
         </Menu.Item>
         <div className="modal-middle">
           <OutlineModal ref="modal" className="modal-container">
-            <Grid className="bananagram" centered container textAlign="center" verticalAlign="top">
+            <Grid className="modal" centered container textAlign="center" verticalAlign="top">
               <Grid.Row centered className="progressBar">
                 <Step.Group ordered items={steps} className="creationProgress" />
               </Grid.Row>
