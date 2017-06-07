@@ -46,3 +46,8 @@
   margin-right: 10px;
   margin-left: 30px;
 }
+
+.grid-item {
+  overflow: scroll !important;
+  height: calc(100vh - 300px ) !important;
+}

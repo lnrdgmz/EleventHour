@@ -84,8 +84,6 @@ class UserEvents extends Component {
           <Grid.Column >
             <Header as="h1" >
               Your Events
-              {this.state.modalFocusTag}
-              {this.state.modalFocusTag === 'Event'}
             </Header>
           </Grid.Column>
           <Grid.Row centered columns={6} verticalAlign="middle">

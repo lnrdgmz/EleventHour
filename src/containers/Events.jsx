@@ -67,7 +67,7 @@ class Events extends Component {
             className="search-input"
             onChange={this.searchUpdated}
             throttle={350}
-            fuzzy="true"
+            fuzzy={true}
           />
           <Divider />
           <Grid centered columns={3} stackable stretched >
