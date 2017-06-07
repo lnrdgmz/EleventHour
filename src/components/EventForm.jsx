@@ -8,6 +8,7 @@ import { createEvent } from '../actions/actions';
 import moment from 'moment';
 import DatePicker from './DatePicker.jsx';
 import fetch from 'isomorphic-fetch';
+import AddressInput from './AddressInput';
 
 let steps = [
   {  active: true, title: 'Event Name', description: 'Name Your Event' },
@@ -22,6 +23,7 @@ class EventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      autocompleteAddress: undefined,
       eventInfo: {
         date: '',
         title: '',
@@ -46,6 +48,8 @@ class EventForm extends Component {
      
     };
 
+    this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.handleAddressSelect = this.handleAddressSelect.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.showModal = this.showModal.bind(this);
     this.nextButtonClick = this.nextButtonClick.bind(this);
@@ -56,6 +60,20 @@ class EventForm extends Component {
     this.submitClick = this.submitClick.bind(this);
     this.geoCode = this.geoCode.bind(this);
     // this.getWeather = this.getWeather.bind(this);
+  }
+
+  handleAddressSelect(address) {
+    this.handleAddressChange(address);
+    $('button.next').prop('disabled', false);
+  }
+
+  handleAddressChange(address) {
+    this.setState((prevState) => {
+      const newEventInfo = Object.assign({}, prevState.eventInfo, { location: address });
+      return {
+        eventInfo: newEventInfo,
+      };
+    });
   }
 
   showModal() {
@@ -169,7 +187,14 @@ class EventForm extends Component {
           m: this.state.m,
         });
         this.setState({
-          modalToRender: <Input focus name="location" type="text" placeholder={this.state.modalInfo.placeHolderText} size="huge" required onChange={this.handleChange} defaultValue={this.state.eventInfo.location} className="modalInput" />,
+          modalToRender: (
+            <div>
+              <AddressInput
+                handleAddressChange={this.handleAddressChange}
+                handleAddressSelect={this.handleAddressSelect}
+              />
+            </div>
+          ),
         });
         setTimeout(() => {
           this.state.history.push(this.state);
