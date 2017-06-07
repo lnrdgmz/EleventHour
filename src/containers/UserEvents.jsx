@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Button, Container, Header, Grid, Divider, Modal, Card } from 'semantic-ui-react';
 import { deleteEvent, updateAttendeeStatus, loginUser, leaveEvent } from '../actions/actions';
 import Event from '../components/Event';
+import EventContainer from '../containers/EventContainer';
 import AttendeeContainer from '../containers/AttendeeContainer';
 
 class UserEvents extends Component {
@@ -17,8 +18,7 @@ class UserEvents extends Component {
       modalFocusTag: 'Event',
       showConfirmButtons: false,
       events: this.props.events,
-      weather : []
-
+      weather: [],
     };
 
     this.filterClick = this.filterClick.bind(this);
@@ -26,7 +26,6 @@ class UserEvents extends Component {
     this.changeModalFocusClick = this.changeModalFocusClick.bind(this);
     this.handleLeaveClick = this.handleLeaveClick.bind(this);
     this.toggleConfirm = this.toggleConfirm.bind(this);
-    this.getWeather = this.getWeather.bind(this);
   }
 
   componentWillMount = () => {
@@ -34,17 +33,28 @@ class UserEvents extends Component {
     console.log(this.state.events);
   }
 
-  filterClick = (flag) => {
-    if (flag) this.setState({ creatorVisibile: true });
-    else this.setState({ creatorVisibile: false });
+  getWeather = () => {
+    const { user } = this.props;
+
+    const geoLoc = user.events[0].lat + ',' + user.events[0].lng;
+    const time = moment(user.events.date_time).format('X');
+ 
+    fetch(`/api/weather?info=${time}&loc=${geoLoc}`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((data) => {
+      const arr = [];
+      arr.push(data.hourly.summary);
+      arr.push(data.hourly.data[0].temperature);
+      this.setState({ weather: arr });
+      user.events.weather = this.state.weather;
+    });
   }
 
-  toggleConfirm() {
-    this.setState((prevState) => {
-      return {
-        showConfirmButtons: !prevState.showConfirmButtons,
-      };
-    });
+  toggleConfirm = () => {
+    this.setState(prevState => ({ showConfirmButtons: !prevState.showConfirmButtons }));
   }
 
   changeModalFocusClick = (focusTag) => {
@@ -53,56 +63,14 @@ class UserEvents extends Component {
 
   deleteClick = event => this.props.deleteEvent(event);
 
-
-
-  handleLeaveClick(user, event) {
+  handleLeaveClick = (user, event) => {
     this.props.leaveEvent(user, event);
     this.setState({ showConfirmButtons: false });
+  };
 
-}
-
-  getWeather(){
-    const { user } = this.props;
-
-    const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
-    const time = moment(user.events.date_time).format('X');
- 
-    fetch(`/api/weather?info=${time}&loc=${geoLoc}`,{
-      headers: {'Content-Type': 'application/json'},
-      method: "GET",
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      let arr = [];
-      arr.push(data.hourly.summary);
-      arr.push(data.hourly.data[0].temperature);
-      this.setState({weather : arr});
-      user.events.weather = this.state.weather
-    })
-
-  }
-
-  getWeather(){
-    const { user } = this.props;
-    const geoLoc =  user.events[0].lat + ',' + user.events[0].lng;
-    const time = moment(user.events.date_time).format('X');
- 
-    fetch(`/api/weather?info=${time}&loc=${geoLoc}`,{
-      headers: {'Content-Type': 'application/json'},
-      method: "GET",
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      let arr = [];
-      arr.push(data.hourly.summary);
-      arr.push(data.hourly.data[0].temperature);
-      this.setState({weather : arr});
-      user.events.weather = this.state.weather
-    })
+  filterClick = (flag) => {
+    if (flag) this.setState({ creatorVisibile: true });
+    else this.setState({ creatorVisibile: false });
   }
 
   render = () => {
@@ -141,12 +109,9 @@ class UserEvents extends Component {
         <Divider section />
         <Card.Group itemsPerRow={3} stackable className="grid-item">
           {filteredListLength === 0 ? (
-         
             <h1>
-              You are currently not signed up for any events. Add some events to your calendar <a href="/#/events">Here</a>
-             
+              You are currently not signed up for any events. Add some events to your calendar <a href="/#/events">Here</a>            
             </h1>
-           
           ) : (
             user.events.filter(event => this.state.creatorVisibile ? event.role === 'creator' : event.role !== 'creator')
             .map((event) => {
@@ -172,7 +137,7 @@ class UserEvents extends Component {
                     >
                       {this.state.modalFocusTag === 'Event' ? (
                       
-                        <Event
+                        <EventContainer
                           parent="User"
                           event={event}
                           user={this.props.user}
@@ -181,7 +146,6 @@ class UserEvents extends Component {
                           changeModalFocusClick={this.changeModalFocusClick}
                           showConfirmButtons={this.state.showConfirmButtons}
                           toggleConfirm={this.toggleConfirm}
-                          weather={this.state.weather}
                         />
 
                       ) : (

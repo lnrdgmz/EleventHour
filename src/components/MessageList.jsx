@@ -36,6 +36,7 @@ class MessageList extends Component {
           sender={message.sender_id} />
       );
     });
+    console.log(myArray);
     return (
       <div className='messages' id='messageList'>
         { messages }

@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
-import { filter } from 'lodash/collection';
-import { escapeRegExp } from 'lodash/string';
 import SearchInput, { createFilter } from 'react-search-input';
 import PropTypes from 'prop-types';
 
@@ -11,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Container, Grid, Divider, Modal } from 'semantic-ui-react';
 import MenuBar from '../components/MenuBar';
 import GridEvent from '../components/GridEvent';
-import Event from '../components/Event';
+import EventContainer from '../containers/EventContainer';
 import { fetchEvents } from '../actions/eventActions';
 import { joinEvent } from '../actions/actions';
 import '../../public/styles/events.scss';
@@ -21,16 +19,16 @@ class Events extends Component {
     super(props);
     this.state = {
       modalFocus: false,
-      page: 0,
+      joinConfirm: false,
       zipCode: props.match.params.zipCode,
+      page: 0,
       searchTerm: '',
     };
 
     this.handleElementClick = this.handleElementClick.bind(this);
     this.getEventCreator = this.getEventCreator.bind(this);
   }
-
-  componentWillMount() {
+  componentDidUpdate() {
     this.props.eventsList.forEach((event) => {
       fetch(`/events/${event.id}`, { credentials: 'include' })
         .then((res) => {
@@ -44,18 +42,15 @@ class Events extends Component {
           });
         });
     });
-    this.resetComponent();
     console.log(this.props.eventsList); 
   }
 
   getMoreEvents = () => {
-    const nextPage = this.state.page + 1;
-    this.setState({ page: nextPage });
-    this.props.fetchEvents(nextPage);
+    const newPage = this.state.page + 1;
+    this.setState({ page: newPage });
+    this.props.fetchEvents(this.state.zipCode, newPage);
   }
-
 // Related to views
-
   clearModalFocus = () => this.setState({ modalFocus: false, eventCreator: {} })
   getEventCreator = (event) => {
     
@@ -80,7 +75,12 @@ class Events extends Component {
         console.log(err);
       });
   }
-  handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
+  handleJoinEvent = (user, event) => {
+    this.props.joinEvent(user, event);
+  };
+
+  toggleJoin = () => this.setState(prevState => ({ joinConfirm: !prevState.joinConfirm }))
+
 
 // Related to search
 
@@ -88,8 +88,6 @@ class Events extends Component {
 
   render = () => {
     const { eventsList, user } = this.props;
-
-
     const KEYS_TO_FILTER = ['title', 'description', 'tags', 'catagories'];
     const { isLoading, value, results, eventCreator } = this.state;
 
@@ -101,6 +99,7 @@ class Events extends Component {
           <SearchInput
             className="search-input"
             onChange={this.searchUpdated}
+            throttle={350}
           />
           <Divider />
           <Grid centered columns={3} stackable stretched >
@@ -121,13 +120,15 @@ class Events extends Component {
             size="small"
             open={Boolean(this.state.modalFocus)}
           >
-            <Event
+            <EventContainer
               parent="Grid"
               user={user}
               event={this.state.modalFocus}
               deleteClick=""
-              changeModalFocusClick=""
+              changeModalFocusClick={this.clearModalFocus}
               joinEvent={this.handleJoinEvent}
+              toggleJoin={this.toggleJoin}
+              joinConfirm={this.state.joinConfirm}
             />
           </Modal>
           <Waypoint
