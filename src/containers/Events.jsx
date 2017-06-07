@@ -28,11 +28,6 @@ class Events extends Component {
     this.handleElementClick = this.handleElementClick.bind(this);
     this.getEventCreator = this.getEventCreator.bind(this);
   }
-  componentWillMount() {
-    
-    // this.resetComponent();
-    console.log(this.props.eventsList); 
-  }
   componentDidUpdate() {
     this.props.eventsList.forEach((event) => {
       fetch(`/events/${event.id}`, { credentials: 'include' })
@@ -47,13 +42,15 @@ class Events extends Component {
           });
         });
     });
+    console.log(this.props.eventsList); 
   }
+
   getMoreEvents = () => {
     const newPage = this.state.page + 1;
     this.setState({ page: newPage });
     this.props.fetchEvents(this.state.zipCode, newPage);
   }
-
+// Related to views
   clearModalFocus = () => this.setState({ modalFocus: false, eventCreator: {} })
   getEventCreator = (event) => {
     
@@ -78,12 +75,12 @@ class Events extends Component {
         console.log(err);
       });
   }
-
   handleJoinEvent = (user, event) => {
     this.props.joinEvent(user, event);
   };
 
   toggleJoin = () => this.setState(prevState => ({ joinConfirm: !prevState.joinConfirm }))
+
 
 // Related to search
 
