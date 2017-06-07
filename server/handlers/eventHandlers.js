@@ -66,7 +66,7 @@ module.exports = {
       eventObj.lat = lat;
       eventObj.lng = lng;
       eventObj.full = false;
-      eventObj.img_url = "https://blog-fr.sportroops.com/wp-content/uploads/2014/02/lebron-james-photobombing-miami-heat-nba-basket-2-630x352.jpg";
+      // eventObj.img_url = "";
       eventObj.habitat = "outdoors";
       console.log(eventObj);
       return new Event(eventObj).save()
