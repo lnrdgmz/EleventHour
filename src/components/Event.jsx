@@ -14,6 +14,8 @@ function Event(props) {
     height: '220px',
   };
 
+  const buttonPad = { paddingBottom: '5px' };
+
   if (parent === 'User') {
   // parent === user
     const role = event.role;
@@ -24,7 +26,7 @@ function Event(props) {
       // event is full
         bottomPart = (
           <Card.Content extra >
-            <Card.Header>
+            <Card.Header style={buttonPad}>
               This event's roster is curently <strong style={roleStyle}>full</strong>!
             </Card.Header>
             <Button negative onClick={() => deleteClick(event)}>Delete Event</Button>
@@ -48,7 +50,7 @@ function Event(props) {
       // if show confirm buttons
         bottomPart = (
           <Card.Content extra>
-            <Card.Header>Are you sure you want to leave this event?</Card.Header>
+            <Card.Header style={buttonPad}>Are you sure you want to leave this event?</Card.Header>
             <Button.Group widths={2}>
               <Button
                 onClick={props.handleLeaveClick.bind(null, props.user, props.event)}
@@ -66,7 +68,7 @@ function Event(props) {
       ) : (
         bottomPart = (
           <Card.Content extra>
-            <Card.Header>
+            <Card.Header style={buttonPad}>
               Your current status for this event:
                 <strong style={roleStyle}> {role.toUpperCase()} </strong>
             </Card.Header>
@@ -101,6 +103,7 @@ function Event(props) {
           <Card.Content extra>
             <Card.Header
               content="Success!"
+              style={buttonPad}
             />
             <Button
               content="Close"
@@ -116,18 +119,18 @@ function Event(props) {
     // user exists
       bottomPart = (
         <Card.Content extra>
-          <Card.Header>Log in to join events!</Card.Header>
+          <Card.Header style={buttonPad}>Log in to join events!</Card.Header>
           <LoginModal />
         </Card.Content>
-      )
+      );
     }
   }
-  
+
   return (
     <Card centered fluid raised>
       <Image src={event.img_url} style={imgStyle} />
       <Card.Content>
-        <Card.Header>
+        <Card.Header style={{ fontFamily: '$graduate !important' }}>
           {event.title}
         </Card.Header>
         <Card.Meta>
@@ -138,18 +141,16 @@ function Event(props) {
         <Divider />
         <Card.Description>
           <Header sub className="eventInfoHeader"> Description: </Header>
-          {event.description}
+          <p className="event-description">{event.description}</p>
           <Header sub className="eventInfoHeader"> Location: </Header>
-          {event.location}
+          <p>{event.location}</p>
           <Header sub className="eventInfoHeader"> Weather: </Header>
-
-
-          {/*<p>{props.weather[1]}</p>*/}
-          {/*<p>{props.weather[0]}</p>*/}
-
-
-          <Header sub>Required Skill: </Header>
-          <Rating defaultRating={event.skill_level} maxRating={5} disabled />
+          <p>
+            {/*<p>{props.weather[1]}</p>*/}
+            {/*<p>{props.weather[0]}</p>*/}
+          </p>
+          <Header sub className="eventInfoHeader">Required Skill: </Header>
+          <Rating style={{ paddingTop: '5px' }} defaultRating={event.skill_level} maxRating={5} disabled />
         </Card.Description>
       </Card.Content>
       {bottomPart}

@@ -7,5 +7,32 @@
 }
 
 .ui.label {
-  color: $offwhite;
+  color: $offwhite !important;
+}
+
+.eventInfoHeader {
+  font-family: $graduate !important;
+  text-decoration: underline !important;
+}
+
+.date {
+  font-family: $lato !important;
+  font-weight: $light !important;
+}
+
+.description > p, {
+  font-family: $lato !important;
+  font-weight: $bold !important;
+}
+
+.event-description {
+  font-family: $lato !important;
+  font-weight: $light !important;
+}
+
+.ui.blue.button {
+  background-color: $lightblue !important;
+  &:hover {
+    background-color: $blue !important;
+  }
 }
