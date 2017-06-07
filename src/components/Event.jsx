@@ -8,6 +8,7 @@ import '../../public/styles/event.scss';
 function Event(props) {
   const { event, deleteClick, changeModalFocusClick, parent, user, joinEvent, toggleConfirm, toggleJoin, joinConfirm } = props;
 
+
   let bottomPart;
   const roleStyles = { creator: 'green', approved: 'green', pending: 'orange', declined: 'red' };
   const imgStyle = {
@@ -142,7 +143,6 @@ function Event(props) {
           <Header sub className="eventInfoHeader"> Location: </Header>
           {event.location}
           <Header sub className="eventInfoHeader"> Weather: </Header>
-
           {
             props.weather ? (
               <div>
@@ -153,8 +153,6 @@ function Event(props) {
               null
             )
           }
-
-
           <Header sub>Required Skill: </Header>
           <Rating defaultRating={event.skill_level} maxRating={5} disabled />
         </Card.Description>
