@@ -144,7 +144,6 @@ function Event(props) {
           {event.location}
           <Header sub className="eventInfoHeader"> Weather: </Header>
 
-
           {
             props.weather ? (
               <div>
@@ -155,8 +154,6 @@ function Event(props) {
               null
             )
           }
-
-
 
           <Header sub>Required Skill: </Header>
           <Rating defaultRating={event.skill_level} maxRating={5} disabled />
