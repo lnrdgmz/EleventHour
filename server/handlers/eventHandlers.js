@@ -58,7 +58,8 @@ module.exports = {
       eventObj.lat = lat;
       eventObj.lng = lng;
       eventObj.full = false;
-      // eventObj.img_url = "";
+      eventObj.category = eventObj.category || Math.ceil(Math.random() * 11);
+      eventObj.img_url = eventObj.img_url || eventUtils.randomCategoryImg(eventObj.category);
       eventObj.habitat = "outdoors";
       // console.log(eventObj);
       return new Event(eventObj).save()
