@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-
+import $ from 'jquery';
 class Message extends Component {
   render() {
-    // Was the message sent by the current user. If so, add a css class
+    console.log(this.props);
+    // if (this.props.creator.display_name === this.props.username) {
+    //   $('.username').css('color', 'blue');
+    // } else {
+    //   $('.username').css('color', 'green');
+    // }
     return (
       <div className={`message`}>
         <div className='username'>

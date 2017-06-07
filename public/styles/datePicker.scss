@@ -160,7 +160,6 @@ $slider-fix: 20px;
   padding: 12px 15px;
   border-radius: 3px;
   border: 1px solid gray;
-  height: 250px;
 
   .options {
     width: 100%;
@@ -196,7 +195,6 @@ $slider-fix: 20px;
 
   .tab {
     display: none;
-    height: 310px;
 
     &.is-active {
       display: block;
@@ -209,7 +207,7 @@ $slider-fix: 20px;
   }
 
   .btn-save {
-    display: block;
+    display: none;
     margin-top: 10px;
     width: 100%;
     background-color: blue;

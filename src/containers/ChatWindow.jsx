@@ -83,7 +83,7 @@ class ChatWindow extends Component {
     return (
       <div className="chat-container">
         <h3>New Chat with {this.props.eventCreator.display_name} </h3>
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} id={this.props.userId} creator={this.props.eventCreator} />
         <ChatInput onSend={this.sendHandler} />
       </div>
     );

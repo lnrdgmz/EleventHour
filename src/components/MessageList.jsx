@@ -25,7 +25,8 @@ class MessageList extends Component {
             username={this.props.userName}
             message={message.message}
             recipient={message.recipient_id}
-            sender={this.props.userId} />
+            sender={this.props.userId}
+            creator={this.props.event.creator} />
         );
       }
       return (
