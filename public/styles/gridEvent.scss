@@ -49,5 +49,6 @@
 
 .grid-item {
   overflow: scroll !important;
-  height: calc(100vh - 300px ) !important;
+  height: calc(100vh - 310px ) !important;
+  border-bottom: 1px solid $grey;
 }
