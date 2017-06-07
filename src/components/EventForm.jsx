@@ -10,12 +10,12 @@ import DatePicker from './DatePicker.jsx';
 import fetch from 'isomorphic-fetch';
 
 let steps = [
-  { completed: false, active: true, title: 'Event Name', description: 'Name Your Event' },
-  { completed: false, active: false, title: 'Event Time & Date', description: 'Set the Time and Date' },
-  { completed: false, active: false, title: 'Event Location', description: 'Set the Location' },
-  { completed: false, active: false, title: 'Looking For...', description: 'How Many People are You Looking For?' },
-  { completed: false, active: false, title: 'Skill Rating', description: 'Specify a Skill Rating (If Applicable)' },
-  { completed: false, active: false, title: 'Event Details', description: 'Additional Details' },
+  {  active: true, title: 'Event Name', description: 'Name Your Event' },
+  {  active: false, title: 'Event Time & Date', description: 'Set the Time and Date' },
+  {  active: false, title: 'Event Location', description: 'Set the Location' },
+  {  active: false, title: 'Looking For...', description: 'How Many People are You Looking For?' },
+  { active: false, title: 'Skill Rating', description: 'Specify a Skill Rating (If Applicable)' },
+  { active: false, title: 'Event Details', description: 'Additional Details' },
 ];
 
 class EventForm extends Component {
@@ -31,6 +31,7 @@ class EventForm extends Component {
         description: '',
         dateFlag: false,
         geoData: {},
+   
       },
       modalInfo: {
         headerText: 'Name Your Event',
@@ -77,8 +78,17 @@ class EventForm extends Component {
     }
     if (event.target.name !== 'needs' && event.target.value.length >= 5) {
       $('button.next').prop('disabled', false);
-    }
+    } 
+    if(event.target.name !== 'needs' && event.target.value.length <= 5) {
+      console.log(true)
+      $('button.next').prop('disabled',true);
+     }
+     if(event.target.name === 'Image'){
+       this.state.eventInfo.img_url = event.target.value;
+       return;
+     }
     const key = event.target.name;
+    console.log('key',key);
     this.state.eventInfo[key] = event.target.value;
   }
   
@@ -117,10 +127,11 @@ class EventForm extends Component {
       };
       setTimeout(() => {
         $('.modal-frame').addClass('animated slideOutRight');
-        steps[0].completed = true;
+        
         steps[0].active = false;
+        steps[1].active = true; 
         steps[0].description = this.state.eventInfo.title;
-        steps[1].active = true;
+       
         console.log('Going Forwards:', steps[0]);
         setTimeout(() => {
           this.setState({
@@ -135,7 +146,7 @@ class EventForm extends Component {
         }, 250);
       }, 250);
     } else if (this.state.modalInfo.modalNumber === 1) {
-      const modalThree = {
+        const modalThree = {
         headerText: 'Where is Your Event?',
         placeHolderText: "1337 Duncan's Pl, Duncan, New York",
         previousButtonStatus: true,
@@ -147,10 +158,11 @@ class EventForm extends Component {
         let dateTime = $('.dateTime').val();
         dateTime = moment(dateTime).format();
         this.state.eventInfo.date = dateTime;
-        steps[1].completed = true;
+      
+        steps[2].active = true;
         steps[1].active = false;
         steps[1].description = $('.dateTime').val();
-        steps[2].active = true;
+       
         this.setState({
           eventInfo: this.state.eventInfo,
           modalInfo: modalThree,
@@ -162,6 +174,7 @@ class EventForm extends Component {
         setTimeout(() => {
           this.state.history.push(this.state);
           $('.modal-frame').removeClass('animated slideOutRight').addClass('animated slideInLeft');
+          $('button.previous').css('display', 'inline-block');
           $('button.next').prop('disabled', true);
         }, 1000);
       }, 250);
@@ -176,7 +189,7 @@ class EventForm extends Component {
       };
       setTimeout(() => {
         $('.modal-frame').addClass('animated slideOutRight');
-        steps[2].completed = true;
+      
         steps[2].active = false;
         steps[2].description = this.state.eventInfo.location;
         steps[3].active = true;
@@ -186,11 +199,13 @@ class EventForm extends Component {
           m: this.state.m,
         });
         this.setState({
-          modalToRender: <Input focus name="needs" type="number" placeholder={this.state.modalInfo.placeHolderText} size="huge" required defaultValue={this.state.eventInfo.needs} onChange={this.handleChange} className="modalInput" />,
+          modalToRender:
+          <Input focus name="needs" type="number" placeholder={this.state.modalInfo.placeHolderText} size="huge" required defaultValue={this.state.eventInfo.needs} onChange={this.handleChange} className="modalInput" />
         });
       setTimeout(() => {
         this.state.history.push(this.state);
         $('.modal-frame').removeClass('animated slideOutRight').addClass('animated slideInLeft');
+        $('button.previous').css('display', 'inline-block');
         $('button.next').prop('disabled', true);
       }, 1000);
       }, 250);
@@ -204,7 +219,7 @@ class EventForm extends Component {
       };
       setTimeout(() => {
         $('.modal-frame').addClass('animated slideOutRight');
-        steps[3].completed = true;
+       
         steps[3].active = false;
         if (Number(this.state.eventInfo.needs) === 1) {
           steps[3].description = this.state.eventInfo.needs + ' Person';
@@ -222,6 +237,7 @@ class EventForm extends Component {
         });
         setTimeout(() => {
           this.state.history.push(this.state);
+          $('button.previous').css('display', 'inline-block');
           $('.modal-frame').removeClass('animated slideOutRight').addClass('animated slideInLeft');
         }, 1000);
       }, 250);
@@ -234,7 +250,7 @@ class EventForm extends Component {
         modalNumber: 5,
       };
       setTimeout(() => {
-        steps[4].completed = true;
+
         steps[4].active = false;
         steps[4].description = this.state.eventInfo.skill_level + ' Stars';
         steps[5].active = true;
@@ -244,11 +260,18 @@ class EventForm extends Component {
           m: this.state.m,
         });
         this.setState({
-          modalToRender: <Input focus name="description" type="text" placeholder={this.state.modalInfo.placeHolderText} size="huge" required defaultValue={this.state.eventInfo.description} onChange={this.handleChange} className="modalInput" />,
+          modalToRender: <div>
+          <Input focus name="description" type="text" placeholder={this.state.modalInfo.placeHolderText} size="huge" required defaultValue={this.state.eventInfo.description} onChange={this.handleChange} className="modalInput" />
+          <br />
+          <Input focus name="Image" type="text" placeholder="Image Link Here" size="huge" defaultValue="" onChange={this.handleChange} className="modalInput" />
+
+          </div>,
         });
         setTimeout(() => {
+          $('button.previous').css('display', 'inline-block');
           $('button.next').css('display', 'none');
           $('button.submit').css('display', 'inline-block');
+
           $('.modal-frame').removeClass('animated slideOutRight').addClass('animated slideInLeft');
         }, 1000);
       }, 250);
@@ -279,13 +302,46 @@ class EventForm extends Component {
     }, 250);
     // Push Event to Store
     // Reset to First Modal
-    this.refs.modal.hide();
+   
   }
 
   cancelButtonClick() {
-    console.log('Cancel Button Clicked');
-    console.log(this.props);
+   this.refs.modal.hide();
+    this.setState({
+      eventInfo: {
+        date: '',
+        title: '',
+        skill_level: '',
+        location: '',
+        needs: '',
+        description: '',
+        dateFlag: false,
+        geoData: '',
+      },
+      modalInfo: {
+        headerText: 'Name Your Event',
+        placeHolderText: 'Example: Co-Ed Soccer',
+        previousButtonStatus: false,
+        nextButtonStatus: true,
+        modalNumber: 0,
+      },
+      m: moment(),
+      modalToRender: '',
+      history: this.state.history,
+    });
+     steps = [
+      { completed: false, active: true, title: 'Event Name', description: 'Name Your Event' },
+      { completed: false, active: false, title: 'Event Time & Date', description: 'Set the Time and Date' },
+      { completed: false, active: false, title: 'Event Location', description: 'Set the Location' },
+      { completed: false, active: false, title: 'Looking For...', description: 'How Many People are You Looking For?' },
+      { completed: false, active: false, title: 'Skill Rating', description: 'Specify a Skill Rating (If Applicable)' },
+      { completed: false, active: false, title: 'Event Details', description: 'Additional Details' },
+    ];
+     this.setState({
+          modalToRender: <Input focus name="description" type="text" placeholder='Example: Co-Ed Soccer' size="huge" required defaultValue={this.state.eventInfo.description} onChange={this.handleChange} className="modalInput" />,
+        });
   }
+
   submitClick() {
     this.refs.modal.hide();
     this.props.createEvent(this.state.eventInfo);
@@ -321,6 +377,7 @@ class EventForm extends Component {
     ];
   }
   componentDidMount() {
+   
     const dateOrForm = () => {
       if (this.state.modalInfo.modalNumber === 2) {
         this.setState({
@@ -353,7 +410,7 @@ class EventForm extends Component {
               </Grid.Row>
               <Container className="modal-frame">
                 <Grid.Row centered>
-                  <Header as='h1'textAlign="center" className="modalHeader">{this.state.modalInfo.headerText}</Header>
+                  <Header as='h1' textAlign="center" className="modalHeader">{this.state.modalInfo.headerText}</Header>
                 </Grid.Row>
                 <Grid.Row centered>
                   {this.state.modalToRender}

@@ -16,10 +16,11 @@ module.exports = {
       res.status(400).send();
     } else {
       const { lat, lng } = eventObj.geoData || { lat: null, lng: null };
+      delete eventObj.geoData;
       eventObj.lat = lat;
       eventObj.lng = lng;
       eventObj.full = false;
-      eventObj.img_url = "http://i.dailymail.co.uk/i/pix/2016/06/20/05/3578969600000578-3649871-image-m-59_1466395548625.jpg";
+      // eventObj.img_url = "";
       eventObj.habitat = "outdoors";
       console.log(eventObj);
       return new Event(eventObj).save()
