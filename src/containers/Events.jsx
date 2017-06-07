@@ -30,7 +30,7 @@ class Events extends Component {
 
 // Related to store/state
   getMoreEvents = () => {
-    const newPage = this.state.page + 1
+    const newPage = this.state.page + 1;
     this.setState({ page: newPage });
     this.props.fetchEvents(this.state.zipCode, newPage);
   }
@@ -57,7 +57,7 @@ class Events extends Component {
   render = () => {
     const { eventsList, user } = this.props;
 
-    const KEYS_TO_FILTER = ['title', 'description', 'tags', 'catagories'];
+    const KEYS_TO_FILTER = ['title', 'date_time', 'description', 'tags', 'catagories', 'location'];
     return (
       <div className="wrapper">
         <MenuBar />
@@ -67,6 +67,7 @@ class Events extends Component {
             className="search-input"
             onChange={this.searchUpdated}
             throttle={350}
+            fuzzy="true"
           />
           <Divider />
           <Grid centered columns={3} stackable stretched >
@@ -99,9 +100,7 @@ class Events extends Component {
               joinConfirm={this.state.joinConfirm}
             />
           </Modal>
-          <Waypoint
-            onEnter={() => this.getMoreEvents()}
-          />
+          <Waypoint onEnter={() => this.getMoreEvents()} />
         </Container>
       </div>
     );

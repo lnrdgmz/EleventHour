@@ -130,12 +130,12 @@ function Event(props) {
     <Card centered fluid raised>
       <Image src={event.img_url} style={imgStyle} />
       <Card.Content>
-        <Card.Header style={{ fontFamily: '$graduate !important' }}>
-          {event.title}
+        <Card.Header >
+          <span className="eventInfo-title" >{event.title}</span>
         </Card.Header>
         <Card.Meta>
           <span className="date">
-            Takes place {moment(event.date_time).format('ll')}
+            Takes place {moment(event.date_time).calendar()}
           </span>
         </Card.Meta>
         <Divider />

@@ -32,14 +32,14 @@
 }
 
 .event-title {
-  font-family: $graduate;
+  font-family: $graduate !important;
   color: $offwhite !important;
 }
 
 .event-item-meta {
-  color: $offwhite;
-  font-family: $lato;
-  font-weight: $light;
+  color: $offwhite !important;
+  font-family: $lato !important;
+  font-weight: $light !important;
 }
 
 .icon {
