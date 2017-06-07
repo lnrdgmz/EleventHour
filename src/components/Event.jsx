@@ -143,8 +143,6 @@ function Event(props) {
           <Header sub className="eventInfoHeader"> Location: </Header>
           {event.location}
           <Header sub className="eventInfoHeader"> Weather: </Header>
-<<<<<<< HEAD
-
           {
             props.weather ? (
               <div>
@@ -155,11 +153,6 @@ function Event(props) {
               null
             )
           }
-
-
-=======
-        
->>>>>>> eventFormFix
           <Header sub>Required Skill: </Header>
           <Rating defaultRating={event.skill_level} maxRating={5} disabled />
         </Card.Description>
