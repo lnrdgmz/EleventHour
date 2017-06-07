@@ -1,5 +1,5 @@
 // create collection from tagEventJoin table 
-const db = require('../config/config');
+const db = require('../config/db-config');
 const EventTag = require('../models/eventTag');
 
 const EventTags = new db.Collection();

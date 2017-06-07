@@ -1,6 +1,6 @@
 const moment = require('moment');
 const rp = require('request-promise');
-const db = require('../config/config');
+const db = require('../config/db-config');
 const Event = require('../models/event');
 const Attendee = require('../models/attendee.js');
 const eventUtils = require('../utils/eventUtils');

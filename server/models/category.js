@@ -1,5 +1,5 @@
 // create bookshelf model of categories from knex schema here
-const db = require('../config/config');
+const db = require('../config/db-config');
 const Event = require('./event.js')
 
 let Category = db.Model.extend({
