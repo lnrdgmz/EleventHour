@@ -1,5 +1,4 @@
-$blue: #004FFF;
-$green: #53FF45;
+@import '_variables.scss';
 
 @keyframes sheen {
   0% {
@@ -10,26 +9,11 @@ $green: #53FF45;
   }
 }
 
-.modal-page.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ui.centered.grid.modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-}
-
 .ui.button.splash-button {
   padding: 0.75em 2em;
   text-align: center;
   text-decoration: none;
-  border: 2px solid $green;
+  border: 2px solid $lightblue;
   font-size: 18px;
   display: inline-block;
   color: #FFFFFF;
@@ -51,8 +35,8 @@ $green: #53FF45;
     transition: none;
   }
   &:hover {
-    background-color: $green;
-    color: $blue;
+    background-color: $blue;
+    color: $offwhite;
     &:before {
       transform: skewX(-45deg) translateX(13.5em);
      transition: all 0.5s ease-in-out;
@@ -65,10 +49,6 @@ $green: #53FF45;
   background: rgba(0, 0, 0, 0);
   display: flex;
   justify-content: center;
-}
-
-.segment.login-segment {
-  width: 50%;
 }
 
 .facebook-login-button {
@@ -110,3 +90,17 @@ $green: #53FF45;
   background: url('../assets/google.png');
   background-size: 100% 100% !important;
 }
+
+.login-title {
+  text-align: center;
+  font-size: 2em !important;
+  font-family: $graduate !important;
+  color: $blue !important;
+}
+
+.login-description {
+  text-align: center;
+  font-family: $lato;
+  font-weight: $light;
+}
+

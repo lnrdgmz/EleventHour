@@ -38,6 +38,8 @@ body {
 .search-input > input {
   width: 100%;
   font-size: 18px;
+  font-family: $lato;
+  font-weight: $bold;
   border: 1px solid $blue !important;
   border-radius: 5px;
   color: $lightblue;

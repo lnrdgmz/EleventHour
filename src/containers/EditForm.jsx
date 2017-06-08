@@ -8,7 +8,6 @@ import SurveyComponent from '../components/Survey';
 
 class EditForm extends React.Component {
   constructor(props) {
-    console.log(props)
     super(props);
     this.state = {
       answers: {
@@ -22,20 +21,16 @@ class EditForm extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleInputChange(event) {
+  handleInputChange = (event) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    this.setState((prevState) => {
-      return {
-        answers: Object.assign(prevState.answers, { [name]: value }),
-      };
-    });
+    this.setState(prevState => ({ answers: Object.assign(prevState.answers, { [name]: value }) }));
   }
-  handleSubmit(event) {
+
+  handleSubmit = (event) => {
     event.preventDefault();
     const surveyAnswers = Object.assign({}, this.state.answers);
-    console.log(surveyAnswers);
     fetch('/users', {
       method: 'PUT',
       credentials: 'include',
@@ -56,26 +51,18 @@ class EditForm extends React.Component {
       this.props.updateUser(body);
     });
   }
-  render() {
-    return (
-      <SurveyComponent
-        handleInputChange={this.handleInputChange}
-        handleSubmit={this.handleSubmit}
-        answers={this.state.answers}
-      />
-    );
-  }
+  render = () => (
+    <SurveyComponent
+      handleInputChange={this.handleInputChange}
+      handleSubmit={this.handleSubmit}
+      answers={this.state.answers}
+    />
+  );
 }
 
 const mapStateToProps = state => state.user;
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateUser: (user) => {
-      dispatch(updateUserInfo(user));
-    },
-  };
-};
+const mapDispatchToProps = dispatch => ({ updateUser: user => dispatch(updateUserInfo(user)) });
 
 export default connect(
   mapStateToProps,

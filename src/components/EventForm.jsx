@@ -1,7 +1,6 @@
 import '../../public/styles/modal.scss';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-const OutlineModal = require('boron/OutlineModal');
 import { Header, Container, Menu, Input, Grid, Button, Icon, Step, Rating } from 'semantic-ui-react';
 import $ from 'jquery';
 import { createEvent } from '../actions/actions';
@@ -9,6 +8,8 @@ import moment from 'moment';
 import DatePicker from './DatePicker.jsx';
 import fetch from 'isomorphic-fetch';
 import AddressInput from './AddressInput';
+
+const OutlineModal = require('boron/OutlineModal');
 
 let steps = [
   {  active: true, title: 'Event Name', description: 'Name Your Event' },
