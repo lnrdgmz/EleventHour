@@ -13,14 +13,8 @@ class ChatList extends Component {
     this.loadConvo = this.loadConvo.bind(this);
   }
 
-  loadConvo(convo) {
-    let userInfo = $(convo.currentTarget).text().split("");
-    let userId = '';
-    for (let i = 0; i < userInfo.length; i++) {
-      if (Number(userInfo[i])) {
-        userId += userInfo[i];
-      }
-    }
+  loadConvo(userId) {
+    console.log('User Id:', userId);
     let messages = [];
     fetch(`/messages/${userId}`, { credentials: 'include' })
       .then((res) => {
@@ -46,7 +40,8 @@ class ChatList extends Component {
           <Card
             header={message.userName}
             meta={message.sender_id}
-            onClick={this.props.switchToMessages}
+            onClick={this.props.switchToMessages.bind(null, message.sender_id)}
+            
           />
         );
       }

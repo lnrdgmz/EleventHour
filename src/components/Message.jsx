@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import '../../public/styles/chat.scss';
+
 class Message extends Component {
   render() {
-    console.log(this.props);
-    // if (this.props.creator.display_name === this.props.username) {
-    //   $('.username').css('color', 'blue');
-    // } else {
-    //   $('.username').css('color', 'green');
-    // }
+    console.log('MessageProps!', this.props);
+    const fromMe = this.props.id === this.props.sender ? 'bubble bubble--alt' : 'bubble'; 
+
     return (
-      <div className={`message`}>
-        <div className='username'>
-          { this.props.username }
-        </div>
-        <div className='message-body'>
+      <div className='chat-message'>
+        <div className={`message-body ${fromMe}`}>
           { this.props.message }
         </div>
       </div>

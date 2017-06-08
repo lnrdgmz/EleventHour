@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 import MessageList from '../components/MessageList';
+import { Message } from 'semantic-ui-react';
 import ChatInput from '../components/ChatInput';
 import { connect } from 'react-redux';
 import { sendMessage } from '../actions/actions';
@@ -14,16 +15,25 @@ class ChatWindow extends Component {
     this.state = { messages: [], flag: false, recipient_id: Number(this.props.recipient), recipient_name: '' };
     this.sendHandler = this.sendHandler.bind(this);
     this.newMessage = this.newMessage.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
     this.showMessages = this.showMessages.bind(this);
     // Connect to the server
     this.socket = io('localhost:3000', { query: `username=${this.props.display_name}` }).connect();
     this.socket.on('server:message', message => {
       this.newMessage(message);
     });
-    // Listen for messages from the server
+    this.socket = io('localhost:3000', { query: `username=${this.props.display_name}` }).connect();
+    this.socket.on('user:isTyping', data => {
+        $('.typingAlert').css("visibility", "visible");
+        setTimeout(() => {
+          $('.typingAlert').css("visibility", "hidden");
+        }, 5000);
+      });
   }
+    // Listen for messages from the server
 
   componentWillMount() {
+    console.log(this.props);
     console.log(this.state);
     fetch(`/messages/${this.props.eventCreator.id}`, { credentials: 'include' })
       .then((res) => {
@@ -40,6 +50,7 @@ class ChatWindow extends Component {
     messages.push(message);
     this.setState({ messages });
   }
+  
   sendHandler(message) {
     const messageObject = {
       message,
@@ -70,21 +81,27 @@ class ChatWindow extends Component {
       console.log(message);
       this.socket.emit('send:message', message);
   }
+  
   showMessages() {
     const filter = this.state.messages.filter((msg) => {
       return (msg.sender_id == this.props.eventCreator.id && msg.recipient_id === this.props.userId) || (msg.sender_id === this.props.userId && msg.recipient_id == this.props.eventCreator.id);
     });
+    console.log('ShowMessages:', this.props);
     let newArray = [];
     console.log('New Recipient', this.props.eventCreator.id);
     this.setState({ messages: filter, recipient_id: this.props.eventCreator.id });
+  }
+  changeHandler() {
+    this.socket.emit('user:typing', `${this.props.eventCreator.display_name} is typing...`);
   }
 
   render() {
     return (
       <div className="chat-container">
         <h3>New Chat with {this.props.eventCreator.display_name} </h3>
-        <MessageList messages={this.state.messages} id={this.props.userId} creator={this.props.eventCreator} />
-        <ChatInput onSend={this.sendHandler} />
+        <Message className="typingAlert" color="blue">{this.props.eventCreator.display_name} is typing...</Message>
+        <MessageList messages={this.state.messages} id={this.props.id} creator={this.props.eventCreator} />
+        <ChatInput onChange={this.changeHandler} className="popup-chat-box" onSend={this.sendHandler} />
       </div>
     );
   }
