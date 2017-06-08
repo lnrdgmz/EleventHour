@@ -18,7 +18,7 @@ class ChatWindow extends Component {
     this.changeHandler = this.changeHandler.bind(this);
     this.showMessages = this.showMessages.bind(this);
     // Connect to the server
-    this.socket = io('localhost:3000', { query: `username=${this.props.display_name}` }).connect();
+    this.socket = io(`${process.env.HOST}:${process.env.HOST}`, { query: `username=${this.props.display_name}` }).connect();
     this.socket.on('server:message', message => {
       this.newMessage(message);
     });

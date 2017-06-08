@@ -1,5 +1,5 @@
 // create collection from Category table 
-const db = require('../config/config');
+const db = require('../config/db-config');
 const Category = require('../models/category');
 
 const Categories = new db.Collection();

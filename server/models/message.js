@@ -1,5 +1,5 @@
 // create bookshelf model of userRating from knex schema here
-const db = require('../config/config');
+const db = require('../config/db-config');
 const User = require('./user');
 
 const Message = db.Model.extend({

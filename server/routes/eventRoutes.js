@@ -1,10 +1,6 @@
 // Put all routing for events here
 const eventRouter = require('express').Router();
-const eventUtils = require('../utils/eventUtils.js')
-const Event = require('../models/event');
-const eventHandlers = require('../handlers/eventHandlers.js')
-// const Modal = require('../../src/components/Modal.jsx')
-// Create route handles for events
+const eventHandlers = require('../handlers/eventHandlers.js');
 
 eventRouter.route('/')
   .get(eventHandlers.getEventList)

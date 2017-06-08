@@ -1,7 +1,7 @@
 // create bookshelf model of user from knex schema here
 const clone = require('lodash').clone;
 
-const db = require('../config/config');
+const db = require('../config/db-config');
 const Event = require('./event.js');
 const Attendee = require('./attendee.js');
 const UserRating = require('./userRating.js');

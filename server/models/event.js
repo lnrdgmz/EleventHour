@@ -1,5 +1,5 @@
 // create bookshelf model of events from knex schema here
-const db = require('../config/config');
+const db = require('../config/db-config');
 const Attendee = require('./attendee.js');
 const User = require('./user.js');
 const EventTag = require('./eventTag.js');
