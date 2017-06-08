@@ -42,7 +42,7 @@
   left: 0;
 }
 .ui.center.aligned.header.modalHeader {
-  font-size: 48px;
+  font-size: 3em;
 }
 
 .ui.input input {
@@ -88,6 +88,7 @@
   align-items: middle;
 }
 
+
 .input.chat-input {
   color: black;
 }
@@ -95,3 +96,14 @@
 .address-input {
   display: inline !important;
 }
+
+.rateBox{
+  height: 200px;
+}
+
+.modalItem{
+  padding : 20px;
+  display: inline-block;
+}
+
+
