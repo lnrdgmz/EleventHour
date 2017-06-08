@@ -31,9 +31,7 @@ class Events extends Component {
   componentDidUpdate() {
     this.props.eventsList.forEach((event) => {
       fetch(`/events/${event.id}`, { credentials: 'include' })
-        .then((res) => {
-          return res.json();
-        })
+        .then(res => res.json())
         .then((data) => {
           data.users.forEach((user) => {
             if (user.role === 'creator') {
@@ -42,11 +40,10 @@ class Events extends Component {
           });
         });
     });
-    console.log(this.props.eventsList); 
   }
 
   getMoreEvents = () => {
-    const newPage = this.state.page + 1
+    const newPage = this.state.page + 1;
     this.setState({ page: newPage });
     this.props.fetchEvents(this.state.zipCode, newPage);
   }
@@ -67,7 +64,7 @@ class Events extends Component {
           }
         });
       })
-      .catch((err) => console.error(err));
+      .catch(err => console.error(err));
   }
 
   handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
@@ -83,7 +80,7 @@ class Events extends Component {
   render = () => {
     const { eventsList, user } = this.props;
 
-    const KEYS_TO_FILTER = ['title', 'description', 'tags', 'catagories'];
+    const KEYS_TO_FILTER = ['title', 'date_time', 'description', 'tags', 'catagories', 'location'];
     return (
       <div className="wrapper">
         <MenuBar />
@@ -93,6 +90,7 @@ class Events extends Component {
             className="search-input"
             onChange={this.searchUpdated}
             throttle={350}
+            fuzzy={true}
           />
           <Divider />
           <Grid centered columns={3} stackable stretched >
@@ -108,6 +106,7 @@ class Events extends Component {
           </Grid>
           <Modal
             dimmer="blurring"
+            className="normal-modal"
             basic
             onClose={() => this.clearModalFocus()}
             size="small"
@@ -124,9 +123,7 @@ class Events extends Component {
               joinConfirm={this.state.joinConfirm}
             />
           </Modal>
-          <Waypoint
-            onEnter={() => this.getMoreEvents()}
-          />
+          <Waypoint onEnter={() => this.getMoreEvents()} />
         </Container>
       </div>
     );

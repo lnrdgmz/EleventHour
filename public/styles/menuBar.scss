@@ -1,13 +1,13 @@
-$light-blue: #26B5EB;
-$dark-blue: #1E90BC;
+@import './_variables.scss';
+
 .ui.menu > a.item {
   min-height: 58px;
 }
 
 a.menuBarButton:hover {
-  background-color: $dark-blue;
+  background-color: $lightblue;
 }
 
 a.menuBarButton:active {
-  background-color: $light-blue;
+  background-color: $blue;
 }

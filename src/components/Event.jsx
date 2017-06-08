@@ -21,17 +21,19 @@ class Event extends Component {
   }
 
   changeModalState(e) {
-
     this.setState({ modalFocus: true, recipient: $(e.target).text() });
   }
 
   clearModalFocus(){
     this.setState({ modalFocus: false });
-  } 
+  }
+
   messageCreator(e) {
     this.setState({ modalFocus: true, recipient: $(e.target).attr("name") });
   }
+
   bottomPart() {
+    const buttonPad = { paddingBottom: '5px' };
     const roleStyles = { creator: 'green', approved: 'green', pending: 'orange', declined: 'red' };
     if (this.props.parent === 'User') {
     // parent === user
@@ -42,7 +44,7 @@ class Event extends Component {
         return this.props.event.full ? (
           // event is full
           <Card.Content extra >
-            <Card.Header>
+            <Card.Header style={buttonPad}>
               This event's roster is curently <strong style={roleStyle}>full</strong>!
             </Card.Header>
             <Button negative onClick={this.props.deleteClick.bind(null, this.props.event)}>Delete Event</Button>
@@ -62,7 +64,7 @@ class Event extends Component {
         return this.props.showConfirmButtons ? (
         // if show confirm buttons
           <Card.Content extra>
-            <Card.Header>Are you sure you want to leave this event?</Card.Header>
+            <Card.Header style={buttonPad} >Are you sure you want to leave this event?</Card.Header>
             <Button.Group widths={2}>
               <Button
                 negative
@@ -71,14 +73,14 @@ class Event extends Component {
               />
               <Button.Or />
               <Button
-                onClick={this.props.toggleConfirm}
+                negative
                 content="No, I don't want to leave the event"
               />
             </Button.Group>
           </Card.Content>
         ) : (
           <Card.Content extra>
-            <Card.Header>
+            <Card.Header style={buttonPad}>
               Your current status for this event:
                 <strong style={roleStyle}> {role.toUpperCase()} </strong>
             </Card.Header>
@@ -108,6 +110,7 @@ class Event extends Component {
           <Card.Content extra>
             <Card.Header
               content="Success!"
+              style={buttonPad}
             />
             <Button
               content="Close"
@@ -121,7 +124,7 @@ class Event extends Component {
       } else {
         return (
           <Card.Content extra>
-            <Card.Header>Log in to join events!</Card.Header>
+            <Card.Header style={buttonPad}>Log in to join events!</Card.Header>
             <LoginModal />
           </Card.Content>
         );
@@ -148,9 +151,9 @@ class Event extends Component {
           <Divider />
           <Card.Description>
             <Header sub className="eventInfoHeader"> Description: </Header>
-            {this.props.event.description}
+            <p>{this.props.event.description}</p>
             <Header sub className="eventInfoHeader"> Location: </Header>
-            {this.props.event.location}
+            <p>{this.props.event.location}</p>
             <Header sub className="eventInfoHeader"> Weather: </Header>
             {
               this.props.weather ? (
@@ -162,8 +165,8 @@ class Event extends Component {
                 null
               )
             }
-            <Header sub>Required Skill: </Header>
-            <Rating defaultRating={this.props.event.skill_level} maxRating={5} disabled />
+            <Header sub className="eventInfoHeader">Required Skill: </Header>
+            <Rating style={{ paddingTop: '5px' }} defaultRating={this.props.event.skill_level} maxRating={5} disabled />
           </Card.Description>
         </Card.Content>
         {this.bottomPart()}

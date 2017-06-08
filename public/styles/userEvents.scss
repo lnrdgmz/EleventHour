@@ -1,0 +1,18 @@
+@import '_variables.scss';
+
+.selector-button {
+  background-color: $lightblue !important;
+  color: white !important;
+}
+
+.selector-button.hover {
+  background-color: $lightblueHover !important;
+}
+
+.selector-button.active {
+    background-color: $blue !important;
+  }
+
+  .event-card {
+    max-height: 175px !important;
+  }
