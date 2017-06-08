@@ -11,7 +11,7 @@ class Inbox extends Component {
   socket = {};
   constructor(props) {
     super(props);
-    this.state = { messages: [], flag: false, recipient_id: 161 };
+    this.state = { messages: [], flag: false, recipient_id: 161, otherUser: '' };
     this.sendHandler = this.sendHandler.bind(this);
     this.newMessage = this.newMessage.bind(this);
     this.usersOrMessages = this.usersOrMessages.bind(this);
@@ -49,7 +49,6 @@ class Inbox extends Component {
   newMessage(message) {
     console.log('SOCKET.IO TRIGGERED')
     const messages = this.state.messages;
-    messages.push(message);
     this.setState({ messages });
   }
   sendHandler(message) {
@@ -83,11 +82,16 @@ class Inbox extends Component {
       this.socket.emit('send:message', message);
   }
   switchToMessages(e) {
+    console.log(e);
+    console.log(this.props);
     const filter = this.state.messages.filter((msg) => {
-      return msg.sender_id == $(e.target).text() || msg.recipient_id == $(e.target).text();
+      if(msg.sender_id == e) {
+        this.setState({ otherUser: msg.userName})
+      }
+      return (msg.sender_id == e && msg.recipient_id === this.props.id) || (msg.sender_id === this.props.id && msg.recipient_id == e);
     });
     let newArray = [];
-    const recipient = Number($(e.target).text());
+    const recipient = Number(e);
     console.log(this.state.messages);
     console.log('New Recipient', recipient);
     return this.showMessages(filter, recipient);
@@ -98,11 +102,15 @@ class Inbox extends Component {
   usersOrMessages() {
     if(this.state.flag === false) {
       return (
-      <ChatList messages={this.state.messages} switchToMessages={this.switchToMessages} userName={this.props.display_name} userId={this.props.id} />
+      <div className="container">
+        <h2>Your Chat List</h2>
+        <ChatList messages={this.state.messages} switchToMessages={this.switchToMessages} userName={this.props.display_name} userId={this.props.id} />
+      </div>
       );
     } else {
       return (
-        <div>
+        <div className="container">
+          <h2>Chatting with {this.state.otherUser} </h2>
           <MessageList messages={this.state.messages} userName={this.props.display_name} userId={this.props.id} />
           <ChatInput onSend={this.sendHandler} />
         </div>
@@ -112,7 +120,6 @@ class Inbox extends Component {
   render() {
     return (
       <div className="container">
-        <h3>Leo's Socket.io</h3>
         {this.usersOrMessages()}
       </div>
     );

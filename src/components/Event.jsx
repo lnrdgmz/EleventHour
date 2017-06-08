@@ -32,11 +32,12 @@ class Event extends Component {
     this.setState({ modalFocus: true, recipient: $(e.target).attr("name") });
   }
   bottomPart() {
-    if (parent === 'User') {
+    const roleStyles = { creator: 'green', approved: 'green', pending: 'orange', declined: 'red' };
+    if (this.props.parent === 'User') {
     // parent === user
       const role = this.props.event.role;
-      const roleStyle = { color: roleStyles[this.props.role] };
-      if (this.props.role === 'creator') {
+      const roleStyle = { color: roleStyles[role] };
+      if (role === 'creator') {
       // role === creator
        return this.props.event.full ? (
         // event is full
@@ -44,15 +45,15 @@ class Event extends Component {
               <Card.Header>
                 This event's roster is curently <strong style={roleStyle}>full</strong>!
               </Card.Header>
-              <Button negative onClick={this.props.deleteClick(this.props.event)}>Delete Event</Button>
+              <Button negative onClick={this.props.deleteClick.bind(null, this.props.event)}>Delete Event</Button>
             </Card.Content>
         ) : (
         // event is not full
             <Card.Content extra >
               <Button.Group widths={2}>
-                <Button onClick={this.props.changeModalFocusClick('Modal')} >View Roster</Button>
+                <Button onClick={this.props.changeModalFocusClick.bind(null, 'Modal')} >View Roster</Button>
                 <Button.Or />
-                <Button negative onClick={this.props.deleteClick(this.props.event)}>Delete Event</Button>
+                <Button negative onClick={this.props.deleteClick.bind(null, this.props.event)}>Delete Event</Button>
               </Button.Group>
             </Card.Content>
           );
@@ -64,12 +65,12 @@ class Event extends Component {
               <Card.Header>Are you sure you want to leave this event?</Card.Header>
               <Button.Group widths={2}>
                 <Button
+                  negative
                   onClick={this.props.handleLeaveClick.bind(null, this.props.user, this.props.event)}
                   content="Yes, Leave event."
                 />
                 <Button.Or />
                 <Button
-                  negative
                   onClick={this.props.toggleConfirm}
                   content="No, I don't want to leave the event"
                 />
@@ -79,7 +80,7 @@ class Event extends Component {
             <Card.Content extra>
               <Card.Header>
                 Your current status for this event:
-                  <strong style={roleStyle}> {this.props.role.toUpperCase()} </strong>
+                  <strong style={roleStyle}> {role.toUpperCase()} </strong>
               </Card.Header>
               <Button negative onClick={this.props.toggleConfirm}>Leave Event</Button>
             </Card.Content>
@@ -129,7 +130,6 @@ class Event extends Component {
     }
   }
   render() {
-    const roleStyles = { creator: 'green', approved: 'green', pending: 'orange', declined: 'red' };
     const imgStyle = {
       height: '220px',
     };
