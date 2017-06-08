@@ -7,7 +7,6 @@ const passport = require('passport');
 const authRouter = require('../routes/authRoutes');
 const eventRouter = require('../routes/eventRoutes');
 const userRouter = require('../routes/userRoutes');
-const ratingRouter = require('../routes/ratingRoutes');
 const testRouter = require('../routes/testRoutes');
 const cookieParser = require('cookie-parser');
 const apiRouter = require('../routes/apiRoutes');
@@ -26,7 +25,6 @@ module.exports = (app, express) => {
   app.use(testRouter);
   app.use('/events', eventRouter);
   app.use('/users', userRouter);
-  app.use('/rating', ratingRouter);
   app.use('/api', apiRouter);
   app.use('/messages', messageRouter);
 };
