@@ -6,20 +6,65 @@
 body {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
 }
 
 .login-container {
   width: $pageWidth;
   height: $pageHeight;
+  display: block;
+  vertical-align: bottom;
+  align-items: center;
+  justify-content: center;
+}
+.topHalf {
+  height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, .4);
 }
-
+.about-us {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: $pageWidth;
+  height: 94vh;
+  font-family: 'Lato';
+}
+.description {
+  font-size: 20px;
+  font-weight: 400;
+}
+.team {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.team-member {
+  display: inline-block;
+  padding: 0px 5px;
+}
+.devName {
+  color: white;
+}
+.team-photo {
+  width: 100px;
+  height: auto;
+  border-radius: 10px;
+}
+.about {
+  height: 30vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .login-video {
  position: fixed;
  top: 50%; left: 50%;
@@ -34,6 +79,20 @@ body {
 
 .ui.header.login-header .content{
   vertical-align: baseline;
+  z-index: 0;
+  color: #102542;
+}
+
+.ui.header.login-front .content{
+  vertical-align: baseline;
+  z-index: 1;
+  color: #F9575F;
+  position: absolute;
+  font-size: 120px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-shadow: -1px 0 #102542, 0 1px #102542, 1px 0 #102542, 0 -1px #102542;
 }
 
 .ui.grid.login-foreground-grid {
