@@ -22,11 +22,8 @@ class Event extends Component {
     this.messageCreator = this.messageCreator.bind(this);
   }
 
-  componentWillMount() {
-    getWeather(this.props.event).then(arr => {
-      this.setState({ weather: arr });
-      console.log(this.state.weather);
-    });
+  componentDidMount() {
+    getWeather(this.props.event).then(arr => this.setState({ weather: arr }));
   }
 
   changeModalState(e) {
@@ -164,10 +161,10 @@ class Event extends Component {
             <p>{this.props.event.description}</p>
             <Header sub className="eventInfoHeader"> Location: </Header>
             <p>{this.props.event.location}</p>
-            <Header sub className="eventInfoHeader"> Weather: </Header>
             {
-              this.state.weather ? (
+              this.state.weather.length > 0 ? (
                 <div>
+                  <Header sub className="eventInfoHeader"> Weather: </Header>
                   <p>{this.state.weather[1]} degrees Farenheit.</p>
                   <p>{this.state.weather[0]}</p>
                 </div>
