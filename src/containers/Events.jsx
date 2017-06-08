@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Container, Grid, Divider, Modal } from 'semantic-ui-react';
 import MenuBar from '../components/MenuBar';
 import GridEvent from '../components/GridEvent';
-import EventContainer from '../containers/EventContainer';
+import Event from '../components/Event';
 import { fetchEvents } from '../actions/eventActions';
 import { joinEvent } from '../actions/actions';
 import '../../public/styles/events.scss';
@@ -26,14 +26,12 @@ class Events extends Component {
     };
 
     this.handleElementClick = this.handleElementClick.bind(this);
-    this.getEventCreator = this.getEventCreator.bind(this);
   }
+
   componentDidUpdate() {
     this.props.eventsList.forEach((event) => {
       fetch(`/events/${event.id}`, { credentials: 'include' })
-        .then((res) => {
-          return res.json();
-        })
+        .then(res => res.json())
         .then((data) => {
           data.users.forEach((user) => {
             if (user.role === 'creator') {
@@ -42,25 +40,21 @@ class Events extends Component {
           });
         });
     });
-    console.log(this.props.eventsList); 
   }
+
   getMoreEvents = () => {
     const newPage = this.state.page + 1;
     this.setState({ page: newPage });
     this.props.fetchEvents(this.state.zipCode, newPage);
   }
+
 // Related to views
-  clearModalFocus = () => this.setState({ modalFocus: false, eventCreator: {} })
-  getEventCreator = (event) => {
-    
-      console.log('eventCreator', this.state.eventCreator);
-  }
+  clearModalFocus = () => this.setState({ modalFocus: false })
+
   handleElementClick = (event) => {
     this.setState({ modalFocus: event });
     fetch(`/events/${event.id}`, { credentials: 'include' })
-      .then((res) => {
-        return res.json();
-      })
+      .then(res => res.json())
       .then((data) => {
         data.users.forEach((user) => {
           if (user.role === 'creator') {
@@ -70,16 +64,14 @@ class Events extends Component {
           }
         });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => console.error(err));
   }
-  handleJoinEvent = (user, event) => {
-    this.props.joinEvent(user, event);
-  };
+
+  handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
 
   toggleJoin = () => this.setState(prevState => ({ joinConfirm: !prevState.joinConfirm }))
 
+  handleConfirm = () => this.setState({ joinConfirm: false })
 
 // Related to search
 
@@ -87,9 +79,8 @@ class Events extends Component {
 
   render = () => {
     const { eventsList, user } = this.props;
-    const KEYS_TO_FILTER = ['title', 'description', 'tags', 'catagories'];
-    const { isLoading, value, results, eventCreator } = this.state;
 
+    const KEYS_TO_FILTER = ['title', 'date_time', 'description', 'tags', 'catagories', 'location'];
     return (
       <div className="wrapper">
         <MenuBar />
@@ -99,6 +90,7 @@ class Events extends Component {
             className="search-input"
             onChange={this.searchUpdated}
             throttle={350}
+            fuzzy={true}
           />
           <Divider />
           <Grid centered columns={3} stackable stretched >
@@ -114,12 +106,13 @@ class Events extends Component {
           </Grid>
           <Modal
             dimmer="blurring"
+            className="normal-modal"
             basic
             onClose={() => this.clearModalFocus()}
             size="small"
             open={Boolean(this.state.modalFocus)}
           >
-            <EventContainer
+            <Event
               parent="Grid"
               user={user}
               event={this.state.modalFocus}
@@ -130,9 +123,7 @@ class Events extends Component {
               joinConfirm={this.state.joinConfirm}
             />
           </Modal>
-          <Waypoint
-            onEnter={() => this.getMoreEvents()}
-          />
+          <Waypoint onEnter={() => this.getMoreEvents()} />
         </Container>
       </div>
     );

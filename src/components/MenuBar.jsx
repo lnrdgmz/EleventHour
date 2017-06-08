@@ -14,27 +14,26 @@ class MenuBar extends Component {
     super(props);
     this.state = {
       activeItem: '',
-      menuButton: <Menu.Item name='status'>Loading...</Menu.Item>
+      menuButton: <Menu.Item name="status">Loading...</Menu.Item>,
     };
+
     this.getUserStatus = this.getUserStatus.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
   }
-  componentWillMount() {
-    return this.getUserStatus();
-  }
-  getUserStatus() {
+
+  componentWillMount = () => this.getUserStatus();
+
+  getUserStatus= () => {
     let { activeItem } = this.state.activeItem;
     const eventForm = <EventForm />;
     const loginModal = <LoginModal />;
     const profileButton = <Menu.Item className="menuBarButton" name="profile" position="right" active={activeItem = 'profile'} onClick={this.handleItemClick}>Profile</Menu.Item>;
     const logOutButton = <Menu.Item className="menuBarButton" name="logout" position="right"><Button negative onClick={this.handleLogout}><Icon name="sign out" /> Logout</Button></Menu.Item>;
     fetch('/auth/loggedIn', { credentials: 'include' })
-      .then((res) => {
-        return res.json();
-      })
+      .then(res => res.json())
       .then((data) => {
-        if(data === false) {
+        if (data === false) {
           this.setState({
             activeItem: '',
             menuButton: <Menu.Item position="right">{loginModal}</Menu.Item>,
@@ -46,26 +45,26 @@ class MenuBar extends Component {
           });
         }
       })
-      .catch((err) => {
-        console.error('Error:', err, 'MenuBar.jsx (Line 42)');
-      });
+      .catch(err => console.error('Error:', err, 'MenuBar.jsx (Line 42)'));
   }
-  handleLogout() {
+
+  handleLogout = () => {
     const cookies = new Cookies();
     cookies.set('redirectTo', location.href, { path: '/' });
     location.href = location.href.split('#')[0] + 'auth/logout';
   }
-  handleItemClick (e, { name }) {
+
+  handleItemClick = (e, { name }) => {
     this.setState({
       activeItem: name,
       menuButton: this.state.menuButton,
     });
     if (name === 'profile') {
-      window.location = "/#/profile";
+      window.location = '/#/profile';
     }
   }
 
-  render() {
+  render= () => {
     const { activeItem } = this.state.activeItem;
     return (
       <div>
@@ -84,10 +83,6 @@ class MenuBar extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
+const mapStateToProps = state => ({ user: state.user });
 
 export default connect(mapStateToProps)(MenuBar);
