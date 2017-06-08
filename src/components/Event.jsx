@@ -74,6 +74,7 @@ class Event extends Component {
               <Button.Or />
               <Button
                 negative
+                onClick={this.props.toggleConfirm}
                 content="No, I don't want to leave the event"
               />
             </Button.Group>
