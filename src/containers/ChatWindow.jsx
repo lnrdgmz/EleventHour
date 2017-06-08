@@ -20,6 +20,7 @@ class ChatWindow extends Component {
     // Connect to the server
     this.socket = io(`${process.env.HOST}:${process.env.HOST}`, { query: `username=${this.props.display_name}` }).connect();
     this.socket.on('server:message', message => {
+      $('.typingAlert').css("visibility", "hidden");
       this.newMessage(message);
     });
     this.socket = io('localhost:3000', { query: `username=${this.props.display_name}` }).connect();
@@ -27,7 +28,7 @@ class ChatWindow extends Component {
         $('.typingAlert').css("visibility", "visible");
         setTimeout(() => {
           $('.typingAlert').css("visibility", "hidden");
-        }, 5000);
+        }, 3000);
       });
   }
     // Listen for messages from the server
@@ -47,7 +48,6 @@ class ChatWindow extends Component {
   newMessage(message) {
     console.log('SOCKET.IO TRIGGERED')
     const messages = this.state.messages;
-    messages.push(message);
     this.setState({ messages });
   }
   
