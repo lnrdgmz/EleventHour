@@ -4,8 +4,8 @@ import moment from 'moment';
 import { Button, Container, Header, Grid, Divider, Modal, Card } from 'semantic-ui-react';
 import { deleteEvent, updateAttendeeStatus, loginUser, leaveEvent } from '../actions/actions';
 import Event from '../components/Event';
-import EventContainer from '../containers/EventContainer';
 import AttendeeContainer from '../containers/AttendeeContainer';
+import '../../public/styles/userEvents.scss';
 
 class UserEvents extends Component {
 
@@ -63,8 +63,8 @@ class UserEvents extends Component {
     return (
       <Container className="userEvents-container">
         <Grid centered columns={4} textAlign="center">
-          <Grid.Column >
-            <Header as="h1" >
+          <Grid.Column width={16}>
+            <Header as="h1" style={{ fontFamily: '$graduate' }} >
               Your Events
             </Header>
           </Grid.Column>

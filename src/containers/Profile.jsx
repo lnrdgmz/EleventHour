@@ -54,7 +54,6 @@ class Profile extends Component {
     return (
       <div className="profile-page">
         <MenuBar />
-        <Divider hidden section />
         <Container>
           <Grid>
             <Grid.Column width={5}>

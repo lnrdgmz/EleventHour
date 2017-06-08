@@ -4,7 +4,7 @@ import { pick } from 'lodash';
 
 import { updateUserInfo } from '../actions/actions';
 
-import SurveyComponent from '../components/Survey';
+import Survey from '../components/Survey';
 
 class EditForm extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class EditForm extends React.Component {
     });
   }
   render = () => (
-    <SurveyComponent
+    <Survey
       handleInputChange={this.handleInputChange}
       handleSubmit={this.handleSubmit}
       answers={this.state.answers}
