@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Container, Grid, Divider, Modal } from 'semantic-ui-react';
 import MenuBar from '../components/MenuBar';
 import GridEvent from '../components/GridEvent';
-import EventContainer from '../containers/EventContainer';
+import Event from '../components/Event';
 import { fetchEvents } from '../actions/eventActions';
 import { joinEvent } from '../actions/actions';
 import '../../public/styles/events.scss';
@@ -112,7 +112,7 @@ class Events extends Component {
             size="small"
             open={Boolean(this.state.modalFocus)}
           >
-            <EventContainer
+            <Event
               parent="Grid"
               user={user}
               event={this.state.modalFocus}

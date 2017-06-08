@@ -18,7 +18,6 @@ class UserEvents extends Component {
       modalFocusTag: 'Event',
       showConfirmButtons: false,
       events: this.props.events,
-      weather: [],
     };
 
     this.filterClick = this.filterClick.bind(this);
@@ -31,26 +30,6 @@ class UserEvents extends Component {
   componentWillMount = () => {
     this.props.loginUser();
     console.log(this.state.events);
-  }
-
-  getWeather = () => {
-    const { user } = this.props;
-
-    const geoLoc = user.events[0].lat + ',' + user.events[0].lng;
-    const time = moment(user.events.date_time).format('X');
- 
-    fetch(`/api/weather?info=${time}&loc=${geoLoc}`, {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then((data) => {
-      const arr = [];
-      arr.push(data.hourly.summary);
-      arr.push(data.hourly.data[0].temperature);
-      this.setState({ weather: arr });
-      user.events.weather = this.state.weather;
-    });
   }
 
   toggleConfirm = () => {
@@ -152,7 +131,6 @@ class UserEvents extends Component {
                 changeModalFocusClick={this.changeModalFocusClick}
                 showConfirmButtons={this.state.showConfirmButtons}
                 toggleConfirm={this.toggleConfirm}
-                weather={this.state.weather}
               />
 
             ) : (

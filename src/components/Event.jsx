@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { Card, Image, Button, Rating, Header, Divider, Label, Icon, Modal } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
 import LoginModal from '../components/LoginModal';
 import '../../public/styles/event.scss';
 import ChatWindow from '../containers/ChatWindow';
-import $ from 'jquery';
+import { getWeather } from '../utils/utils';
 
 class Event extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class Event extends Component {
     this.state = {
       modalFocus: false,
       recipient: 0,
+      weather: [],
     };
     this.bottomPart = this.bottomPart.bind(this);
     this.changeModalState = this.changeModalState.bind(this);
@@ -20,11 +22,18 @@ class Event extends Component {
     this.messageCreator = this.messageCreator.bind(this);
   }
 
+  componentWillMount() {
+    getWeather(this.props.event).then(arr => {
+      this.setState({ weather: arr });
+      console.log(this.state.weather);
+    });
+  }
+
   changeModalState(e) {
     this.setState({ modalFocus: true, recipient: $(e.target).text() });
   }
 
-  clearModalFocus(){
+  clearModalFocus() {
     this.setState({ modalFocus: false });
   }
 
@@ -156,10 +165,10 @@ class Event extends Component {
             <p>{this.props.event.location}</p>
             <Header sub className="eventInfoHeader"> Weather: </Header>
             {
-              this.props.weather ? (
+              this.state.weather ? (
                 <div>
-                  <p>{this.props.weather[1]}</p>
-                  <p>{this.props.weather[0]}</p>
+                  <p>{this.state.weather[1]} degrees Farenheit.</p>
+                  <p>{this.state.weather[0]}</p>
                 </div>
               ) : (
                 null
@@ -170,6 +179,17 @@ class Event extends Component {
           </Card.Description>
         </Card.Content>
         {this.bottomPart()}
+        <Modal
+          dimmer="blurring"
+          basic
+          onClose={() => this.clearModalFocus()}
+          size="small"
+          open={Boolean(this.state.modalFocus)}
+        >
+          <Card centered fluid>
+            <ChatWindow userId={this.props.user.id} recipient={this.state.recipient} eventCreator={this.props.event.creator} />
+          </Card>
+        </Modal>
       </Card>
     );
   }
