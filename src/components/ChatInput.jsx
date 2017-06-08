@@ -3,7 +3,7 @@ import { Message } from 'semantic-ui-react';
 class ChatInput extends Component {
   constructor(props) {
     super(props);
-    this.state = { chatInput: '', timeout: undefined, typing: false };
+    this.state = { chatInput: '' };
     // React ES6 does not bind 'this' to event handlers by default
     this.submitHandler = this.submitHandler.bind(this);
     this.textChangeHandler = this.textChangeHandler.bind(this);
