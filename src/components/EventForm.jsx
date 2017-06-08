@@ -1,8 +1,7 @@
 import '../../public/styles/modal.scss';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Header, Container, Menu, Input, Grid, Button, Icon, Step, Rating } from 'semantic-ui-react';
-const OutlineModal = require('boron/OutlineModal');
+import OutlineModal from 'boron/OutlineModal';
 import { Header, Container, Menu, Input, Grid, Button, Icon, Step, Rating, Dropdown } from 'semantic-ui-react';
 import $ from 'jquery';
 import { createEvent } from '../actions/actions';
@@ -10,8 +9,6 @@ import moment from 'moment';
 import DatePicker from './DatePicker.jsx';
 import fetch from 'isomorphic-fetch';
 import AddressInput from './AddressInput';
-
-const OutlineModal = require('boron/OutlineModal');
 
 let steps = [
   {  active: true, title: 'Event Name', description: 'Name Your Event' },
@@ -49,13 +46,19 @@ class EventForm extends Component {
       m: moment(),
       modalToRender: '',
       history: [],
-      category:  [ 
-        { key: 'ba', value: 5, text: 'Basketball' },{ key: 'fo', value: 6, text: 'Football' },
-        { key: 'fr', value: 3, text: 'Frisbee' },{ key: 'ju', value: 1, text: 'Juggling' },
-        { key: 'qu', value: 9, text: 'Quidditch' },{ key: 'go', value: 2, text: 'Golf' },
-        { key: 'ru', value: 10, text: 'Running' }, { key: 'so', value: 7, text: 'Soccer' },
-        { key: 'bo', value: 11, text: 'Blokus' }, { key: 'dn', value: 8, text: 'DnD' }, 
-        { key: 'fi', value: 4, text: 'Fingerpainting' } ]
+      category: [
+        { key: 'ju', value: 1, text: 'Juggling' },
+        { key: 'go', value: 2, text: 'Golf' },
+        { key: 'fr', value: 3, text: 'Frisbee' },
+        { key: 'fi', value: 4, text: 'Fingerpainting' },
+        { key: 'ba', value: 5, text: 'Basketball' },
+        { key: 'fo', value: 6, text: 'Football' },
+        { key: 'so', value: 7, text: 'Soccer' },
+        { key: 'dn', value: 8, text: 'DnD' }, 
+        { key: 'qu', value: 9, text: 'Quidditch' },
+        { key: 'ru', value: 10, text: 'Running' },
+        { key: 'bo', value: 11, text: 'Blokus' },
+      ],
     };
 
     this.handleAddressChange = this.handleAddressChange.bind(this);
