@@ -65,6 +65,46 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+.about-us {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: $pageWidth;
+  height: 94vh;
+  font-family: 'Lato';
+}
+.description {
+  font-size: 20px;
+  font-weight: 400;
+}
+.team {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.team-member {
+  display: inline-block;
+  padding: 0px 5px;
+}
+.devName {
+  color: white;
+}
+.team-photo {
+  width: 100px;
+  height: auto;
+  border-radius: 10px;
+}
+.about {
+  height: 30vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .login-video {
  position: fixed;
  top: 50%; left: 50%;
@@ -87,11 +127,7 @@ body {
   vertical-align: baseline;
   z-index: 1;
   color: #F9575F;
-  position: absolute;
   font-size: 120px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
   text-shadow: -1px 0 #102542, 0 1px #102542, 1px 0 #102542, 0 -1px #102542;
 }
 
