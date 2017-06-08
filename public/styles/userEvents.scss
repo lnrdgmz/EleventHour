@@ -5,14 +5,19 @@
   color: white !important;
 }
 
-.selector-button.hover {
-  background-color: $lightblueHover !important;
-}
-
 .selector-button.active {
     background-color: $blue !important;
   }
 
+.selector-button.hover {
+  background-color: $lightblueHover !important;
+}
   .event-card {
     max-height: 175px !important;
   }
+
+.grid-item {
+  overflow: scroll !important;
+  height: calc(100vh - 350px ) !important;
+  border-bottom: 1px solid $grey;
+}

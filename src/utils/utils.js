@@ -35,3 +35,4 @@ export function getWeather(event) {
     return arr;
   });
 }
+
