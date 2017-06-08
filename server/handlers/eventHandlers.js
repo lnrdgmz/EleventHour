@@ -14,9 +14,7 @@ const handleZipCodeSearch = (req, res) => {
   };
   rp(reqOptions)
     .then((resp) => {
-      console.log('This is the Google response when looking up zip code', zipCode)
-      console.log(resp)
-      if (resp.results.length === 0) Promise.reject('Zip code could not be found.')
+      if (resp.results.length === 0) Promise.reject('Zip code could not be found.');
       return resp.results[0].geometry.location;
     })
     .then((coords) => {
@@ -26,19 +24,14 @@ const handleZipCodeSearch = (req, res) => {
 
 const latLngSearch = ({ lat, lng }, req, res) => {
   const dist = req.query.dist || 1000;
-  console.log('dist is', dist)
   const bounds = eventUtils.boundingBox(lat, lng, parseFloat(dist));
   new Event().where({ full: 0 })
     .query(((qb) => {
-      // if (bounds) {
-        qb.where('lat', '<', bounds.upperLat)
-          .andWhere('lat', '>', bounds.lowerLat)
-          .andWhere('lng', '<', bounds.upperLng)
-          .andWhere('lng', '>', bounds.lowerLng)
-          .andWhere('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
-      // } else {
-      //   qb.where('date_time', '>', `'${moment.utc().format().replace('T', ' ')}'`);
-      // }
+      qb.where('lat', '<', bounds.upperLat)
+        .andWhere('lat', '>', bounds.lowerLat)
+        .andWhere('lng', '<', bounds.upperLng)
+        .andWhere('lng', '>', bounds.lowerLng)
+        .andWhere('date_time', '>', `${moment.utc().format().replace('T', ' ')}`);
     }))
     .orderBy('date_time', 'ASC')
     .fetchPage({
@@ -46,7 +39,6 @@ const latLngSearch = ({ lat, lng }, req, res) => {
       page: req.query.page || 1,
     })
     .then((models) => {
-      console.log(req.query.page);
       res.send(models);
     });
 };
@@ -66,12 +58,13 @@ module.exports = {
       eventObj.lat = lat;
       eventObj.lng = lng;
       eventObj.full = false;
-      // eventObj.img_url = "";
+      eventObj.category = eventObj.category || Math.ceil(Math.random() * 11);
+      eventObj.img_url = eventObj.img_url || eventUtils.randomCategoryImg(eventObj.category);
       eventObj.habitat = "outdoors";
-      console.log(eventObj);
+      // console.log(eventObj);
       return new Event(eventObj).save()
         .then((model) => {
-          console.log('New event', model.attributes);
+          // console.log('New event', model.attributes);
           new Attendee({
             event_id: parseInt(model.attributes.id, 10),
             user_id: req.session.user_id,
@@ -127,7 +120,6 @@ module.exports = {
           page: req.query.page || 1,
         })
         .then((models) => {
-          console.log(req.query.page);
           res.send(models);
         });
     }
