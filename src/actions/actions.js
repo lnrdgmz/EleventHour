@@ -6,7 +6,6 @@ import $ from 'jquery';
 
 
 export const changeUser = (user) => {
-  console.log('User:', user);
   return {
     type: 'LOGIN_USER',
     payload: user,
@@ -83,7 +82,6 @@ export const createEvent = (event) => {
   delete event.date;
   delete event.time;
   delete event.dateFlag;
-  console.log(event);
   return function (dispatch) {
     fetch('/events', {
       method: 'POST',
