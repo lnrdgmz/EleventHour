@@ -60,7 +60,7 @@ class Profile extends Component {
               <Segment>
                 <Header className="user-name">{userName}</Header>
               </Segment>
-              <Image fluid src={user.img_url} rounded />
+              <Image fluid src={user.img_url} />
               <Menu vertical stackable fluid>
                 <Menu.Item
                   className="menu-item"

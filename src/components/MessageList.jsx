@@ -20,7 +20,7 @@ class MessageList extends Component {
       if (message.sender_id === this.props.userId) {
         return (
           <Message
-            key={i}
+            key={message.id}
             username={this.props.userName}
             message={message.message}
             recipient={message.recipient_id}

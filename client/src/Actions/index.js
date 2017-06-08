@@ -11,24 +11,24 @@ export function addEvent(eventInfo) {
   });
 }
 
-export function createEvent(event) {
-  console.log('CREATE EVENT ACTION CREATOR CALLED');
-  event.date_time = moment(event.date + ':' + event.time);
-  delete event.date;
-  delete event.time;
-  delete event.dateFlag;
-  return function (dispatch) {
-    console.log('DISPATCHED');
-    fetch('/events', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(event),
-    })
-    .then(resp => resp.json())
-    .then(body => dispatch(addEvent(body)))
-    .catch(err => console.error(err));
-  };
-}
+// export function createEvent(event) {
+//   console.log('CREATE EVENT ACTION CREATOR CALLED');
+//   event.date_time = moment(event.date + ':' + event.time);
+//   delete event.date;
+//   delete event.time;
+//   delete event.dateFlag;
+//   return function (dispatch) {
+//     console.log('DISPATCHED');
+//     fetch('/events', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify(event),
+//     })
+//     .then(resp => resp.json())
+//     .then(body => dispatch(addEvent(body)))
+//     .catch(err => console.error(err));
+//   };
+// }
 
 export function removeEvent(event) {
   return ({
