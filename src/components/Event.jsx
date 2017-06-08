@@ -225,8 +225,6 @@ class Event extends Component {
             )
           }
 
-
-
           <Header sub>Required Skill: </Header>
           <Rating defaultRating={event.skill_level} maxRating={5} disabled />
         </Card.Description>
