@@ -26,7 +26,6 @@ class Events extends Component {
     };
 
     this.handleElementClick = this.handleElementClick.bind(this);
-    this.getEventCreator = this.getEventCreator.bind(this);
   }
 
   componentDidUpdate() {
@@ -58,9 +57,7 @@ class Events extends Component {
   handleElementClick = (event) => {
     this.setState({ modalFocus: event });
     fetch(`/events/${event.id}`, { credentials: 'include' })
-      .then((res) => {
-        return res.json();
-      })
+      .then(res => res.json())
       .then((data) => {
         data.users.forEach((user) => {
           if (user.role === 'creator') {
@@ -70,9 +67,7 @@ class Events extends Component {
           }
         });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.error(err));
   }
 
   handleJoinEvent = (user, event) => this.props.joinEvent(user, event);
