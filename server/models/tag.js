@@ -1,5 +1,5 @@
 // create bookshelf model of eventTags from knex schema here
-const db = require('../config/config');
+const db = require('../config/db-config');
 const SkillRating = require('./skillRating.js')
 const EventTag = require('./eventTag.js')
 

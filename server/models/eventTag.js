@@ -1,5 +1,5 @@
 // create bookshelf model of tagEventJoin from knex schema here
-const db = require('../config/config');
+const db = require('../config/db-config');
 const Tag = require('./tag');
 const Event = require('./event');
 
