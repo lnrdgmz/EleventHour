@@ -34,21 +34,13 @@ class Inbox extends Component {
       })
       .then((data) => {
         this.setState({ messages: data });
+        console.log('Inbox Msg Count:', this.state.messages.length);
       });
-    // if(this.props.messages.length > 15) {
-    //   newProps = this.props.messages.slice(15);
-    //   newProps = newProps.split("}");
-    //   newProps.forEach((message) => {
-    //     if(message.length > 0) {
-    //       message += '}';
-    //       messages.push(JSON.parse(message));
-    //     }
-    //   });
-    // }
   }
   newMessage(message) {
     console.log('SOCKET.IO TRIGGERED')
     const messages = this.state.messages;
+    messages.push(message);
     this.setState({ messages });
   }
   sendHandler(message) {
@@ -65,9 +57,6 @@ class Inbox extends Component {
 
   addMessage(message) {
     // Append the message to the component state
-    const messages = this.state.messages;
-    messages.push(message);
-    this.setState({ messages });
     fetch(`users/${message.sender_id}`, { credentials: 'include' })
       .then((res) => {
         return res.json();

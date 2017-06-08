@@ -26,10 +26,8 @@ class MessageList extends Component {
             message={message.message}
             recipient={message.recipient_id}
             sender={this.props.userId}
-            creator={this.props.creator}
-            id={this.props.id}
-            lastmsg={''}
-             />
+            id={this.props.userId}
+          />
         );
       }
       return (
@@ -38,9 +36,7 @@ class MessageList extends Component {
           message={message.message}
           recipient={message.recipient_id}
           sender={message.sender_id}
-          creator={this.props.creator}
           id={this.props.id}
-          
         />
       );
     });

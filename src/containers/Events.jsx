@@ -26,7 +26,6 @@ class Events extends Component {
     };
 
     this.handleElementClick = this.handleElementClick.bind(this);
-    this.getEventCreator = this.getEventCreator.bind(this);
   }
   componentDidUpdate() {
     this.props.eventsList.forEach((event) => {
@@ -51,10 +50,7 @@ class Events extends Component {
   }
 // Related to views
   clearModalFocus = () => this.setState({ modalFocus: false, eventCreator: {} })
-  getEventCreator = (event) => {
-    
-      console.log('eventCreator', this.state.eventCreator);
-  }
+
   handleElementClick = (event) => {
     this.setState({ modalFocus: event });
     fetch(`/events/${event.id}`, { credentials: 'include' })

@@ -93,8 +93,8 @@ class Event extends Component {
             <Card.Content extra>
               <Button
                 onClick={() => {
-                  joinEvent(this.props.user, this.props.event);
-                  toggleJoin();
+                  this.props.joinEvent(this.props.user, this.props.event);
+                  this.props.toggleJoin();
                 }}
               >
                 Join Event
@@ -112,12 +112,12 @@ class Event extends Component {
               <Button
                 content="Close"
                 onClick={() => {
-                  changeModalFocusClick();
-                  toggleJoin();
+                  this.props.changeModalFocusClick();
+                  this.props.toggleJoin();
                 }}
               />
             </Card.Content>
-        )
+        );
       } else {
       // user exists
         return (
