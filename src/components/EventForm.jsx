@@ -2,6 +2,8 @@ import '../../public/styles/modal.scss';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Header, Container, Menu, Input, Grid, Button, Icon, Step, Rating } from 'semantic-ui-react';
+const OutlineModal = require('boron/OutlineModal');
+import { Header, Container, Menu, Input, Grid, Button, Icon, Step, Rating, Dropdown } from 'semantic-ui-react';
 import $ from 'jquery';
 import { createEvent } from '../actions/actions';
 import moment from 'moment';
@@ -34,6 +36,7 @@ class EventForm extends Component {
         description: '',
         dateFlag: false,
         geoData: {},
+        category: "",
    
       },
       modalInfo: {
@@ -46,7 +49,13 @@ class EventForm extends Component {
       m: moment(),
       modalToRender: '',
       history: [],
-     
+      category:  [ 
+        { key: 'ba', value: 5, text: 'Basketball' },{ key: 'fo', value: 6, text: 'Football' },
+        { key: 'fr', value: 3, text: 'Frisbee' },{ key: 'ju', value: 1, text: 'Juggling' },
+        { key: 'qu', value: 9, text: 'Quidditch' },{ key: 'go', value: 2, text: 'Golf' },
+        { key: 'ru', value: 10, text: 'Running' }, { key: 'so', value: 7, text: 'Soccer' },
+        { key: 'bo', value: 11, text: 'Blokus' }, { key: 'dn', value: 8, text: 'DnD' }, 
+        { key: 'fi', value: 4, text: 'Fingerpainting' } ]
     };
 
     this.handleAddressChange = this.handleAddressChange.bind(this);
@@ -60,7 +69,7 @@ class EventForm extends Component {
     this.handleRate = this.handleRate.bind(this);
     this.submitClick = this.submitClick.bind(this);
     this.geoCode = this.geoCode.bind(this);
-    // this.getWeather = this.getWeather.bind(this);
+    this.implementCategory = this.implementCategory.bind(this);
   }
 
   handleAddressSelect(address) {
@@ -82,11 +91,12 @@ class EventForm extends Component {
     this.refs.modal.show();
     setTimeout(() => {
       $('.previous').css('display', 'none');
-      $('button.next').prop('disabled', true);
+      $('button.next').prop('disabled',true);
     }, 100);
   }
 
   handleChange(event) {
+    
     console.log("EVENT TARGET NAME: "+ event.target.name);
     if(event.target.name === 'needs') {
       if (Number(event.target.value) < 1) { 
@@ -95,14 +105,19 @@ class EventForm extends Component {
         $('button.next').prop('disabled', false);
       }
     }
-    if (event.target.name !== 'needs' && event.target.value.length >= 5) {
+    if (event.target.name !== 'needs' && event.target.value.length >= 4) {
       $('button.next').prop('disabled', false);
     } 
-    if(event.target.name !== 'needs' && event.target.value.length <= 5) {
+    if(event.target.name !== 'needs' && event.target.value.length <= 4) {
       console.log(true)
       $('button.next').prop('disabled',true);
      }
+    if(event.target.name === 'category'){
+      this.state.eventInfo.category = event.target.value;
+      console.log('category',this.state.eventInfo.category);
+    }
      if(event.target.name === 'Image'){
+
        this.state.eventInfo.img_url = event.target.value;
        return;
      }
@@ -127,7 +142,12 @@ class EventForm extends Component {
       });
   
   }
-
+  implementCategory(event, data){
+    console.log('data',data);
+    this.state.eventInfo.category = data.value;
+    console.log('category',this.state.eventInfo.category);
+  }
+ 
   
 
   handleDateChange(m) {
@@ -136,6 +156,7 @@ class EventForm extends Component {
 
   handleRate = (e, { rating }) => this.state.eventInfo.skill_level = rating;
   nextButtonClick() {
+    console.log('this.state.eventInfo',this.state.eventInfo);
     if (this.state.modalInfo.modalNumber === 0) {
       const modalTwo = {
         headerText: 'When is Your Event',
@@ -178,11 +199,14 @@ class EventForm extends Component {
         dateTime = moment(dateTime).format();
         this.state.eventInfo.date = dateTime;
       
-        steps[2].active = true;
+        
         steps[1].active = false;
+        steps[2].active = true;
         steps[1].description = $('.dateTime').val();
        
-        this.setState({
+        
+        setTimeout(() => {
+          this.setState({
           eventInfo: this.state.eventInfo,
           modalInfo: modalThree,
           m: this.state.m,
@@ -197,7 +221,6 @@ class EventForm extends Component {
             </div>
           ),
         });
-        setTimeout(() => {
           this.state.history.push(this.state);
           $('.modal-frame').removeClass('animated slideOutRight').addClass('animated slideInLeft');
           $('button.previous').css('display', 'inline-block');
@@ -224,26 +247,28 @@ class EventForm extends Component {
           modalInfo: modalThree,
           m: this.state.m,
         });
-        this.setState({
+     
+      setTimeout(() => {
+           this.setState({
           modalToRender:
           <Input focus name="needs" type="number" placeholder={this.state.modalInfo.placeHolderText} size="huge" required defaultValue={this.state.eventInfo.needs} onChange={this.handleChange} className="modalInput" />
         });
-      setTimeout(() => {
         this.state.history.push(this.state);
         $('.modal-frame').removeClass('animated slideOutRight').addClass('animated slideInLeft');
         $('button.previous').css('display', 'inline-block');
-        $('button.next').prop('disabled', true);
+        $('button.next').prop('disabled',false);
       }, 1000);
       }, 250);
     } else if (this.state.modalInfo.modalNumber === 3) {
       const modalFour = {
-        headerText: 'Select a Required Skill Level',
+        headerText: 'Skill Level and Category',
         placeHolderText: "Example: Not a Duncan",
         previousButtonStatus: true,
         nextButtonStatus: true,
         modalNumber: 4,
       };
       setTimeout(() => {
+        $('button.next').prop('disabled', false);
         $('.modal-frame').addClass('animated slideOutRight');
        
         steps[3].active = false;
@@ -258,10 +283,19 @@ class EventForm extends Component {
           modalInfo: modalFour,
           m: this.state.m,
         });
-        this.setState({
-          modalToRender: <Rating name="skill_level" size="massive" maxRating={5} clearable onRate={this.handleRate} className="ratingStars" />,
-        });
         setTimeout(() => {
+          this.setState({
+          modalToRender: 
+          <div className="rateBox">
+          <div>
+            <Rating name="skill_level" size="massive" maxRating={5} clearable onRate={this.handleRate} className="ratingStars" className="modalItem"/>
+         </div>
+         <div>
+            <Dropdown placeholder='Select Category' search scrolling options={this.state.category} onChange={this.implementCategory} className="modalItem" />
+          </div>
+          </div>
+          ,
+        });
           this.state.history.push(this.state);
           $('button.previous').css('display', 'inline-block');
           $('.modal-frame').removeClass('animated slideOutRight').addClass('animated slideInLeft');
@@ -286,10 +320,12 @@ class EventForm extends Component {
           m: this.state.m,
         });
         this.setState({
-          modalToRender: <div>
-          <Input focus name="description" type="text" placeholder={this.state.modalInfo.placeHolderText} size="huge" required defaultValue={this.state.eventInfo.description} onChange={this.handleChange} className="modalInput" />
-          <br />
-          <Input focus name="Image" type="text" placeholder="Image Link Here" size="huge" defaultValue="" onChange={this.handleChange} className="modalInput" />
+          modalToRender:
+           <div>
+           
+             <Input focus name="description" type="text" placeholder={this.state.modalInfo.placeHolderText} size="medium" required defaultValue={this.state.eventInfo.description} onChange={this.handleChange} className="modalInput" />
+             <br />
+             <Input focus name="Image" type="text" placeholder="Image Link Here" size="medium" defaultValue="" onChange={this.handleChange} className="modalInput" />
 
           </div>,
         });
