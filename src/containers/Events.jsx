@@ -49,7 +49,7 @@ class Events extends Component {
   }
 
 // Related to views
-  clearModalFocus = () => this.setState({ modalFocus: false })
+  clearModalFocus = () => this.setState({ modalFocus: false, eventCreator: {} })
 
   handleElementClick = (event) => {
     this.setState({ modalFocus: event });
