@@ -21,7 +21,7 @@
   left: 0;
 }
 .ui.center.aligned.header.modalHeader {
-  font-size: 48px;
+  font-size: 3em;
 }
 
 .ui.input input {
@@ -66,3 +66,16 @@
   justify-content: center;
   align-items: middle;
 }
+
+.rateBox{
+  height: 200px;
+}
+
+.modalItem{
+  padding : 20px;
+  display: inline-block;
+}
+
+// div.menu.transition.visible{
+// max-height: 80px;
+// }
