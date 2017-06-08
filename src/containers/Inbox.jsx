@@ -17,11 +17,18 @@ class Inbox extends Component {
     this.usersOrMessages = this.usersOrMessages.bind(this);
     this.switchToMessages = this.switchToMessages.bind(this);
     this.showMessages = this.showMessages.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
     // Connect to the server
     this.socket = io('localhost:3000', { query: `username=${this.props.display_name}` }).connect();
     this.socket.on('server:message', message => {
       this.newMessage(message);
     });
+    this.socket.on('user:isTyping', data => {
+        $('.typingAlert').css("visibility", "visible");
+        setTimeout(() => {
+          $('.typingAlert').css("visibility", "hidden");
+        }, 5000);
+      });
     // Listen for messages from the server
   }
 
@@ -56,6 +63,9 @@ class Inbox extends Component {
   }
 
   addMessage(message) {
+    const messages = this.state.messages;
+    messages.push(message);
+    this.setState({ messages });
     // Append the message to the component state
     fetch(`users/${message.sender_id}`, { credentials: 'include' })
       .then((res) => {
@@ -88,6 +98,9 @@ class Inbox extends Component {
   showMessages(arr, otherUser) {
     this.setState({ messages: arr, flag: true, recipient_id: otherUser });
   }
+  changeHandler() {
+    this.socket.emit('user:typing', `${this.state.otherUser} is typing...`);
+  }
   usersOrMessages() {
     if(this.state.flag === false) {
       return (
@@ -101,7 +114,7 @@ class Inbox extends Component {
         <div className="container">
           <h2>Chatting with {this.state.otherUser} </h2>
           <MessageList messages={this.state.messages} userName={this.props.display_name} userId={this.props.id} />
-          <ChatInput onSend={this.sendHandler} />
+          <ChatInput onSend={this.sendHandler} onChange={this.changeHandler} />
         </div>
       );
     }

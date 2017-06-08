@@ -59,7 +59,7 @@ img {
 	padding: 8px 30px;
 	position: relative;
 	width: auto;
-	max-width: 50%;
+	max-width: 75%;
 	word-wrap: break-word;
   font-family: $lato;
   font-weight: $bold;
@@ -84,7 +84,7 @@ img {
 	border: 8px solid transparent;
 	border-bottom-color: #E2E2E2;
 	bottom: 1px;
-	left: -5px;
+	left: -2px;
 }
 
 .bubble--alt {
@@ -115,7 +115,7 @@ img {
 	border-bottom-color: #247BA0;
 	border-radius: 20px / 10px;
 	left: auto;
-	right: -5px;
+	right: -2px;
 }
 
 .typingAlert {
