@@ -5,6 +5,7 @@ import ChatInput from '../components/ChatInput';
 import ChatList from '../components/ChatList';
 import { connect } from 'react-redux';
 import { sendMessage } from '../actions/actions';
+import { Message } from 'semantic-ui-react';
 import { sendToUser, getUserMessages } from '../utils/utils';
 import $ from 'jquery';
 class Inbox extends Component {
@@ -21,13 +22,14 @@ class Inbox extends Component {
     // Connect to the server
     this.socket = io(`${process.env.HOST}:${process.env.HOST}`, { query: `username=${this.props.display_name}` }).connect();
     this.socket.on('server:message', message => {
+      $('.typingAlert').css("visibility", "hidden");
       this.newMessage(message);
     });
     this.socket.on('user:isTyping', data => {
         $('.typingAlert').css("visibility", "visible");
         setTimeout(() => {
           $('.typingAlert').css("visibility", "hidden");
-        }, 5000);
+        }, 3000);
       });
     // Listen for messages from the server
   }
@@ -41,7 +43,6 @@ class Inbox extends Component {
       })
       .then((data) => {
         this.setState({ messages: data });
-        console.log('Inbox Msg Count:', this.state.messages.length);
       });
   }
   newMessage(message) {
@@ -113,6 +114,7 @@ class Inbox extends Component {
       return (
         <div className="container">
           <h2>Chatting with {this.state.otherUser} </h2>
+          <Message className="typingAlert" color="blue">{this.state.otherUser} is typing...</Message>
           <MessageList messages={this.state.messages} userName={this.props.display_name} userId={this.props.id} />
           <ChatInput onSend={this.sendHandler} onChange={this.changeHandler} />
         </div>

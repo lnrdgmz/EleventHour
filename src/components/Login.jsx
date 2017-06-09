@@ -49,13 +49,11 @@ class Login extends Component {
               <Grid.Column width={16}>
                 <Header size="huge" textAlign="center" className="login-header">
                   <Header.Content className="login-header">
-                    Eleventh
+                    Eleventh 
                   </Header.Content>
-                  <Header size="huge" textAlign="center" className="login-front">
-                    <Header.Content className="login-front">
-                      Hour
-                    </Header.Content>
-                  </Header>
+                  <Header.Content className="login-front">
+                    Hour
+                  </Header.Content>
                   <Header.Subheader className="subHeader" className="login-subHeader">
                     Find people. Fill your group. Do the things you love.
                   </Header.Subheader>
