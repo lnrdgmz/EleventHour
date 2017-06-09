@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Message } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
+
 class ChatInput extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +30,9 @@ class ChatInput extends Component {
   render() {
     return (
       <form className="chat-input" onSubmit={this.submitHandler}>
-        <input type="text"
+        <Input
+          type="text"
+          size="large"
           onChange={this.textChangeHandler}
           className="chat-input"
           value={this.state.chatInput}

@@ -36,9 +36,7 @@ class ChatWindow extends Component {
 
   componentWillMount() {
     fetch(`/messages/${this.props.eventCreator.id}`, { credentials: 'include' })
-      .then((res) => {
-        return res.json();
-      })
+      .then(res => res.json())
       .then((data) => {
         this.setState({ messages: data });
         this.showMessages();
@@ -67,16 +65,13 @@ class ChatWindow extends Component {
     messages.push(message);
     this.setState({ messages });
     fetch(`users/${message.sender_id}`, { credentials: 'include' })
-      .then((res) => {
-        return res.json();
-      })
+      .then(res => res.json())
       .then((data) => {
         message.userName = data.display_name;
         this.props.sendMsg(message);
         this.props.toTarget(message);
         return message;
       })
-      console.log(message);
       this.socket.emit('send:message', message);
   }
   
@@ -84,9 +79,7 @@ class ChatWindow extends Component {
     const filter = this.state.messages.filter((msg) => {
       return (msg.sender_id == this.props.eventCreator.id && msg.recipient_id === this.props.userId) || (msg.sender_id === this.props.userId && msg.recipient_id == this.props.eventCreator.id);
     });
-    console.log('ShowMessages:', this.props);
     let newArray = [];
-    console.log('New Recipient', this.props.eventCreator.id);
     this.setState({ messages: filter, recipient_id: this.props.eventCreator.id });
   }
   changeHandler() {
