@@ -17,7 +17,7 @@ class MessageList extends Component {
       if (myArray.indexOf(message.sender_id) === -1 && message.sender_id !== this.props.userId) {
         myArray.push(message.sender_id);
       }
-      if (message.sender_id === this.props.id) {
+      if (message.sender_id === this.props.userId) {
         return (
           <Message
             key={i}
