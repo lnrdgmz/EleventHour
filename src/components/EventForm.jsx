@@ -1,7 +1,12 @@
 import '../../public/styles/modal.scss';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import OutlineModal from 'boron/OutlineModal';
+
+
+const OutlineModal = require('boron/OutlineModal');
+
 import { Header, Container, Menu, Input, Grid, Button, Icon, Step, Rating, Dropdown } from 'semantic-ui-react';
 import $ from 'jquery';
 import { createEvent } from '../actions/actions';
@@ -344,6 +349,7 @@ class EventForm extends Component {
   }
   previousButtonClick() {
     const currentIndex = this.state.history[this.state.history.length - 2];
+    console.log("curr idx", currentIndex);
     this.setState({
       eventInfo: currentIndex.eventInfo,
       modalInfo: currentIndex.modalInfo,
@@ -352,7 +358,8 @@ class EventForm extends Component {
       history: this.state.history,
     });
     setTimeout(() => {
-      $('.modal-frame').removeClass('animated slideInLeft').addClass('animated slideOutLeft');
+      // $('.modal-frame').removeClass('animated slideInRight').addClass('animated slideOutLeft');
+       $('button.next').prop('disabled', false);
       steps[this.state.modalInfo.modalNumber + 1].completed = false;
       steps[this.state.modalInfo.modalNumber + 1].active = false;
       steps[this.state.modalInfo.modalNumber].active = true;
@@ -362,7 +369,7 @@ class EventForm extends Component {
           modalInfo: this.state.modalInfo,
           m: this.state.m,
         });
-        $('.modal-frame').removeClass('animated slideOutLeft').addClass('animated slideInRight');
+        // $('.modal-frame').removeClass('animated slideOutRight').addClass('animated slideInLeft');
       }, 1000);
     }, 250);
     // Push Event to Store
@@ -486,7 +493,7 @@ class EventForm extends Component {
                   <Button name="previous" className="previous" animated negative onClick={this.previousButtonClick}>
                     <Button.Content visible>Previous</Button.Content>
                     <Button.Content hidden>
-                      <Icon name='left arrow' className="previous" />
+                      <Icon name='arrow left' className="arrow left" />
                     </Button.Content>
                   </Button>
                   <Button name="next" className="next" animated positive onClick={this.nextButtonClick}>
