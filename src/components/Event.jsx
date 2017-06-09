@@ -191,6 +191,7 @@ class Event extends Component {
       </Card>
     );
   }
+
 }
 
 Event.PropTypes = {
