@@ -22,6 +22,7 @@ $slider-fix: 20px;
     border-spacing: 0;
     table-layout: fixed;
     line-height: 0.25;
+    padding-bottom: 5px !important;
   }
 
   td {
@@ -201,21 +202,8 @@ $slider-fix: 20px;
     }
   }
 
-  .tabs {
-    margin-bottom: 11px;
-    height: 250px;
-  }
-
   .btn-save {
     display: none;
-    margin-top: 10px;
-    width: 100%;
-    background-color: blue;
-    padding: 12px 0;
-    text-align: center;
-    color: #ffffff;
-    font-size: 16px;
-    border-radius: 3px;
   }
 }
 

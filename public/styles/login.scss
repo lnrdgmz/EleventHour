@@ -25,21 +25,30 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, .4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
-.about-us {
-  color: white;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: $pageWidth;
-  height: 94vh;
-  font-family: 'Lato';
+
+.zipcode-field {
+  width: 33% !important;
+  text-align: center !important;
 }
-.description {
+.login-down-arrow {
+  color: $offwhite !important;
+  position: absolute;
+  top: 85%;
+}
+.about-description {
   font-size: 20px;
   font-weight: 400;
+}
+.logo-v {
+  font-size: 140px;
+  transform: rotate(-18deg);
+  color: $salmon;
+  text-shadow: -1px 0 $blue, 0 1px $blue, 1px 0 $blue, 0 -1px $blue;
+}
+.logo-event {
+  text-shadow: -1px 0 $offwhite, 0 1px $offwhite, 1px 0 $offwhite, 0 -1px $offwhite;
 }
 .team {
   display: flex;
@@ -67,16 +76,16 @@ body {
 }
 
 .about-us {
-  color: white;
-  background: rgba(0, 0, 0, 0.5);
+  color: black;
+  background: $offwhite;
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: $pageWidth;
-  height: 94vh;
+  height: 100vh;
   font-family: 'Lato';
 }
-.description {
+.about-description {
   font-size: 20px;
   font-weight: 400;
 }
@@ -117,20 +126,6 @@ body {
  padding: 0 !important;
 }
 
-.ui.header.login-header .content{
-  vertical-align: baseline;
-  z-index: 0;
-  color: #102542;
-}
-
-.ui.header.login-front .content{
-  vertical-align: baseline;
-  z-index: 1;
-  color: #F9575F;
-  font-size: 120px;
-  text-shadow: -1px 0 #102542, 0 1px #102542, 1px 0 #102542, 0 -1px #102542;
-}
-
 .ui.grid.login-foreground-grid {
   font-family: $graduate;
   display: flex;
@@ -141,12 +136,24 @@ body {
   font-size: 120px;
   font-family: $graduate;  
   color: $lightblue;
-  text-shadow: 0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 0.5px black;
+  text-shadow: -1px 0 $offwhite, 0 1px $offwhite, 1px 0 $offwhite, 0 -1px $offwhite;
+  vertical-align: baseline !important;
 }
 
 .ui.header .sub.header.login-subHeader {
   font-family: $lato;
   font-size: 24px;
-  color: $offwhite;
-  text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+  color: $salmon;
+  text-shadow: -0.5px 0 $blue, 0 0.5px $blue, 0.5px 0 $blue, 0 -0.5px $blue;
+}
+.footer-divider {
+  position: relative;
+  top: 25%;
+}
+
+.github-repo {
+  position: relative;
+  top: 20%;
+  display: flex;
+  align-items: center;
 }

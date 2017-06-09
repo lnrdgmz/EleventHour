@@ -5,7 +5,6 @@ import '../../public/styles/chat.scss';
 class Message extends Component {
 
   render() {
-    console.log('MessageProps!', this.props);
     const fromMe = this.props.id === this.props.sender ? 'bubble bubble--alt' : 'bubble'; 
     return (
       <div className='chat-message'>

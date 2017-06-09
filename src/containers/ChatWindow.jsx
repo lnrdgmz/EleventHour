@@ -10,6 +10,7 @@ import $ from 'jquery';
 import '../../public/styles/chat.scss';
 class ChatWindow extends Component {
   socket = {};
+  timeoutVar;
   constructor(props) {
     super(props);
     this.state = { messages: [], flag: false, recipient_id: Number(this.props.recipient), recipient_name: '' };
@@ -18,18 +19,18 @@ class ChatWindow extends Component {
     this.changeHandler = this.changeHandler.bind(this);
     this.showMessages = this.showMessages.bind(this);
     // Connect to the server
-    this.socket = io(`${process.env.HOST}:${process.env.HOST}`, { query: `username=${this.props.display_name}` }).connect();
+    this.socket = io(window.location.origin).connect();
     this.socket.on('server:message', message => {
-      $('.typingAlert').css("visibility", "hidden");
+      $('.typingAlert').css('visibility', 'hidden');
+      clearTimeout(this.timeoutVar);
       this.newMessage(message);
     });
-    this.socket = io('localhost:3000', { query: `username=${this.props.display_name}` }).connect();
     this.socket.on('user:isTyping', data => {
-        $('.typingAlert').css("visibility", "visible");
-        setTimeout(() => {
-          $('.typingAlert').css("visibility", "hidden");
-        }, 3000);
-      });
+      $('.typingAlert').css('visibility', 'visible');
+      this.timeoutVar = setTimeout(() => {
+        $('.typingAlert').css('visibility', 'hidden');
+      }, 3500);
+    });
   }
     // Listen for messages from the server
 
