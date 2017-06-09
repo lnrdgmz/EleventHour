@@ -11,3 +11,7 @@ a.menuBarButton:hover {
 a.menuBarButton:active {
   background-color: $blue;
 }
+
+.ui.menu:not(.vertical) .item {
+  height: 100%;
+}
