@@ -1,9 +1,7 @@
 import '../../public/styles/modal.scss';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import OutlineModal from 'boron/OutlineModal';
-
 import { Header, Container, Menu, Input, Grid, Button, Icon, Step, Rating, Dropdown } from 'semantic-ui-react';
 import $ from 'jquery';
 import { createEvent } from '../actions/actions';
