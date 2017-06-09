@@ -109,6 +109,7 @@
     "semantic-ui-react": "^0.68.3",
     "socket.io": "^2.0.2",
     "socket.io-client": "^2.0.2",
+    "sweet-scroll": "^2.2.1",
     "universal-cookie": "^2.0.8"
   }
 }

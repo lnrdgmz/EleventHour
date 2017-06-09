@@ -5,11 +5,13 @@ import ChatInput from '../components/ChatInput';
 import ChatList from '../components/ChatList';
 import { connect } from 'react-redux';
 import { sendMessage } from '../actions/actions';
-import { Message } from 'semantic-ui-react';
+import { Message, Button, Icon, Segment, Header } from 'semantic-ui-react';
 import { sendToUser, getUserMessages } from '../utils/utils';
 import $ from 'jquery';
+import '../../public/styles/chat.scss';
 class Inbox extends Component {
   socket = {};
+  timeoutVar;
   constructor(props) {
     super(props);
     this.state = { messages: [], flag: false, recipient_id: 161, otherUser: '' };
@@ -19,24 +21,24 @@ class Inbox extends Component {
     this.switchToMessages = this.switchToMessages.bind(this);
     this.showMessages = this.showMessages.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
+    this.backButton = this.backButton.bind(this);
     // Connect to the server
-    this.socket = io(`${process.env.HOST}:${process.env.HOST}`, { query: `username=${this.props.display_name}` }).connect();
+    this.socket = io(window.location.origin).connect();
     this.socket.on('server:message', message => {
       $('.typingAlert').css("visibility", "hidden");
+      clearTimeout(this.timeoutVar);
       this.newMessage(message);
     });
     this.socket.on('user:isTyping', data => {
         $('.typingAlert').css("visibility", "visible");
-        setTimeout(() => {
+        this.timeoutVar = setTimeout(() => {
           $('.typingAlert').css("visibility", "hidden");
-        }, 3000);
-      });
+        }, 3500);
+    });
     // Listen for messages from the server
   }
 
   componentWillMount() {
-    let newProps;
-    let messages = [];
     fetch(`/messages/${this.props.id}`, { credentials: 'include' })
       .then((res) => {
         return res.json();
@@ -46,7 +48,7 @@ class Inbox extends Component {
       });
   }
   newMessage(message) {
-    console.log('SOCKET.IO TRIGGERED')
+    console.log('SOCKET.IO TRIGGERED');
     const messages = this.state.messages;
     messages.push(message);
     this.setState({ messages });
@@ -102,28 +104,39 @@ class Inbox extends Component {
   changeHandler() {
     this.socket.emit('user:typing', `${this.state.otherUser} is typing...`);
   }
+
+  backButton() {
+    this.setState({ flag: false });
+  }
+
   usersOrMessages() {
     if(this.state.flag === false) {
       return (
-      <div className="container">
-        <h2>Your Chat List</h2>
-        <ChatList messages={this.state.messages} switchToMessages={this.switchToMessages} userName={this.props.display_name} userId={this.props.id} />
-      </div>
+        <div className="container">
+          <h2>Your Chat List</h2>
+          <ChatList messages={this.state.messages} switchToMessages={this.switchToMessages} userName={this.props.display_name} userId={this.props.id} />
+        </div>
       );
     } else {
       return (
-        <div className="container">
-          <h2>Chatting with {this.state.otherUser} </h2>
-          <Message className="typingAlert" color="blue">{this.state.otherUser} is typing...</Message>
-          <MessageList messages={this.state.messages} userName={this.props.display_name} userId={this.props.id} />
-          <ChatInput onSend={this.sendHandler} onChange={this.changeHandler} />
+        <div>
+          <Segment className="inbox-container">
+            <Button onClick={this.backButton} className="chat-back">
+              <Icon size="large" name="arrow left" />
+            </Button>
+            <Header as="h2" textAlign="center">Chatting with {this.state.otherUser} </Header>
+            <Message className="typingAlert" color="blue">{this.state.otherUser} is typing...</Message>
+            <MessageList messages={this.state.messages} userName={this.props.display_name} userId={this.props.id} />
+            <ChatInput onSend={this.sendHandler} onChange={this.changeHandler} />
+          </Segment>
         </div>
       );
     }
   }
+
   render() {
     return (
-      <div className="container">
+      <div className="chat-container">
         {this.usersOrMessages()}
       </div>
     );

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 
 // Import Semantic-UI Dependencies
-import { Menu, Image, Button, Icon } from 'semantic-ui-react';
+import { Menu, Image, Button, Icon, Header } from 'semantic-ui-react';
 import EventForm from './EventForm.jsx';
 import LoginModal from '../components/LoginModal';
 import '../../public/styles/menuBar.scss';
@@ -30,6 +30,7 @@ class MenuBar extends Component {
     const loginModal = <LoginModal />;
     const profileButton = <Menu.Item className="menuBarButton" name="profile" position="right" active={activeItem = 'profile'} onClick={this.handleItemClick}>Profile</Menu.Item>;
     const logOutButton = <Menu.Item className="menuBarButton" name="logout" position="right"><Button negative onClick={this.handleLogout}><Icon name="sign out" /> Logout</Button></Menu.Item>;
+    
     fetch('/auth/loggedIn', { credentials: 'include' })
       .then(res => res.json())
       .then((data) => {
@@ -38,9 +39,14 @@ class MenuBar extends Component {
             activeItem: '',
             menuButton: <Menu.Item position="right">{loginModal}</Menu.Item>,
           });
+        } else if (data && window.location === '/#/profile') {
+          this.setState({
+            activeItem: 'profile',
+            menuButton: [eventForm, <Menu.Menu position="right">{profileButton} {logOutButton}</Menu.Menu>],
+          });
         } else {
           this.setState({
-            activeItem: '',
+            activeItem: 'events',
             menuButton: [eventForm, <Menu.Menu position="right">{profileButton} {logOutButton}</Menu.Menu>],
           });
         }
@@ -62,20 +68,28 @@ class MenuBar extends Component {
     if (name === 'profile') {
       window.location = '/#/profile';
     }
+    if(name === 'events') {
+      window.history.back();
+    }
   }
 
   render= () => {
     const { activeItem } = this.state.activeItem;
     return (
       <div>
-        <Menu stackable>
+        <Menu stackable className="menu-bar">
           <Menu.Item
-            name="home"
-            active={activeItem === 'home'}
+            name="events"
+            active={activeItem === 'events'}
             onClick={this.handleItemClick}
           >
-            <Image src="http://i.imgur.com/MdYaRqm.png" size="mini" />
+            Events
           </Menu.Item>
+          <Header className="menu-logo">
+            <Header.Content className="menu-logo-v">
+              V
+            </Header.Content>
+          </Header>
           {this.state.menuButton}
         </Menu>
       </div>

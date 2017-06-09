@@ -5,20 +5,19 @@ module.exports = (server) => {
 
   socketIo.on('connection', (socket) => {
     const username = socket.handshake.query.username;
-    console.log(`${username} connected`);
+    console.log(`${username} connected.`);
 
     socket.on('send:message', (data) => {
-      console.log(data);
-      console.log(`${data.userName}: ${data.message}`);
+      console.log('send:message', data);
       // message received from client, now broadcast it to everyone else
       socket.broadcast.emit('server:message', data);
     });
     socket.on('user:typing', (data) => {
-      console.log('SOCKET SOMEONE IS TYPING');
+      console.log(`${username} is typing:`, data);
       socket.broadcast.emit('user:isTyping', data);
     });
     socket.on('disconnect', () => {
-      console.log(`${username} disconnected`);
+      console.log(`${username} disconnected.`);
     });
   });
 };

@@ -20,11 +20,11 @@ class ChatInput extends Component {
     this.props.onSend(this.state.chatInput);
   }
 
-  textChangeHandler(event)  {
+  textChangeHandler(event) {
     this.setState({ chatInput: event.target.value });
 
-    this.props.onChange();
-    }
+    this.props.onChange(this.state.chatInput);
+  }
 
   render() {
     return (

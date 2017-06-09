@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 // Import Semantic-UI Components
-import { Container, Grid, Header, Button, Form } from 'semantic-ui-react';
-
+import { Container, Grid, Header, Button, Form, Icon } from 'semantic-ui-react';
+import SweetScroll from 'sweet-scroll';
 // Import Local Dependencies
 import LoginModal from './LoginModal.jsx';
 import About from './About';
@@ -14,11 +14,19 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAbout: false,
+      about: false,
       zipCode: undefined,
     };
     this.showEvents = this.showEvents.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  componentDidMount() {
+    this.sweetScroll = new SweetScroll();
+  }
+  handleScroll() {
+    this.sweetScroll.toElement(document.getElementById('about-us'));
   }
 
   handleInputChange(event) {
@@ -49,10 +57,7 @@ class Login extends Component {
               <Grid.Column width={16}>
                 <Header size="huge" textAlign="center" className="login-header">
                   <Header.Content className="login-header">
-                    Eleventh 
-                  </Header.Content>
-                  <Header.Content className="login-front">
-                    Hour
+                    El<span className="logo-event">e<Header.Content className="logo-v">V</Header.Content>ent</span>Hour
                   </Header.Content>
                   <Header.Subheader className="subHeader" className="login-subHeader">
                     Find people. Fill your group. Do the things you love.
@@ -62,6 +67,7 @@ class Login extends Component {
                   <Form>
                     <Form.Field>
                       <input
+                        className="zipcode-field"
                         value={this.state.zipCode}
                         placeholder="Enter a zip code to get started"
                         onChange={this.handleInputChange}
@@ -79,6 +85,7 @@ class Login extends Component {
               </Grid.Column>
             </Grid>
           </Grid>
+            <Icon name="chevron down" size="huge" className="login-down-arrow" onClick={this.handleScroll} />
           </div>
         </div>
         <About />

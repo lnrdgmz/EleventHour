@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { Container, Grid, Header, Image, Icon } from 'semantic-ui-react';
+import { Container, Grid, Header, Image, Icon, Divider } from 'semantic-ui-react';
 import '../../public/styles/login.scss';
 
 class About extends Component {
   render() {
     return (
-      <Container fluid className="about-us">
+      <Container fluid id="about-us" className="about-us">
         <Grid className="about" columns={4}>
           <Grid.Row centered>
             <Header as="h1" color="blue" className="eleventhour">About El<span className="event-text-title">event</span>Hour</Header>
           </Grid.Row>
           <Grid.Row centered>
-            <Container className="description">
+            <Container className="about-description">
               Have you ever had to cancel plans because one person canceled at the last-minute? <br />
               With EleventHour, you can fill that final spot, and will no-longer need to cancel group events! <br />
               Just post your event, fill in the details, and before you know it, you will have a line of people asking to fill that last spot.
@@ -67,6 +67,15 @@ class About extends Component {
                 </Header.Subheader>
               </Grid.Column>
               </Grid.Row>
+            </Grid.Row>
+             <Divider className="footer-divider" />
+            <Grid.Row centered className="github-repo">
+              <a href="https://github.com/BinaryBaboons/PlusOne/">
+                <Header as="h2" color="blue">
+                  <Icon size="large" name="github" color="blue" /> 
+                  EleventHour Repo
+                </Header>
+              </a>
             </Grid.Row>
         </Grid>
       </Container>
