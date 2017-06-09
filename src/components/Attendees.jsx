@@ -6,22 +6,21 @@ import Attendee from './Attendee';
 const Attendees = (props) => {
   const { users, changeModalFocusClick } = props;
   const numApproved = users.filter(user => user.role === 'approved').length;
-  const guests = users.filter(user => user.role === 'creator');
-
+  const guests = users.filter(user => user.role !== 'creator');
+  console.log(users)
+  console.log(guests);
   return (
     <Card.Group itemsPerRow={1} stackable>
       {
-        guests > 0 ? (
-          users.filter(user => user.role !== 'creator').map((user) => {
-            return (
-              <Attendee
-                key={user.id}
-                user={user}
-                handleClick={props.handleClick}
-                full={numApproved >= props.needs}
-              />
-            );
-          })
+        guests.length > 0 ? (
+          users.filter(user => user.role !== 'creator').map((user) => (
+            <Attendee
+              key={user.id}
+              user={user}
+              handleClick={props.handleClick}
+              full={numApproved >= props.needs}
+            />
+          ))
         ) : (
           <Card>
             <Card.Content>
