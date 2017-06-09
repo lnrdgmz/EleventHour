@@ -80,6 +80,10 @@ const defaultImageUrls = [
     'https://c1.staticflickr.com/7/6010/5931986666_7402a781db.jpg',
     'https://c1.staticflickr.com/9/8004/7557858454_c50b557307_z.jpg',
   ],
+  // football
+  [
+    'https://c1.staticflickr.com/6/5575/14733358271_8013b61096.jpg',
+  ],
   // soccer
   [
     'https://media.giphy.com/media/dKdtyye7l5f44/giphy.gif',
