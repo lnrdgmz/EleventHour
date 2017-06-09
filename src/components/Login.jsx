@@ -25,15 +25,8 @@ class Login extends Component {
   componentDidMount() {
     this.sweetScroll = new SweetScroll();
   }
-  componentDidUpdate(lastProps, lastState) {
-    if (!lastState.about) {
-      this.sweetScroll.toElement(document.getElementById('about-us'));
-    }
-  }
   handleScroll() {
-    this.setState({
-      about: !this.state.about,
-    });
+    this.sweetScroll.toElement(document.getElementById('about-us'));
   }
 
   handleInputChange(event) {
