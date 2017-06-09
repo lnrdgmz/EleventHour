@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 
 import OutlineModal from 'boron/OutlineModal';
 
-
-const OutlineModal = require('boron/OutlineModal');
-
 import { Header, Container, Menu, Input, Grid, Button, Icon, Step, Rating, Dropdown } from 'semantic-ui-react';
 import $ from 'jquery';
 import { createEvent } from '../actions/actions';
