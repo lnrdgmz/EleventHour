@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
-import { Container, Header } from 'semantic-ui-react';
 import MessageList from '../components/MessageList';
 import ChatInput from '../components/ChatInput';
 import ChatList from '../components/ChatList';
 import { sendMessage } from '../actions/actions';
-import { Message, Button, Icon, Segment, Header } from 'semantic-ui-react';
+import { Container, Message, Button, Icon, Segment, Header } from 'semantic-ui-react';
 import { sendToUser, getUserMessages } from '../utils/utils';
 
 import $ from 'jquery';
