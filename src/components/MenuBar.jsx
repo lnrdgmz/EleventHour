@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 
 // Import Semantic-UI Dependencies
-import { Menu, Image, Button, Icon } from 'semantic-ui-react';
+import { Menu, Image, Button, Icon, Header } from 'semantic-ui-react';
 import EventForm from './EventForm.jsx';
 import LoginModal from '../components/LoginModal';
 import '../../public/styles/menuBar.scss';
@@ -77,7 +77,7 @@ class MenuBar extends Component {
     const { activeItem } = this.state.activeItem;
     return (
       <div>
-        <Menu stackable>
+        <Menu stackable className="menu-bar">
           <Menu.Item
             name="events"
             active={activeItem === 'events'}
@@ -85,6 +85,11 @@ class MenuBar extends Component {
           >
             Events
           </Menu.Item>
+          <Header className="menu-logo">
+            <Header.Content className="menu-logo-v">
+              V
+            </Header.Content>
+          </Header>
           {this.state.menuButton}
         </Menu>
       </div>

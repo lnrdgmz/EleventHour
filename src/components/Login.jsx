@@ -57,7 +57,7 @@ class Login extends Component {
               <Grid.Column width={16}>
                 <Header size="huge" textAlign="center" className="login-header">
                   <Header.Content className="login-header">
-                    EleventHour
+                    El<span className="logo-event">e<Header.Content className="logo-v">V</Header.Content>ent</span>Hour
                   </Header.Content>
                   <Header.Subheader className="subHeader" className="login-subHeader">
                     Find people. Fill your group. Do the things you love.

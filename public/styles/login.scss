@@ -41,7 +41,15 @@ body {
   font-size: 20px;
   font-weight: 400;
 }
-
+.logo-v {
+  font-size: 140px;
+  transform: rotate(-18deg);
+  color: $salmon;
+  text-shadow: -1px 0 $blue, 0 1px $blue, 1px 0 $blue, 0 -1px $blue;
+}
+.logo-event {
+  text-shadow: -1px 0 $offwhite, 0 1px $offwhite, 1px 0 $offwhite, 0 -1px $offwhite;
+}
 .team {
   display: flex;
   justify-content: center;

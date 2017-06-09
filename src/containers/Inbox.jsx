@@ -23,7 +23,7 @@ class Inbox extends Component {
     this.changeHandler = this.changeHandler.bind(this);
     this.backButton = this.backButton.bind(this);
     // Connect to the server
-    this.socket = io('http://localhost:3000').connect();
+    this.socket = io(window.location.origin).connect();
     this.socket.on('server:message', message => {
       $('.typingAlert').css("visibility", "hidden");
       clearTimeout(this.timeoutVar);
